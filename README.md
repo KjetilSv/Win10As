@@ -17,3 +17,4 @@ Optional MQTT lisensers
 - Hibrernate
 - Custom commands
 
+Download beta version https://github.com/KjetilSv/Win10As/raw/master/mqtt.zip

@@ -1,7 +1,7 @@
 # Win10As
-Make your windows 10 computer IOT friendly
+## Make your windows 10 computer IOT friendly
 
-Publish mqtt senors<br>
+######Publish mqtt senors
 - Cpu prosessor load /cpuprosessortime
 [maintopic]/cpuprosessortime returns string 0-100%<br>
 - Free memory in MB /freememory<br>

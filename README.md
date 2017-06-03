@@ -38,4 +38,5 @@ The the image must be visable from the windows computer.
 Mqtt message is sendt to the synthesizer.
 Currently the volume is set to 100%
 #### Custom commands
-Message is optional
+[maintopic]/[customcommandname]
+Message is currently not used, will be impemented in later versions.

@@ -4,13 +4,17 @@
 ### Publish mqtt senors
 
 #### Cpu prosessor load /cpuprosessortime
-[maintopic]/cpuprosessortime returns string 0-100%
+[maintopic]/cpuprosessortime 
+returns string 0-100%
 #### Free memory in MB /freememory
-[maintopic]/freememory returns string of memory in MB
+[maintopic]/freememory 
+returns string of memory in MB
 #### Volume muted
-[maintopic]/mute 1=muted 0=not muted
+[maintopic]/mute 
+1=muted 0=not muted
 #### Master volume in % volume
-[maintopic]/volume returns string of current volume setting 0-100
+[maintopic]/volume 
+returns string of current volume setting 0-100
 ### MQTT lisensers 
 The predefined is optional due safety resons
 #### Mute/Unmute

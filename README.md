@@ -5,14 +5,14 @@
 
 - Cpu prosessor load /cpuprosessortime
 [maintopic]/cpuprosessortime returns string 0-100%
-
 - Free memory in MB /freememory
-  [maintopic]/freememory returns string of memory in MB
+[maintopic]/freememory returns string of memory in MB
 - Volume muted
-    [maintopic]/mute 1=muted 0=not muted
+[maintopic]/mute 1=muted 0=not muted
 - Master volume in % volume
-    [maintopic]/volume returns string of current volume setting 0-100
-Optional MQTT lisensers
+[maintopic]/volume returns string of current volume setting 0-100
+
+###### Optional MQTT lisensers
 - Mute/Unmute
 - Volume
 - Suspend PC

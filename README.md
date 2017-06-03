@@ -13,12 +13,12 @@
 '[maintopic]/volume returns string of current volume setting 0-100'
 
 #### Optional MQTT lisensers
-- Mute/Unmute
-- Volume
-- Suspend PC
-- Shutdown
-- Toast message
-- TTS
-- Reboot
-- Hibrernate
-- Custom commands
+#### Mute/Unmute
+#### Volume
+#### Suspend PC
+#### Shutdown
+#### Toast message
+#### TTS
+#### Reboot
+#### Hibrernate
+#### Custom commands

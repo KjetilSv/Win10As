@@ -11,7 +11,6 @@
 [maintopic]/mute 1=muted 0=not muted
 #### Master volume in % volume
 [maintopic]/volume returns string of current volume setting 0-100
-
 ### MQTT lisensers 
 The predefined is optional due safety resons
 #### Mute/Unmute
@@ -31,7 +30,7 @@ published to [maintopic]/volume after setting
 #### Toast message
 [maintopic]/toast
 Displays a message on the windows computer.
-Message exsample "Home Assistant,kom ned!,Kjetil,c:\temp\iselin.jpg"
+Message exsample "Home Assistant,kom ned!,Kjetil,c:\temp\iselin.jpg".
 The the image must be visable from the windows computer.
 #### TTS
 [maintopic]/hibrernate

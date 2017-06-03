@@ -15,6 +15,8 @@ returns string of memory in MB
 #### Master volume in % volume
 [maintopic]/volume 
 returns string of current volume setting 0-100
+#### Camera Screnshot of primary monitor
+if enabled it publishes to specified folder as jpg file or published the [maintopic]/mqttcamera topic
 ### MQTT lisensers 
 The predefined is optional due safety resons
 #### Mute/Unmute

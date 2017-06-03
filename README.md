@@ -1,5 +1,5 @@
-# Win10As
-## Make your windows 10 computer IOT friendly
+# Win 10 Assistant
+## Make your windows 10 computer IOT friendly with MQTT
 
 ### Publish mqtt senors
 

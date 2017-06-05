@@ -17,6 +17,23 @@ returns string of memory in MB
 returns string of current volume setting 0-100
 #### Camera Screnshot of primary monitor
 if enabled it publishes to specified folder as jpg file or published the [maintopic]/mqttcamera topic
+#### Battery sensors
+if enabled published to [maintopic]/Power with subtopics
+- BatteryChargeStatus
+- BatteryFullLifetime
+- BatteryLifePercent
+- BatteryLifeRemaining
+- PowerLineStatus
+
+#### Disk sensors
+[maintopic]/drive
+Subtopic with each drive letter with the following subtopics
+- totalsize
+- percentFree
+- availablefreespace
+
+Exsample : kjetilsv/drive/c/totalsize
+
 ### MQTT lisensers 
 The predefined is optional due safety resons
 #### Mute/Unmute

@@ -25,6 +25,9 @@ published to [maintopic]/mute after setting
 #### Volume
 [maintopic]/volume/set volume 0-100
 published to [maintopic]/volume after setting
+#### Monitor
+[maintopic]/monitor/set 0-1
+published to [maintopic]/monitor after setting
 #### Suspend PC
 [maintopic]/suspend 
 #### Shutdown

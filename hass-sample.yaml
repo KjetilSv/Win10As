@@ -1,0 +1,77 @@
+# replace the string kjetilsv with your topic defined in the mqtt client
+
+camera:
+  - platform: mqtt
+    topic: kjetilsv/mqttcamera
+    name: kjetilsv
+
+switch:
+#power options
+  - platform: mqtt
+    name: "Kjetilsvhibernate"
+    command_topic: "kjetilsv/hibernate"
+    payload_on: "1"
+    optimistic: false
+  - platform: mqtt
+    name: "Kjetilsvsuspend"
+    command_topic: "kjetilsv/suspend"
+    payload_on: "1"
+    optimistic: false
+  - platform: mqtt
+    name: "Kjetilsvreboot"
+    command_topic: "kjetilsv/reboot"
+    payload_on: "1"
+    optimistic: false
+  - platform: mqtt
+    name: "Kjetilsvshutdown"
+    command_topic: "kjetilsv/shutdown"
+    payload_on: "1"
+    optimistic: false
+  - platform: command_line
+    switches:
+      dinner_time:
+        command_on: '/home/homeassistant/.homeassistant/scripts/dinner.sh'
+        #dinner.sh
+        #mosquitto_pub -t kjetilsv/toast -m "Home Assistant,Dinner time!,,c:\temp\dinner.jpg"
+        #mosquitto_pub -t kjetilsv/tts -m "dinner time,DINNER TIME, D I N N E R TIME"
+  - platform: command_line
+    switches:
+      come_down:
+        command_on: '/home/homeassistant/.homeassistant/scripts/comedown.sh'
+        #comedown.sh
+        #mosquitto_pub -t kjetilsv/toast -m "Home Assistant,kom ned!,,c:\temp\iselin.jpg"
+        #mosquitto_pub -t kjetilsv/tts -m "NAG NAG NAG"
+
+sensor:
+#hardware
+  - platform: mqtt
+    state_topic: "kjetilsv/freememory"
+    name: "Kjetilsv freememory" 
+  - platform: mqtt
+    state_topic: "kjetilsv/cpuprosessortime"
+    name: "Kjetilsv Cpu load" 
+#media
+  - platform: mqtt
+    state_topic: "kjetilsv/mute"
+    name: "Kjetilsv Volume muted" 
+  - platform: mqtt
+    state_topic: "kjetilsv/volume"
+    name: "Kjetilsv Volume" 
+#disk usage
+  - platform: mqtt
+    state_topic: "kjetilsv/drive/C/percentfree"
+    name: 'Kjetilsv C:\ precent free space'
+    unit_of_measurement: "%"
+  - platform: mqtt
+    state_topic: "kjetilsv/drive/D/percentfree"
+    name: 'Kjetilsv D:\ precent free space'
+    unit_of_measurement: "%"  
+  - platform: mqtt
+    state_topic: "kjetilsv/drive/E/percentfree"
+    name: 'Kjetilsv E:\ precent free space'
+    unit_of_measurement: "%"
+  - platform: mqtt
+    state_topic: "kjetilsv/drive/F/percentfree"
+    name: 'Kjetilsv F:\ precent free space'
+    unit_of_measurement: "%"
+

@@ -27,6 +27,23 @@ switch:
     command_topic: "kjetilsv/shutdown"
     payload_on: "1"
     optimistic: false
+#Instead of slider/input box i just made three presets low,normal og full(90%) 
+  - platform: mqtt
+    name: "KjetilsvVolume50"
+    state_topic: "kjetilsv/volume"
+    command_topic: "kjetilsv/volume/set"
+    payload_on: "50"
+  - platform: mqtt
+    name: "KjetilsvVolume50"
+    state_topic: "kjetilsv/volume"
+    command_topic: "kjetilsv/volume/set"
+    payload_on: "50"
+  - platform: mqtt
+    name: "KjetilsvVolume90"
+    state_topic: "kjetilsv/volume"
+    command_topic: "kjetilsv/volume/set"
+    payload_on: "90"
+#commandline scripts
   - platform: command_line
     switches:
       dinner_time:

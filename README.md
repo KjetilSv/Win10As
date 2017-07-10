@@ -34,7 +34,7 @@ Subtopic with each drive letter with the following subtopics
 
 Exsample : kjetilsv/drive/c/totalsize
 
-### MQTT lisensers 
+### MQTT listeners 
 The predefined is optional due safety resons
 #### Mute/Unmute
 [maintopic]/mute/set 1=muted 0=not muted

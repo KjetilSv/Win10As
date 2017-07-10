@@ -62,6 +62,9 @@ The the image must be visable from the windows computer.
 [maintopic]/hibrernate
 Mqtt message is sendt to the synthesizer.
 Currently the volume is set to 100%
+#### Added app/running sensor
+lisens to [maintopic]/app/running/ message:[appname] and published back to [maintopic]/app/running/[appname] with 0= not running/not found in process 1= found
+Tested with common applications like spotify/firefox/skype.
 #### Custom commands
 [maintopic]/[customcommandname]
 Message is currently not used, will be impemented in later versions.

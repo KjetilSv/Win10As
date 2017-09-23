@@ -392,7 +392,16 @@ namespace mqttclient
                 {
                     mqttconnect();
                 }
-                MqttPublish(SetSubTopic("cpuprosessortime"), HardwareSensors.GetCpuProsessorTime());
+                try
+                {
+                    MqttPublish(SetSubTopic("cpuprosessortime"), HardwareSensors.GetCpuProsessorTime());
+                }
+                catch (Exception)
+                {
+                    //we ignore 
+                    //throw;
+                }
+                
                 MqttPublish(SetSubTopic("freememory"), HardwareSensors.GetFreeMemory());
                 MqttPublish(SetSubTopic("volume"), audioobj.GetVolume());
 

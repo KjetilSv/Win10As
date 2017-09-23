@@ -161,7 +161,10 @@ namespace mqttclient
             Properties.Settings.Default["ScreenshotMqtt"] = chkScreenshotMqtt.Checked;
             Properties.Settings.Default["ScreenShotpath"] = txtScreenshotPath.Text;
             Properties.Settings.Default["MinimizeToTray"] = chkMinimizeToTray.Checked;
-            Properties.Settings.Default["TTSSpeaker"] = comboBox1.SelectedItem.ToString();
+            if (comboBox1.SelectedItem.ToString().Length> 5)
+            {
+                Properties.Settings.Default["TTSSpeaker"] = comboBox1.SelectedItem.ToString();
+            }
 
             Properties.Settings.Default.Save();
 
@@ -367,5 +370,7 @@ namespace mqttclient
             synthesizer.SelectVoice(comboBox1.SelectedItem.ToString());
             synthesizer.Speak("testing");
         }
+
+  
     }
 }

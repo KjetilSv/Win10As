@@ -224,6 +224,7 @@
             this.CmdAddTrigger.TabIndex = 27;
             this.CmdAddTrigger.Text = "Add";
             this.CmdAddTrigger.UseVisualStyleBackColor = true;
+            this.CmdAddTrigger.Click += new System.EventHandler(this.CmdAddTrigger_Click);
             // 
             // label5
             // 

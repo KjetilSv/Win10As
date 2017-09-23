@@ -104,8 +104,9 @@ namespace mqttclient
                 client = new MqttClient(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), false, null, null, MqttSslProtocols.None, null);
                 byte code = client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
                 client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+                client.ConnectionClosed += client_MqttConnectionClosed;
                 client.Subscribe(new string[] { g_mqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-                WriteToLog("connected");
+                toolStripStatusLabel1.Text = "connected";
             }
 
             catch (Exception)
@@ -115,6 +116,12 @@ namespace mqttclient
 
 
         }
+
+        private void client_MqttConnectionClosed(object sender, EventArgs e)
+        {
+            toolStripStatusLabel1.Text = "not connected";
+        }
+
         private void LoadTriggerlist()
         {
             if (File.Exists(g_TriggerFile))
@@ -155,7 +162,6 @@ namespace mqttclient
         {
             try
             {
-
                 string message = Encoding.UTF8.GetString(e.Message);
                 mqtttrigger CurrentMqttTrigger = new mqtttrigger();
                 WriteToLog("Message recived " + e.Topic + " value " + message);

@@ -83,6 +83,10 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.CmdTestSpeaker = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.txtSlideshowFolder = new System.Windows.Forms.TextBox();
+            this.ChkSlideshow = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -90,6 +94,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox6
@@ -645,11 +650,50 @@
             this.CmdTestSpeaker.UseVisualStyleBackColor = true;
             this.CmdTestSpeaker.Click += new System.EventHandler(this.CmdTestSpeaker_Click);
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.label12);
+            this.groupBox7.Controls.Add(this.ChkSlideshow);
+            this.groupBox7.Controls.Add(this.txtSlideshowFolder);
+            this.groupBox7.Location = new System.Drawing.Point(322, 357);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(352, 109);
+            this.groupBox7.TabIndex = 49;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Slideshow";
+            // 
+            // txtSlideshowFolder
+            // 
+            this.txtSlideshowFolder.Location = new System.Drawing.Point(72, 48);
+            this.txtSlideshowFolder.Name = "txtSlideshowFolder";
+            this.txtSlideshowFolder.Size = new System.Drawing.Size(219, 20);
+            this.txtSlideshowFolder.TabIndex = 49;
+            // 
+            // ChkSlideshow
+            // 
+            this.ChkSlideshow.AutoSize = true;
+            this.ChkSlideshow.Location = new System.Drawing.Point(15, 19);
+            this.ChkSlideshow.Name = "ChkSlideshow";
+            this.ChkSlideshow.Size = new System.Drawing.Size(74, 17);
+            this.ChkSlideshow.TabIndex = 50;
+            this.ChkSlideshow.Text = "Slideshow";
+            this.ChkSlideshow.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 51);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(44, 13);
+            this.label12.TabIndex = 51;
+            this.label12.Text = "Filepath";
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(876, 734);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.CmdTestSpeaker);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.comboBox1);
@@ -678,6 +722,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -740,5 +786,9 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button CmdTestSpeaker;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox ChkSlideshow;
+        private System.Windows.Forms.TextBox txtSlideshowFolder;
     }
 }

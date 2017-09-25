@@ -433,6 +433,10 @@ namespace mqttclient
 
                 TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
 
+                //todo : make front
+                //MqttCameraSlide();
+
+
                 if (Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString()) == true)
                 {
                     MqttPublish(SetSubTopic("/Power/BatteryChargeStatus"), power.BatteryChargeStatus());
@@ -527,10 +531,22 @@ namespace mqttclient
 
 
         }
+
+
+        private void MqttCameraSlide()
+        {
+
+            var rand = new Random();
+            var files = Directory.GetFiles(@"C:\temp\images", "*.jpg");
+            string topic = "slideshow";
+            client.Publish(SetSubTopic(topic), File.ReadAllBytes(files[rand.Next(files.Length)]));
+        }
+
+
         public void HandleUnhandledException(Exception e)
         {
-            if (MessageBox.Show("An unexpected error has occurred. Continue?",
-                "My application", MessageBoxButtons.YesNo, MessageBoxIcon.Stop,
+            if (MessageBox.Show("An unexpected error has occurred. details:" + e.Message  + "innerException:" +  e.InnerException +  "Continue?",
+                "MqttClient" + e.Message + " inner:" +  e.InnerException , MessageBoxButtons.YesNo, MessageBoxIcon.Stop,
                 MessageBoxDefaultButton.Button2) == DialogResult.No)
             {
                 Application.Exit();

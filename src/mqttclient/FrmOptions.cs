@@ -43,9 +43,20 @@ namespace mqttclient
 
         }
         private void SaveTriggerlist()
+
         {
             string output = JsonConvert.SerializeObject(MqttTriggerList);
-            File.WriteAllText(g_TriggerFile, output);
+            try
+            {
+                File.WriteAllText(g_TriggerFile, output);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("error durring file io:" + g_TriggerFile + " details:" + ex.Message);
+                throw;
+            }
+
+
         }
         private void ClearNewTrigger()
         {
@@ -145,6 +156,7 @@ namespace mqttclient
         }
         private void savesettings()
         {
+
             Properties.Settings.Default["mqttserver"] = txtmqttserver.Text;
             Properties.Settings.Default["mqttusername"] = txtmqttusername.Text;
             Properties.Settings.Default["mqttpassword"] = txtmqttpassword.Text;
@@ -154,7 +166,9 @@ namespace mqttclient
             Properties.Settings.Default["ScreenshotMqtt"] = chkScreenshotMqtt.Checked;
             Properties.Settings.Default["ScreenShotpath"] = txtScreenshotPath.Text;
             Properties.Settings.Default["MinimizeToTray"] = chkMinimizeToTray.Checked;
-            if (comboBox1.SelectedItem.ToString().Length> 5)
+
+
+            if (comboBox1.SelectedItem != null)
             {
                 Properties.Settings.Default["TTSSpeaker"] = comboBox1.SelectedItem.ToString();
             }
@@ -252,8 +266,6 @@ namespace mqttclient
         {
             try
             {
-
-
                 mqtttrigger newtrigger = new mqtttrigger();
                 newtrigger.name = txtSubTopic.Text;
                 newtrigger.cmdtext = txtCmd.Text;
@@ -262,13 +274,10 @@ namespace mqttclient
                 MqttTriggerList.Add(newtrigger);
                 SaveTriggerlist();
                 ClearNewTrigger();
-
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                MessageBox.Show("error" + ex.Message + " details: " + ex.InnerException);
             }
         }
         private void chkStartUp_CheckedChanged(object sender, EventArgs e)
@@ -341,11 +350,20 @@ namespace mqttclient
         }
         private void CmdSave_Click(object sender, EventArgs e)
         {
-            SaveTriggerlist();
-            savesettings();
-            //todo : make a cleaner restart
-            Application.Restart();
-            Environment.Exit(0);
+            try
+            {
+                SaveTriggerlist();
+                savesettings();
+                //todo : make a cleaner restart
+                Application.Restart();
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("error" + ex.Message + " details: " + ex.InnerException);
+                throw;
+            }
+
         }
         private void CmdTestSpeaker_Click(object sender, EventArgs e)
         {

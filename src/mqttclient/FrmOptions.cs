@@ -347,12 +347,11 @@ namespace mqttclient
             Application.Restart();
             Environment.Exit(0);
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void CmdTestSpeaker_Click(object sender, EventArgs e)
         {
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
             synthesizer.SelectVoice(comboBox1.SelectedItem.ToString());
             synthesizer.Speak("testing");
         }
-
     }
 }

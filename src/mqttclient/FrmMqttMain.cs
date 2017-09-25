@@ -127,12 +127,10 @@ namespace mqttclient
 
 
         }
-
         private void client_MqttConnectionClosed(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = "not connected";
         }
-
         private void LoadTriggerlist()
         {
             if (File.Exists(g_TriggerFile))

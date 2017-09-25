@@ -101,8 +101,19 @@ namespace mqttclient
             try
             {
                 g_mqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
+
                 client = new MqttClient(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), false, null, null, MqttSslProtocols.None, null);
-                byte code = client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+
+                if (Properties.Settings.Default["mqttusername"].ToString().Length>3)
+                {
+
+                    byte code = client.Connect(Guid.NewGuid().ToString());
+                }
+                else
+                {
+                    byte code = client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+                }
+
                 client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
                 client.ConnectionClosed += client_MqttConnectionClosed;
                 client.Subscribe(new string[] { g_mqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });

@@ -72,7 +72,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtmqtttopic = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtmqttpassword = new System.Windows.Forms.TextBox();
@@ -477,7 +476,6 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.txtmqtttopic);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.txtmqttpassword);
@@ -549,15 +547,6 @@
             this.label3.Size = new System.Drawing.Size(53, 13);
             this.label3.TabIndex = 21;
             this.label3.Text = "Password";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(187, 185);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 20);
-            this.button2.TabIndex = 22;
-            this.button2.Text = "Save";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -740,7 +729,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtmqtttopic;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtmqttpassword;

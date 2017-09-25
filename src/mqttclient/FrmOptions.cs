@@ -1,14 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-//using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-//using System.Drawing;
 using System.IO;
-//using System.Linq;
 using System.Speech.Synthesis;
-//using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mqttclient
@@ -23,7 +18,6 @@ namespace mqttclient
         {
 
             InitializeComponent();
-
             g_TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
             LoadSettings();
             if (txtmqtttopic.TextLength == 0)
@@ -38,7 +32,6 @@ namespace mqttclient
             LoadTriggerlist();
             dataGridView1.DataSource = MqttTriggerList;
             dataGridView1.Columns[0].Visible = false;
-            //backwards compatible
 
             if (txtmqtttopic.Text.Contains("#") == true)
             {
@@ -167,17 +160,6 @@ namespace mqttclient
             }
 
             Properties.Settings.Default.Save();
-
-        }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            SaveTriggerlist();
-            savesettings();
-
-
-            Application.Restart();
-            Environment.Exit(0);
-
 
         }
         private void AddRemovePrefinedItem(string name, Boolean Add)
@@ -361,9 +343,10 @@ namespace mqttclient
         {
             SaveTriggerlist();
             savesettings();
-            this.Close();
+            //todo : make a cleaner restart
+            Application.Restart();
+            Environment.Exit(0);
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
@@ -371,6 +354,5 @@ namespace mqttclient
             synthesizer.Speak("testing");
         }
 
-  
     }
 }

@@ -169,7 +169,6 @@ namespace mqttclient
             Properties.Settings.Default["ScreenshotMqtt"] = chkScreenshotMqtt.Checked;
             Properties.Settings.Default["ScreenShotpath"] = txtScreenshotPath.Text;
             Properties.Settings.Default["MinimizeToTray"] = chkMinimizeToTray.Checked;
-
             Properties.Settings.Default["MqttSlideshow"] = ChkSlideshow.Checked;
             Properties.Settings.Default["MqttSlideshowFolder"] = txtSlideshowFolder.Text;
 

@@ -92,6 +92,7 @@ namespace mqttclient
             mqttconnect();
             SetupTimer();
             LoadTriggerlist();
+            notifyIcon1.Visible = false;
             notifyIcon1.Text = NotifyIconText;
             notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
             notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);

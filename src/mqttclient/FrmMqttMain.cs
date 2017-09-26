@@ -630,6 +630,11 @@ namespace mqttclient
             this.Show();
             this.WindowState = FormWindowState.Normal;
         }
+
+        private void FrmMqttMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
 

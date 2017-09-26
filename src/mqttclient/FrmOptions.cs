@@ -151,6 +151,9 @@ namespace mqttclient
             }
 
             comboBox1.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
+            ChkSlideshow.Checked = Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString());
+            txtSlideshowFolder.Text = Properties.Settings.Default["MqttSlideshowFolder"].ToString();
+            chkStartUp.Checked = Convert.ToBoolean(Properties.Settings.Default["RunAtStart"]);
 
 
         }
@@ -166,6 +169,9 @@ namespace mqttclient
             Properties.Settings.Default["ScreenshotMqtt"] = chkScreenshotMqtt.Checked;
             Properties.Settings.Default["ScreenShotpath"] = txtScreenshotPath.Text;
             Properties.Settings.Default["MinimizeToTray"] = chkMinimizeToTray.Checked;
+
+            Properties.Settings.Default["MqttSlideshow"] = ChkSlideshow.Checked;
+            Properties.Settings.Default["MqttSlideshowFolder"] = txtSlideshowFolder.Text;
 
 
             if (comboBox1.SelectedItem != null)
@@ -280,8 +286,6 @@ namespace mqttclient
                 MessageBox.Show("error" + ex.Message + " details: " + ex.InnerException);
             }
         }
-     
-        
         private void chkScreenshotMqtt_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -370,9 +374,14 @@ namespace mqttclient
                 Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
                 if (chkStartUp.Checked)
+                {
                     rk.SetValue(appID, Application.ExecutablePath.ToString());
+                }
                 else
+                {
                     rk.DeleteValue(appID, false);
+                }
+                Properties.Settings.Default["RunAtStart"] = chkStartUp.Checked;
             }
         }
     }

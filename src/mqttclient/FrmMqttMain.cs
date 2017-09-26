@@ -434,8 +434,15 @@ namespace mqttclient
                 TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
 
                 //todo : make front
-                //MqttCameraSlide();
 
+
+                if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true){
+                    if (Properties.Settings.Default["MqttSlideshowFolder"].ToString().Length > 5)
+                    {
+                        string folder = @Properties.Settings.Default["MqttSlideshowFolder"].ToString();
+                        MqttCameraSlide(folder);
+                    }
+                }
 
                 if (Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString()) == true)
                 {
@@ -450,10 +457,6 @@ namespace mqttclient
                 {
                     publishDiskStatus();
                 }
-
-
-
-                // }
             }
             catch (Exception)
             {
@@ -531,11 +534,10 @@ namespace mqttclient
 
 
         }
-        private void MqttCameraSlide()
+        private void MqttCameraSlide(string Folder)
         {
-
             var rand = new Random();
-            var files = Directory.GetFiles(@"C:\temp\images", "*.jpg");
+            var files = Directory.GetFiles(@Folder , "*.jpg");
             string topic = "slideshow";
             client.Publish(SetSubTopic(topic), File.ReadAllBytes(files[rand.Next(files.Length)]));
         }

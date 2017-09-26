@@ -190,5 +190,41 @@ namespace mqttclient.Properties {
                 this["TTSSpeaker"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MqttSlideshow {
+            get {
+                return ((bool)(this["MqttSlideshow"]));
+            }
+            set {
+                this["MqttSlideshow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MqttSlideshowFolder {
+            get {
+                return ((string)(this["MqttSlideshowFolder"]));
+            }
+            set {
+                this["MqttSlideshowFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RunAtStart {
+            get {
+                return ((bool)(this["RunAtStart"]));
+            }
+            set {
+                this["RunAtStart"] = value;
+            }
+        }
     }
 }

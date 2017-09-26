@@ -84,9 +84,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.CmdTestSpeaker = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.txtSlideshowFolder = new System.Windows.Forms.TextBox();
-            this.ChkSlideshow = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.ChkSlideshow = new System.Windows.Forms.CheckBox();
+            this.txtSlideshowFolder = new System.Windows.Forms.TextBox();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -139,6 +139,7 @@
             this.chkStartUp.TabIndex = 39;
             this.chkStartUp.Text = "Run at start";
             this.chkStartUp.UseVisualStyleBackColor = true;
+            this.chkStartUp.CheckedChanged += new System.EventHandler(this.chkStartUp_CheckedChanged);
             // 
             // groupBox5
             // 
@@ -662,12 +663,14 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Slideshow";
             // 
-            // txtSlideshowFolder
+            // label12
             // 
-            this.txtSlideshowFolder.Location = new System.Drawing.Point(72, 48);
-            this.txtSlideshowFolder.Name = "txtSlideshowFolder";
-            this.txtSlideshowFolder.Size = new System.Drawing.Size(219, 20);
-            this.txtSlideshowFolder.TabIndex = 49;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 51);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(44, 13);
+            this.label12.TabIndex = 51;
+            this.label12.Text = "Filepath";
             // 
             // ChkSlideshow
             // 
@@ -679,20 +682,18 @@
             this.ChkSlideshow.Text = "Slideshow";
             this.ChkSlideshow.UseVisualStyleBackColor = true;
             // 
-            // label12
+            // txtSlideshowFolder
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 51);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(44, 13);
-            this.label12.TabIndex = 51;
-            this.label12.Text = "Filepath";
+            this.txtSlideshowFolder.Location = new System.Drawing.Point(72, 48);
+            this.txtSlideshowFolder.Name = "txtSlideshowFolder";
+            this.txtSlideshowFolder.Size = new System.Drawing.Size(219, 20);
+            this.txtSlideshowFolder.TabIndex = 49;
             // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(876, 734);
+            this.ClientSize = new System.Drawing.Size(876, 733);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.CmdTestSpeaker);
             this.Controls.Add(this.label11);

@@ -531,8 +531,6 @@ namespace mqttclient
 
 
         }
-
-
         private void MqttCameraSlide()
         {
 
@@ -541,8 +539,6 @@ namespace mqttclient
             string topic = "slideshow";
             client.Publish(SetSubTopic(topic), File.ReadAllBytes(files[rand.Next(files.Length)]));
         }
-
-
         public void HandleUnhandledException(Exception e)
         {
             if (MessageBox.Show("An unexpected error has occurred. details:" + e.Message  + "innerException:" +  e.InnerException +  "Continue?",

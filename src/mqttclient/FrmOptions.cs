@@ -280,15 +280,8 @@ namespace mqttclient
                 MessageBox.Show("error" + ex.Message + " details: " + ex.InnerException);
             }
         }
-        private void chkStartUp_CheckedChanged(object sender, EventArgs e)
-        {
-            Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
-            if (chkStartUp.Checked)
-                rk.SetValue(appID, Application.ExecutablePath.ToString());
-            else
-                rk.DeleteValue(appID, false);
-        }
+     
+        
         private void chkScreenshotMqtt_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -370,6 +363,17 @@ namespace mqttclient
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
             synthesizer.SelectVoice(comboBox1.SelectedItem.ToString());
             synthesizer.Speak("testing");
+        }
+        private void chkStartUp_CheckedChanged(object sender, EventArgs e)
+        {
+            {
+                Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                if (chkStartUp.Checked)
+                    rk.SetValue(appID, Application.ExecutablePath.ToString());
+                else
+                    rk.DeleteValue(appID, false);
+            }
         }
     }
 }

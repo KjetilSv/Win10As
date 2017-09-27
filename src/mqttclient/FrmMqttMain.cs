@@ -633,7 +633,7 @@ namespace mqttclient
 
         private void FrmMqttMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            System.Environment.Exit(1);
         }
     }
 }

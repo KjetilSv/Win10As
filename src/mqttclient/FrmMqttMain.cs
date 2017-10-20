@@ -96,6 +96,7 @@ namespace mqttclient
             notifyIcon1.Text = NotifyIconText;
             notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
             notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);
+            timer1_Tick(null,null);
         }
         void mqttconnect()
         {

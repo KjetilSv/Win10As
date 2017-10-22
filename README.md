@@ -72,3 +72,5 @@ if spotify is running kjetilsv/app/running/Spotify return message = 1
 #### Custom commands
 [maintopic]/[customcommandname]
 Message is currently not used, will be impemented in later versions.
+One example of a custom command is lockcomputer. 
+Thanks to @FatBasta it's no added in the hass-example file.

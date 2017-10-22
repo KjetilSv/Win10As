@@ -27,6 +27,17 @@ switch:
     command_topic: "kjetilsv/shutdown"
     payload_on: "1"
     optimistic: false
+#Lock computer
+#add custom command
+#topic: "lockcomputer"
+#cmdtxt: "rundll32.exe"
+#cmdparameters: "user32.dll, LockWorkStation"
+#thanks to https://github.com/FatBasta
+  - platform: mqtt
+    name: "Kjetilsvlockcomputer"
+    command_topic: "kjetilsv/lockcomputer"
+    payload_on: "1"
+
 #Instead of slider/input box i just made three presets low,normal og full(90%) 
   - platform: mqtt
     name: "KjetilsvVolume20"

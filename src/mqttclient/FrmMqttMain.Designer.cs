@@ -109,7 +109,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmMqttMain";
             this.Text = "Mqtt Client";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMqttMain_FormClosed);
+          // this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMqttMain_FormClosed);
             this.Resize += new System.EventHandler(this.FrmMqttMain_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

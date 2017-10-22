@@ -96,7 +96,6 @@ namespace mqttclient
             notifyIcon1.Text = NotifyIconText;
             notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
             notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);
-            timer1_Tick(null,null);
         }
         void mqttconnect()
         {
@@ -607,8 +606,29 @@ namespace mqttclient
         }
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frmSettingsFrom = new FrmOptions();
+            var frmSettingsFrom = new FrmOptions(this);
             frmSettingsFrom.Show();
+        }
+        public string FrmOptionExitVal { get; set; }
+        //public static ResultFromFrmMain Execute()
+        //{
+        //    using (var f = new frmMain())
+        //    {
+        //        var result = new ResultFromFrmMain();
+        //        result.Result = f.ShowDialog();
+        //        if (result.Result == DialogResult.OK)
+        //        {
+        //            // fill other values
+        //        }
+        //        return result;
+        //    }
+        //}
+        public void ReloadApp() {
+
+            client.Disconnect();
+            mqttconnect();
+            SetupTimer();
+            LoadTriggerlist();
         }
         private void FrmMqttMain_Resize(object sender, EventArgs e)
         {
@@ -632,10 +652,7 @@ namespace mqttclient
             this.WindowState = FormWindowState.Normal;
         }
 
-        private void FrmMqttMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            System.Environment.Exit(1);
-        }
+
     }
 }
 

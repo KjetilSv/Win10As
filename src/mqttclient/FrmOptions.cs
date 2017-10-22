@@ -14,10 +14,13 @@ namespace mqttclient
         string appID = "win iot";
         public string g_TriggerFile { get; set; }
         public string g_LocalScreetshotFile { get; set; }
-        public FrmOptions()
+        public FrmMqttMain parentform;
+
+        public FrmOptions(FrmMqttMain Mainform)
         {
 
             InitializeComponent();
+            parentform = Mainform;
             g_TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
             LoadSettings();
             if (txtmqtttopic.TextLength == 0)
@@ -42,6 +45,7 @@ namespace mqttclient
             }
 
         }
+        
         private void SaveTriggerlist()
 
         {
@@ -342,7 +346,7 @@ namespace mqttclient
         }
         private void CmdClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
         private void CmdSave_Click(object sender, EventArgs e)
         {
@@ -350,9 +354,8 @@ namespace mqttclient
             {
                 SaveTriggerlist();
                 savesettings();
-                //todo : make a cleaner restart
-                Application.Restart();
-                Environment.Exit(0);
+                parentform.ReloadApp();
+                Close();
             }
             catch (Exception ex)
             {
@@ -383,5 +386,6 @@ namespace mqttclient
                 Properties.Settings.Default["RunAtStart"] = chkStartUp.Checked;
             }
         }
+        
     }
 }

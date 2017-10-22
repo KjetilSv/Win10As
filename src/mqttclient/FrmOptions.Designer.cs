@@ -133,7 +133,7 @@
             // chkStartUp
             // 
             this.chkStartUp.AutoSize = true;
-            this.chkStartUp.Location = new System.Drawing.Point(12, 634);
+            this.chkStartUp.Location = new System.Drawing.Point(322, 480);
             this.chkStartUp.Name = "chkStartUp";
             this.chkStartUp.Size = new System.Drawing.Size(81, 17);
             this.chkStartUp.TabIndex = 39;
@@ -597,7 +597,7 @@
             // chkMinimizeToTray
             // 
             this.chkMinimizeToTray.AutoSize = true;
-            this.chkMinimizeToTray.Location = new System.Drawing.Point(12, 657);
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(322, 519);
             this.chkMinimizeToTray.Name = "chkMinimizeToTray";
             this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);
             this.chkMinimizeToTray.TabIndex = 41;
@@ -606,7 +606,7 @@
             // 
             // CmdSave
             // 
-            this.CmdSave.Location = new System.Drawing.Point(769, 699);
+            this.CmdSave.Location = new System.Drawing.Point(619, 600);
             this.CmdSave.Name = "CmdSave";
             this.CmdSave.Size = new System.Drawing.Size(95, 23);
             this.CmdSave.TabIndex = 42;
@@ -616,7 +616,7 @@
             // 
             // CmdClose
             // 
-            this.CmdClose.Location = new System.Drawing.Point(668, 699);
+            this.CmdClose.Location = new System.Drawing.Point(518, 600);
             this.CmdClose.Name = "CmdClose";
             this.CmdClose.Size = new System.Drawing.Size(95, 23);
             this.CmdClose.TabIndex = 43;
@@ -693,7 +693,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(876, 733);
+            this.ClientSize = new System.Drawing.Size(716, 634);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.CmdTestSpeaker);
             this.Controls.Add(this.label11);

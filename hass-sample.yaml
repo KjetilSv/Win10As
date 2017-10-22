@@ -102,4 +102,15 @@ sensor:
     state_topic: "kjetilsv/drive/F/percentfree"
     name: 'Kjetilsv F:\ precent free space'
     unit_of_measurement: "%"
-
+#usage of the mqtt notification to tts
+automation:
+- alias: Muted
+  trigger:
+    platform: state
+    entity_id: switch.Kjetilsvmute
+    to: 'on'
+  action:
+    service: mqtt.publish
+    data_template:
+      payload: "your audio is muted, so you can hear this"
+      topic: "kjetilsv/tts"

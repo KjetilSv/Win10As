@@ -89,6 +89,7 @@ namespace mqttclient
             g_LocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
 
             InitializeComponent();
+            Properties.Settings.Default.Upgrade();
             mqttconnect();
             SetupTimer();
             LoadTriggerlist();
@@ -101,24 +102,32 @@ namespace mqttclient
         {
             try
             {
-                g_mqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
-
-                client = new MqttClient(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), false, null, null, MqttSslProtocols.None, null);
-
-                if (Properties.Settings.Default["mqttusername"].ToString().Length>3)
+                if (Properties.Settings.Default["mqttserver"].ToString().Length > 3)
                 {
 
-                    byte code = client.Connect(Guid.NewGuid().ToString());
+                    g_mqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
+
+                    client = new MqttClient(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), false, null, null, MqttSslProtocols.None, null);
+
+                    if (Properties.Settings.Default["mqttusername"].ToString().Length > 3)
+                    {
+
+                        byte code = client.Connect(Guid.NewGuid().ToString());
+                    }
+                    else
+                    {
+                        byte code = client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+                    }
+
+                    client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+                    client.ConnectionClosed += client_MqttConnectionClosed;
+                    client.Subscribe(new string[] { g_mqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                    toolStripStatusLabel1.Text = "connected";
                 }
                 else
                 {
-                    byte code = client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+                    toolStripStatusLabel1.Text = "not connected,check settings";
                 }
-
-                client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                client.ConnectionClosed += client_MqttConnectionClosed;
-                client.Subscribe(new string[] { g_mqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-                toolStripStatusLabel1.Text = "connected";
             }
 
             catch (Exception)
@@ -139,7 +148,7 @@ namespace mqttclient
 
                 throw;
             }
-            
+
         }
         private void LoadTriggerlist()
         {
@@ -148,7 +157,7 @@ namespace mqttclient
                 string s = File.ReadAllText(g_TriggerFile);
                 BindingList<mqtttrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<mqtttrigger>>(s);
                 MqttTriggerList = deserializedProduct;
-                
+
             }
 
         }
@@ -262,7 +271,7 @@ namespace mqttclient
                             break;
                         case "tts":
                             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-                           // synthesizer.GetInstalledVoices
+                            // synthesizer.GetInstalledVoices
 
                             synthesizer.Volume = 100;  // 0...100
                             synthesizer.SpeakAsync(message);
@@ -420,7 +429,7 @@ namespace mqttclient
                     //we ignore 
                     //throw;
                 }
-                
+
                 MqttPublish(SetSubTopic("freememory"), HardwareSensors.GetFreeMemory());
                 MqttPublish(SetSubTopic("volume"), audioobj.GetVolume());
 
@@ -446,7 +455,8 @@ namespace mqttclient
                 //todo : make front
 
 
-                if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true){
+                if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true)
+                {
                     if (Properties.Settings.Default["MqttSlideshowFolder"].ToString().Length > 5)
                     {
                         string folder = @Properties.Settings.Default["MqttSlideshowFolder"].ToString();
@@ -547,14 +557,14 @@ namespace mqttclient
         private void MqttCameraSlide(string Folder)
         {
             var rand = new Random();
-            var files = Directory.GetFiles(@Folder , "*.jpg");
+            var files = Directory.GetFiles(@Folder, "*.jpg");
             string topic = "slideshow";
             client.Publish(SetSubTopic(topic), File.ReadAllBytes(files[rand.Next(files.Length)]));
         }
         public void HandleUnhandledException(Exception e)
         {
-            if (MessageBox.Show("An unexpected error has occurred. details:" + e.Message  + "innerException:" +  e.InnerException +  "Continue?",
-                "MqttClient" + e.Message + " inner:" +  e.InnerException , MessageBoxButtons.YesNo, MessageBoxIcon.Stop,
+            if (MessageBox.Show("An unexpected error has occurred. details:" + e.Message + "innerException:" + e.InnerException + "Continue?",
+                "MqttClient" + e.Message + " inner:" + e.InnerException, MessageBoxButtons.YesNo, MessageBoxIcon.Stop,
                 MessageBoxDefaultButton.Button2) == DialogResult.No)
             {
                 Application.Exit();
@@ -632,9 +642,19 @@ namespace mqttclient
         //        return result;
         //    }
         //}
-        public void ReloadApp() {
+        public void ReloadApp()
+        {
 
-            client.Disconnect();
+            if (client != null)
+            {
+                if (client.IsConnected == true)
+                {
+                    client.Disconnect();
+                }
+
+               
+            }
+
             mqttconnect();
             SetupTimer();
             LoadTriggerlist();
@@ -660,7 +680,6 @@ namespace mqttclient
             this.Show();
             this.WindowState = FormWindowState.Normal;
         }
-
         private void FrmMqttMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             //hard exit

@@ -130,7 +130,16 @@ namespace mqttclient
         }
         private void client_MqttConnectionClosed(object sender, EventArgs e)
         {
-            toolStripStatusLabel1.Text = "not connected";
+            try
+            {
+                toolStripStatusLabel1.Text = "not connected";
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
         private void LoadTriggerlist()
         {
@@ -652,7 +661,11 @@ namespace mqttclient
             this.WindowState = FormWindowState.Normal;
         }
 
-
+        private void FrmMqttMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //hard exit
+            Environment.Exit(0);
+        }
     }
 }
 

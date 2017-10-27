@@ -16,6 +16,7 @@ using System.Speech.Synthesis;
 using System.Runtime.InteropServices;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace mqttclient
 {
@@ -85,18 +86,35 @@ namespace mqttclient
         }
         public FrmMqttMain()
         {
-            g_TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
-            g_LocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
+            try
+            {
+                InitializeComponent();
+              //  toolStripStatusLabel2.Text = Application.ProductVersion;
+                Version version = Assembly.GetExecutingAssembly().GetName().Version;
+                toolStripStatusLabel2.Text = "";
 
-            InitializeComponent();
-            Properties.Settings.Default.Upgrade();
-            mqttconnect();
-            SetupTimer();
-            LoadTriggerlist();
-            notifyIcon1.Visible = false;
-            notifyIcon1.Text = NotifyIconText;
-            notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
-            notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);
+
+                g_TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
+                g_LocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
+
+               
+                Properties.Settings.Default.Upgrade();
+                mqttconnect();
+                SetupTimer();
+                LoadTriggerlist();
+                notifyIcon1.Visible = false;
+                notifyIcon1.Text = NotifyIconText;
+                notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
+                notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);
+
+               
+            }
+            catch (Exception ex)
+            {
+                toolStripStatusLabel1.Text = "Error message:" + ex.Message + " details" + ex.InnerException;
+                //throw;
+            }
+
         }
         void mqttconnect()
         {
@@ -130,11 +148,10 @@ namespace mqttclient
                 }
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
-                //todo: add handlers
+                toolStripStatusLabel1.Text = "not connected,check settings. Error:" + ex.InnerException.ToString();
             }
-
 
         }
         private void client_MqttConnectionClosed(object sender, EventArgs e)
@@ -652,7 +669,7 @@ namespace mqttclient
                     client.Disconnect();
                 }
 
-               
+
             }
 
             mqttconnect();
@@ -684,6 +701,11 @@ namespace mqttclient
         {
             //hard exit
             Environment.Exit(0);
+        }
+
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

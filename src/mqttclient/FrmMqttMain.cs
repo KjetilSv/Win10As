@@ -56,11 +56,19 @@ namespace mqttclient
                 client.Publish(SetSubTopic(topic), File.ReadAllBytes(file));
             }
         }
-        private void MqttPublish(string topic, string message)
+        private void MqttPublish(string topic, string message, Boolean Retain = false)
         {
             if (client.IsConnected == true)
             {
-                client.Publish(topic, Encoding.UTF8.GetBytes(message));
+                if (Retain == true)
+                {
+
+                    client.Publish(topic, Encoding.UTF8.GetBytes(message), 0, Retain);
+                }
+                else
+                {
+                    client.Publish(topic, Encoding.UTF8.GetBytes(message));
+                }
             }
         }
         private void SetupTimer()
@@ -89,7 +97,7 @@ namespace mqttclient
             try
             {
                 InitializeComponent();
-              //  toolStripStatusLabel2.Text = Application.ProductVersion;
+                //  toolStripStatusLabel2.Text = Application.ProductVersion;
                 Version version = Assembly.GetExecutingAssembly().GetName().Version;
                 toolStripStatusLabel2.Text = "";
 
@@ -97,7 +105,7 @@ namespace mqttclient
                 g_TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
                 g_LocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
 
-               
+
                 Properties.Settings.Default.Upgrade();
                 mqttconnect();
                 SetupTimer();
@@ -107,7 +115,7 @@ namespace mqttclient
                 notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
                 notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);
 
-               
+
             }
             catch (Exception ex)
             {
@@ -123,28 +131,49 @@ namespace mqttclient
                 if (Properties.Settings.Default["mqttserver"].ToString().Length > 3)
                 {
 
-                    g_mqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
+                    try
+                    {
+                        client = new MqttClient(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), false, null, null, MqttSslProtocols.None, null);
 
-                    client = new MqttClient(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), false, null, null, MqttSslProtocols.None, null);
-
-                    if (Properties.Settings.Default["mqttusername"].ToString().Length > 3)
+                        if (Properties.Settings.Default["mqttusername"].ToString().Length > 3)
+                        {
+                            byte code = client.Connect(Guid.NewGuid().ToString());
+                        }
+                        else
+                        {
+                            byte code = client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+                        }
+                    }
+                    catch (Exception ex)
                     {
 
-                        byte code = client.Connect(Guid.NewGuid().ToString());
-                    }
-                    else
-                    {
-                        byte code = client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+                        toolStripStatusLabel1.Text = "not connected,check connection settings error:" + ex.Message;
                     }
 
-                    client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                    client.ConnectionClosed += client_MqttConnectionClosed;
-                    client.Subscribe(new string[] { g_mqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-                    toolStripStatusLabel1.Text = "connected";
+                    try
+                    {
+                        if (client.IsConnected == true)
+                        {
+                            g_mqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
+                            client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+                            client.ConnectionClosed += client_MqttConnectionClosed;
+                            client.Subscribe(new string[] { g_mqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            toolStripStatusLabel1.Text = "connected";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        toolStripStatusLabel1.Text = "not connected,check mqtt setup error:" + ex.Message ;
+                    }
+
+
+
+
                 }
                 else
                 {
-                    toolStripStatusLabel1.Text = "not connected,check settings";
+                    toolStripStatusLabel1.Text = "not connected,check settings mqttservername not entered";
                 }
             }
 
@@ -431,68 +460,72 @@ namespace mqttclient
             try
             {
 
-                //if (isLoading == false)
-                //{
                 if (client.IsConnected == false)
                 {
                     mqttconnect();
                 }
-                try
-                {
-                    MqttPublish(SetSubTopic("cpuprosessortime"), HardwareSensors.GetCpuProsessorTime());
-                }
-                catch (Exception)
-                {
-                    //we ignore 
-                    //throw;
-                }
 
-                MqttPublish(SetSubTopic("freememory"), HardwareSensors.GetFreeMemory());
-                MqttPublish(SetSubTopic("volume"), audioobj.GetVolume());
-
-                try
+                if (client.IsConnected == true)
                 {
-                    if (audioobj.isMuted() == true)
+
+                    try
                     {
-                        MqttPublish(SetSubTopic("mute"), "1");
+                        MqttPublish(SetSubTopic("cpuprosessortime"), HardwareSensors.GetCpuProsessorTime());
                     }
-                    else
+                    catch (Exception)
                     {
-                        MqttPublish(SetSubTopic("mute"), "0");
+                        //we ignore 
+                        //throw;
                     }
-                }
-                catch (Exception)
-                {
 
-                    //throw;
-                }
+                    MqttPublish(SetSubTopic("freememory"), HardwareSensors.GetFreeMemory());
+                    //use retain for input box
+                    MqttPublish(SetSubTopic("volume"), audioobj.GetVolume(), true);
 
-                TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
-
-                //todo : make front
-
-
-                if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true)
-                {
-                    if (Properties.Settings.Default["MqttSlideshowFolder"].ToString().Length > 5)
+                    try
                     {
-                        string folder = @Properties.Settings.Default["MqttSlideshowFolder"].ToString();
-                        MqttCameraSlide(folder);
+                        if (audioobj.isMuted() == true)
+                        {
+                            MqttPublish(SetSubTopic("mute"), "1");
+                        }
+                        else
+                        {
+                            MqttPublish(SetSubTopic("mute"), "0");
+                        }
                     }
-                }
+                    catch (Exception ex)
+                    {
 
-                if (Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString()) == true)
-                {
-                    MqttPublish(SetSubTopic("/Power/BatteryChargeStatus"), power.BatteryChargeStatus());
-                    MqttPublish(SetSubTopic("/Power/BatteryFullLifetime"), power.BatteryFullLifetime());
-                    MqttPublish(SetSubTopic("/Power/BatteryLifePercent"), power.BatteryLifePercent());
-                    MqttPublish(SetSubTopic("/Power/BatteryLifeRemaining"), power.BatteryLifeRemaining());
-                    MqttPublish(SetSubTopic("/Power/PowerLineStatus"), power.PowerLineStatus());
-                }
+                        //throw;
+                    }
 
-                if (Convert.ToBoolean(Properties.Settings.Default["DiskSensor"].ToString()) == true)
-                {
-                    publishDiskStatus();
+                    TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
+
+                    //todo : make front
+
+
+                    if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true)
+                    {
+                        if (Properties.Settings.Default["MqttSlideshowFolder"].ToString().Length > 5)
+                        {
+                            string folder = @Properties.Settings.Default["MqttSlideshowFolder"].ToString();
+                            MqttCameraSlide(folder);
+                        }
+                    }
+
+                    if (Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString()) == true)
+                    {
+                        MqttPublish(SetSubTopic("/Power/BatteryChargeStatus"), power.BatteryChargeStatus());
+                        MqttPublish(SetSubTopic("/Power/BatteryFullLifetime"), power.BatteryFullLifetime());
+                        MqttPublish(SetSubTopic("/Power/BatteryLifePercent"), power.BatteryLifePercent());
+                        MqttPublish(SetSubTopic("/Power/BatteryLifeRemaining"), power.BatteryLifeRemaining());
+                        MqttPublish(SetSubTopic("/Power/PowerLineStatus"), power.PowerLineStatus());
+                    }
+
+                    if (Convert.ToBoolean(Properties.Settings.Default["DiskSensor"].ToString()) == true)
+                    {
+                        publishDiskStatus();
+                    }
                 }
             }
             catch (Exception)
@@ -661,20 +694,27 @@ namespace mqttclient
         //}
         public void ReloadApp()
         {
-
-            if (client != null)
+            try
             {
-                if (client.IsConnected == true)
+                if (client != null)
                 {
-                    client.Disconnect();
+                    if (client.IsConnected == true)
+                    {
+                        client.Disconnect();
+                    }
                 }
 
+                mqttconnect();
+                SetupTimer();
+                LoadTriggerlist();
+            }
+            catch (Exception)
+            {
 
+                throw;
             }
 
-            mqttconnect();
-            SetupTimer();
-            LoadTriggerlist();
+            
         }
         private void FrmMqttMain_Resize(object sender, EventArgs e)
         {

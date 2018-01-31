@@ -132,6 +132,10 @@ namespace mqttclient
             ChkBatterySensor.Checked = Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString());
             ChkDiskSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["DiskSensor"].ToString());
 
+            chkCpuSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Cpusensor"].ToString());
+            chkMemorySensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Freememorysensor"].ToString());
+            chkVolumeSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Volumesensor"].ToString());
+
             chkMinimizeToTray.Checked = Convert.ToBoolean(Properties.Settings.Default["MinimizeToTray"].ToString());
 
             if (Convert.ToBoolean(Properties.Settings.Default["ScreenShotEnable"]) == true)
@@ -177,7 +181,9 @@ namespace mqttclient
             Properties.Settings.Default["MinimizeToTray"] = chkMinimizeToTray.Checked;
             Properties.Settings.Default["MqttSlideshow"] = ChkSlideshow.Checked;
             Properties.Settings.Default["MqttSlideshowFolder"] = txtSlideshowFolder.Text;
-
+            Properties.Settings.Default["Cpusensor"] = chkCpuSensor.Checked;
+            Properties.Settings.Default["Freememorysensor"] = chkMemorySensor.Checked;
+            Properties.Settings.Default["Volumesensor"] = chkVolumeSensor.Checked;
 
             if (comboBox1.SelectedItem != null)
             {
@@ -450,6 +456,11 @@ namespace mqttclient
 
 
 
+
+        }
+
+        private void chkScreenshot_CheckedChanged(object sender, EventArgs e)
+        {
 
         }
     }

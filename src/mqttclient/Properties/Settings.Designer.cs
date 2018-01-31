@@ -226,5 +226,41 @@ namespace mqttclient.Properties {
                 this["RunAtStart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Cpusensor {
+            get {
+                return ((bool)(this["Cpusensor"]));
+            }
+            set {
+                this["Cpusensor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Freememorysensor {
+            get {
+                return ((bool)(this["Freememorysensor"]));
+            }
+            set {
+                this["Freememorysensor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Volumesensor {
+            get {
+                return ((bool)(this["Volumesensor"]));
+            }
+            set {
+                this["Volumesensor"] = value;
+            }
+        }
     }
 }

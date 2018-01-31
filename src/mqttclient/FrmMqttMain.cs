@@ -106,10 +106,21 @@ namespace mqttclient
                 g_LocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
 
 
-                Properties.Settings.Default.Upgrade();
+                 Properties.Settings.Default.Upgrade();
+
+                //if (Properties.Settings.Default.UpgradeRequired)
+                //{
+                   
+                //    Properties.Settings.Default.UpgradeRequired = false;
+                //    Properties.Settings.Default.Save();
+                //}
+
+
                 mqttconnect();
                 SetupTimer();
+
                 LoadTriggerlist();
+
                 notifyIcon1.Visible = false;
                 notifyIcon1.Text = NotifyIconText;
                 notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
@@ -119,7 +130,8 @@ namespace mqttclient
             }
             catch (Exception ex)
             {
-                toolStripStatusLabel1.Text = "Error message:" + ex.Message + " details" + ex.InnerException;
+                MessageBox.Show(ex.Message);
+                // toolStripStatusLabel1.Text = "Error message:" + ex.Message + " details" + ex.InnerException;
                 //throw;
             }
 
@@ -164,7 +176,7 @@ namespace mqttclient
                     catch (Exception ex)
                     {
 
-                        toolStripStatusLabel1.Text = "not connected,check mqtt setup error:" + ex.Message ;
+                        toolStripStatusLabel1.Text = "not connected,check mqtt setup error:" + ex.Message;
                     }
 
 
@@ -198,13 +210,22 @@ namespace mqttclient
         }
         private void LoadTriggerlist()
         {
-            if (File.Exists(g_TriggerFile))
+            try
             {
-                string s = File.ReadAllText(g_TriggerFile);
-                BindingList<mqtttrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<mqtttrigger>>(s);
-                MqttTriggerList = deserializedProduct;
+                if (File.Exists(g_TriggerFile))
+                {
+                    string s = File.ReadAllText(g_TriggerFile);
+                    BindingList<mqtttrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<mqtttrigger>>(s);
+                    MqttTriggerList = deserializedProduct;
 
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
 
         }
         void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
@@ -444,11 +465,20 @@ namespace mqttclient
         }
         private void WriteToLog(string logtext)
         {
-            this.Invoke((MethodInvoker)(() => listBox1.Items.Insert(0, logtext)));
-            if (listBox1.Items.Count > 20)
+            try
             {
-                this.Invoke((MethodInvoker)(() => listBox1.Items.RemoveAt(20)));
+                this.Invoke((MethodInvoker)(() => listBox1.Items.Insert(0, logtext)));
+                if (listBox1.Items.Count > 20)
+                {
+                    this.Invoke((MethodInvoker)(() => listBox1.Items.RemoveAt(20)));
+                }
             }
+            catch (Exception)
+            {
+
+               // throw;
+            }
+
         }
         delegate void SetTextCallback(string text);
         private string SetSubTopic(string Topic)
@@ -468,19 +498,32 @@ namespace mqttclient
                 if (client.IsConnected == true)
                 {
 
-                    try
+
+
+                    if (Convert.ToBoolean(Properties.Settings.Default["Cpusensor"].ToString()) == true)
                     {
-                        MqttPublish(SetSubTopic("cpuprosessortime"), HardwareSensors.GetCpuProsessorTime());
-                    }
-                    catch (Exception)
-                    {
-                        //we ignore 
-                        //throw;
+                        try
+                        {
+                            MqttPublish(SetSubTopic("cpuprosessortime"), HardwareSensors.GetCpuProsessorTime());
+                        }
+                        catch (Exception)
+                        {
+                            //we ignore 
+                            //throw;
+                        }
                     }
 
-                    MqttPublish(SetSubTopic("freememory"), HardwareSensors.GetFreeMemory());
-                    //use retain for input box
-                    MqttPublish(SetSubTopic("volume"), audioobj.GetVolume(), true);
+                    if (Convert.ToBoolean(Properties.Settings.Default["Freememorysensor"].ToString()) == true)
+                    {
+                        MqttPublish(SetSubTopic("freememory"), HardwareSensors.GetFreeMemory());
+
+                    }
+
+                    if (Convert.ToBoolean(Properties.Settings.Default["Volumesensor"].ToString()) == true)
+                    {
+
+                        MqttPublish(SetSubTopic("volume"), audioobj.GetVolume(), true);
+                    }
 
                     try
                     {
@@ -499,10 +542,10 @@ namespace mqttclient
                         //throw;
                     }
 
-                    TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
-
-                    //todo : make front
-
+                    if (Convert.ToBoolean(Properties.Settings.Default["screenshotenable"]) == true)
+                    {
+                        TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
+                    }
 
                     if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true)
                     {
@@ -714,7 +757,7 @@ namespace mqttclient
                 throw;
             }
 
-            
+
         }
         private void FrmMqttMain_Resize(object sender, EventArgs e)
         {

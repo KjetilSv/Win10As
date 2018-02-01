@@ -84,6 +84,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.AutoSize = false;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2});
@@ -117,6 +118,8 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FrmMqttMain";
             this.Text = "Mqtt Client";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMqttMain_FormClosing);

@@ -1,5 +1,4 @@
 ﻿using System;
-//using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Text;
@@ -97,25 +96,13 @@ namespace mqttclient
             try
             {
                 InitializeComponent();
-                //  toolStripStatusLabel2.Text = Application.ProductVersion;
                 Version version = Assembly.GetExecutingAssembly().GetName().Version;
                 toolStripStatusLabel2.Text = "";
-
 
                 g_TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
                 g_LocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
 
-
-                 Properties.Settings.Default.Upgrade();
-
-                //if (Properties.Settings.Default.UpgradeRequired)
-                //{
-                   
-                //    Properties.Settings.Default.UpgradeRequired = false;
-                //    Properties.Settings.Default.Save();
-                //}
-
-
+                Properties.Settings.Default.Upgrade();
                 mqttconnect();
                 SetupTimer();
 
@@ -126,13 +113,10 @@ namespace mqttclient
                 notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
                 notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);
 
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                // toolStripStatusLabel1.Text = "Error message:" + ex.Message + " details" + ex.InnerException;
-                //throw;
             }
 
         }
@@ -476,7 +460,7 @@ namespace mqttclient
             catch (Exception)
             {
 
-               // throw;
+                // throw;
             }
 
         }
@@ -509,7 +493,6 @@ namespace mqttclient
                         catch (Exception)
                         {
                             //we ignore 
-                            //throw;
                         }
                     }
 
@@ -536,10 +519,9 @@ namespace mqttclient
                             MqttPublish(SetSubTopic("mute"), "0");
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
 
-                        //throw;
                     }
 
                     if (Convert.ToBoolean(Properties.Settings.Default["screenshotenable"]) == true)
@@ -722,19 +704,6 @@ namespace mqttclient
             frmSettingsFrom.Show();
         }
         public string FrmOptionExitVal { get; set; }
-        //public static ResultFromFrmMain Execute()
-        //{
-        //    using (var f = new frmMain())
-        //    {
-        //        var result = new ResultFromFrmMain();
-        //        result.Result = f.ShowDialog();
-        //        if (result.Result == DialogResult.OK)
-        //        {
-        //            // fill other values
-        //        }
-        //        return result;
-        //    }
-        //}
         public void ReloadApp()
         {
             try
@@ -785,7 +754,6 @@ namespace mqttclient
             //hard exit
             Environment.Exit(0);
         }
-
         private void toolStripStatusLabel2_Click(object sender, EventArgs e)
         {
 

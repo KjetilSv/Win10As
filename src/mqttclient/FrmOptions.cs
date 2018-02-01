@@ -6,7 +6,7 @@ using System.IO;
 using System.Speech.Synthesis;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
+//using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace mqttclient
 {
@@ -47,7 +47,6 @@ namespace mqttclient
             }
 
         }
-
         private void SaveTriggerlist()
 
         {
@@ -428,7 +427,6 @@ namespace mqttclient
                 Properties.Settings.Default["RunAtStart"] = chkStartUp.Checked;
             }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -458,7 +456,6 @@ namespace mqttclient
 
 
         }
-
         private void chkScreenshot_CheckedChanged(object sender, EventArgs e)
         {
 

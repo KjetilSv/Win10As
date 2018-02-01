@@ -118,7 +118,7 @@
             // ChkDiskSensor
             // 
             this.ChkDiskSensor.AutoSize = true;
-            this.ChkDiskSensor.Location = new System.Drawing.Point(95, 19);
+            this.ChkDiskSensor.Location = new System.Drawing.Point(95, 23);
             this.ChkDiskSensor.Name = "ChkDiskSensor";
             this.ChkDiskSensor.Size = new System.Drawing.Size(52, 17);
             this.ChkDiskSensor.TabIndex = 1;
@@ -129,7 +129,7 @@
             // ChkBatterySensor
             // 
             this.ChkBatterySensor.AutoSize = true;
-            this.ChkBatterySensor.Location = new System.Drawing.Point(10, 19);
+            this.ChkBatterySensor.Location = new System.Drawing.Point(10, 23);
             this.ChkBatterySensor.Name = "ChkBatterySensor";
             this.ChkBatterySensor.Size = new System.Drawing.Size(56, 17);
             this.ChkBatterySensor.TabIndex = 0;
@@ -462,7 +462,7 @@
             // chkShutdown
             // 
             this.chkShutdown.AutoSize = true;
-            this.chkShutdown.Location = new System.Drawing.Point(23, 88);
+            this.chkShutdown.Location = new System.Drawing.Point(24, 88);
             this.chkShutdown.Name = "chkShutdown";
             this.chkShutdown.Size = new System.Drawing.Size(74, 17);
             this.chkShutdown.TabIndex = 15;
@@ -473,7 +473,7 @@
             // chkSuspend
             // 
             this.chkSuspend.AutoSize = true;
-            this.chkSuspend.Location = new System.Drawing.Point(23, 66);
+            this.chkSuspend.Location = new System.Drawing.Point(24, 66);
             this.chkSuspend.Name = "chkSuspend";
             this.chkSuspend.Size = new System.Drawing.Size(68, 17);
             this.chkSuspend.TabIndex = 14;
@@ -711,7 +711,7 @@
             // chkMemorySensor
             // 
             this.chkMemorySensor.AutoSize = true;
-            this.chkMemorySensor.Location = new System.Drawing.Point(11, 78);
+            this.chkMemorySensor.Location = new System.Drawing.Point(10, 69);
             this.chkMemorySensor.Name = "chkMemorySensor";
             this.chkMemorySensor.Size = new System.Drawing.Size(63, 17);
             this.chkMemorySensor.TabIndex = 2;
@@ -731,7 +731,7 @@
             // chkVolumeSensor
             // 
             this.chkVolumeSensor.AutoSize = true;
-            this.chkVolumeSensor.Location = new System.Drawing.Point(11, 46);
+            this.chkVolumeSensor.Location = new System.Drawing.Point(10, 46);
             this.chkVolumeSensor.Name = "chkVolumeSensor";
             this.chkVolumeSensor.Size = new System.Drawing.Size(61, 17);
             this.chkVolumeSensor.TabIndex = 4;

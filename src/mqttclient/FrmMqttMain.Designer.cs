@@ -119,7 +119,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "FrmMqttMain";
             this.Text = "Mqtt Client";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMqttMain_FormClosing);

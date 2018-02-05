@@ -736,7 +736,12 @@ namespace mqttclient
                 {
                     notifyIcon1.Visible = true;
                     this.ShowInTaskbar = false;
+                    this.Hide();
                 }
+            }
+            else
+            {
+                this.Show();
             }
         }
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)

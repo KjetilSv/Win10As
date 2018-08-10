@@ -102,6 +102,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HardwareSensors\Audio.cs" />
     <Compile Include="DataModel.cs" />
     <Compile Include="FrmMqttMain.cs">
       <SubType>Form</SubType>
@@ -115,7 +116,9 @@
     <Compile Include="FrmOptions.Designer.cs">
       <DependentUpon>FrmOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="HardwareSensors.cs" />
+    <Compile Include="HardwareSensors\Memory.cs" />
+    <Compile Include="HardwareSensors\Power.cs" />
+    <Compile Include="HardwareSensors\Processor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMqttMain.resx">

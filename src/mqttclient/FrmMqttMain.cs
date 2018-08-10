@@ -489,7 +489,7 @@ namespace mqttclient
                     {
                         try
                         {
-                            MqttPublish(SetSubTopic("cpuprosessortime"), HardwareSensors.GetCpuProsessorTime());
+                            MqttPublish(SetSubTopic("cpuprosessortime"), Processor.GetCpuProcessorTime());
                         }
                         catch (Exception)
                         {
@@ -499,7 +499,7 @@ namespace mqttclient
 
                     if (Convert.ToBoolean(Properties.Settings.Default["Freememorysensor"].ToString()) == true)
                     {
-                        MqttPublish(SetSubTopic("freememory"), HardwareSensors.GetFreeMemory());
+                        MqttPublish(SetSubTopic("freememory"), Memory.GetFreeMemory());
 
                     }
 

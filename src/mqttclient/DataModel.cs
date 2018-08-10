@@ -8,12 +8,12 @@ using System.Xml.Serialization;
 namespace mqttclient
 {
     [XmlRoot(ElementName = "mqtttriggers")]
-    public class mqtttrigger
+    public class MqttTrigger
     {
-        public long id { get; set; }
-        public string name { get; set; }
-        public string cmdtext { get; set; }
-        public string cmdparameters { get; set; }
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public string CmdText { get; set; }
+        public string CmdParameters { get; set; }
         public Boolean Predefined { get; set; }
     }
 }

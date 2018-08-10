@@ -59,7 +59,7 @@ namespace mqttclient
             }
             
         }
-        public Boolean isMuted()
+        public Boolean IsMuted()
         {
             try
             {
@@ -98,7 +98,7 @@ namespace mqttclient
             
         }
     }
-    public class power
+    public class Power
     {
 
         public static string BatteryChargeStatus()

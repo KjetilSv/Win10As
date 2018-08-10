@@ -119,6 +119,7 @@
     <Compile Include="HardwareSensors\Memory.cs" />
     <Compile Include="HardwareSensors\Power.cs" />
     <Compile Include="HardwareSensors\Processor.cs" />
+    <Compile Include="Mqtt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMqttMain.resx">

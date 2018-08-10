@@ -41,55 +41,22 @@ namespace mqttclient
         private const string NotifyIconBalloonTipText = "Mqtt client minimized to systemtray";
         private const int NotifyIconBalloonTipTimer = 200;
 
-        MqttClient _client;
         readonly Audio _audioobj = new Audio();
+        private readonly Mqtt _mqtt = new Mqtt();
 
-        private string GMqtttopic { get; set; }
         private string GTriggerFile { get; set; }
         private string GLocalScreetshotFile { get; set; }
 
-        private void MqttPublishImage(string topic, string file)
-        {
-            if (_client.IsConnected == true)
-            {
-                _client.Publish(SetSubTopic(topic), File.ReadAllBytes(file));
-            }
-        }
-        private void MqttPublish(string topic, string message, bool retain = false)
-        {
-            if (_client.IsConnected == true)
-            {
-                if (retain == true)
-                {
-
-                    _client.Publish(topic, Encoding.UTF8.GetBytes(message), 0, retain);
-                }
-                else
-                {
-                    _client.Publish(topic, Encoding.UTF8.GetBytes(message));
-                }
-            }
-        }
         private void SetupTimer()
         {
-            try
+            if (string.IsNullOrEmpty(Properties.Settings.Default["mqtttimerinterval"].ToString()))
             {
-                if (Properties.Settings.Default["mqtttimerinterval"].ToString() == "")
-                {
-                    Properties.Settings.Default["mqtttimerinterval"] = 6000;
-                    //txtMqttTimerInterval.Text = Properties.Settings.Default["mqtttimerinterval"].ToString();
-                    Properties.Settings.Default.Save();
-                }
-
-                timer1.Interval = Convert.ToInt32(Properties.Settings.Default["mqtttimerinterval"].ToString());
-                timer1.Start();
-                //timer1_Tick(null, null);
-
+                Properties.Settings.Default["mqtttimerinterval"] = 6000;
+                Properties.Settings.Default.Save();
             }
-            catch (Exception)
-            {
 
-            }
+            timer1.Interval = Convert.ToInt32(Properties.Settings.Default["mqtttimerinterval"].ToString());
+            timer1.Start();
         }
         public FrmMqttMain()
         {
@@ -103,7 +70,7 @@ namespace mqttclient
                 GLocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
 
                 Properties.Settings.Default.Upgrade();
-                MqttConnect();
+                _mqtt.MqttConnect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
                 SetupTimer();
 
                 LoadTriggerlist();
@@ -112,71 +79,10 @@ namespace mqttclient
                 notifyIcon1.Text = NotifyIconText;
                 notifyIcon1.BalloonTipText = NotifyIconBalloonTipText;
                 notifyIcon1.ShowBalloonTip(NotifyIconBalloonTipTimer);
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-
-        }
-
-        private void MqttConnect()
-        {
-            try
-            {
-                if (Properties.Settings.Default["mqttserver"].ToString().Length > 3)
-                {
-
-                    try
-                    {
-                        _client = new MqttClient(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), false, null, null, MqttSslProtocols.None, null);
-
-                        if (Properties.Settings.Default["mqttusername"].ToString().Length > 3)
-                        {
-                            byte code = _client.Connect(Guid.NewGuid().ToString());
-                        }
-                        else
-                        {
-                            byte code = _client.Connect(Guid.NewGuid().ToString(), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                        toolStripStatusLabel1.Text = "not connected,check connection settings error:" + ex.Message;
-                    }
-
-                    try
-                    {
-                        if (_client.IsConnected == true)
-                        {
-                            GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
-                            _client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                            _client.ConnectionClosed += client_MqttConnectionClosed;
-                            _client.Subscribe(new string[] { GMqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-                            toolStripStatusLabel1.Text = "connected";
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                        toolStripStatusLabel1.Text = "not connected,check mqtt setup error:" + ex.Message;
-                    }
-
-
-
-
-                }
-                else
-                {
-                    toolStripStatusLabel1.Text = "not connected,check settings mqttservername not entered";
-                }
-            }
-
-            catch (Exception ex)
-            {
-                toolStripStatusLabel1.Text = "not connected,check settings. Error:" + ex.InnerException.ToString();
             }
 
         }
@@ -195,20 +101,13 @@ namespace mqttclient
         }
         private void LoadTriggerlist()
         {
-            try
-            {
-                if (File.Exists(GTriggerFile))
-                {
-                    string s = File.ReadAllText(GTriggerFile);
-                    BindingList<MqttTrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
-                    MqttTriggerList = deserializedProduct;
 
-                }
-            }
-            catch (Exception)
+            if (File.Exists(GTriggerFile))
             {
+                string s = File.ReadAllText(GTriggerFile);
+                BindingList<MqttTrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
+                MqttTriggerList = deserializedProduct;
 
-                throw;
             }
 
 
@@ -222,7 +121,6 @@ namespace mqttclient
             catch (Exception ex)
             {
                 WriteToLog("error: " + ex.Message);
-                //throw;
             }
 
         }
@@ -243,7 +141,7 @@ namespace mqttclient
             try
             {
                 string message = Encoding.UTF8.GetString(e.Message);
-                MqttTrigger CurrentMqttTrigger = new MqttTrigger();
+                MqttTrigger currentMqttTrigger = new MqttTrigger();
                 WriteToLog("Message recived " + e.Topic + " value " + message);
 
                 string TopLevel = Properties.Settings.Default["mqtttopic"].ToString().Replace("/#", "");
@@ -253,22 +151,22 @@ namespace mqttclient
                 {
                     if (tmpTrigger.Name == subtopic)
                     {
-                        CurrentMqttTrigger = tmpTrigger;
-                        CurrentMqttTrigger.Id = 1;
+                        currentMqttTrigger = tmpTrigger;
+                        currentMqttTrigger.Id = 1;
                         break;
                     }
                 }
 
-                if (CurrentMqttTrigger.Id == 1)
+                if (currentMqttTrigger.Id == 1)
                 {
 
                     switch (subtopic)
                     {
                         case "app/running":
-                            MqttPublish(SetSubTopic("app/running/" + message), ExeRunning(message, ""));
+                            _mqtt.Publish(_mqtt.SetSubTopic("app/running/" + message), ExeRunning(message, ""));
                             break;
                         case "app/close":
-                            MqttPublish(SetSubTopic("app/running/" + message), ExeClose(message));
+                            _mqtt.Publish(_mqtt.SetSubTopic("app/running/" + message), ExeClose(message));
                             break;
 
                         case "monitor/set":
@@ -279,12 +177,12 @@ namespace mqttclient
                                 {
 
                                     NativeMethods.SendMessage(f.Handle, WM_SYSCOMMAND, (IntPtr)SC_MONITORPOWER, (IntPtr)MonitorTurnOn);
-                                    MqttPublish(SetSubTopic("monitor"), "1");
+                                    _mqtt.Publish(_mqtt.SetSubTopic("monitor"), "1");
                                 }
                                 else
                                 {
                                     NativeMethods.SendMessage(f.Handle, WM_SYSCOMMAND, (IntPtr)SC_MONITORPOWER, (IntPtr)MonitorShutoff);
-                                    MqttPublish(SetSubTopic("monitor"), "0");
+                                    _mqtt.Publish(_mqtt.SetSubTopic("monitor"), "0");
                                 }
                             }
                             break;
@@ -300,7 +198,7 @@ namespace mqttclient
                                 _audioobj.Mute(false);
                             }
 
-                            MqttPublish(TopLevel + "/mute", message);
+                            _mqtt.Publish(TopLevel + "/mute", message);
                             break;
                         case "mute":
                             break;
@@ -366,13 +264,13 @@ namespace mqttclient
                             break;
                         default:
 
-                            if (CurrentMqttTrigger.CmdText.Length > 2)
+                            if (currentMqttTrigger.CmdText.Length > 2)
                             {
-                                ProcessStartInfo startInfo = new ProcessStartInfo(CurrentMqttTrigger.CmdText);
+                                ProcessStartInfo startInfo = new ProcessStartInfo(currentMqttTrigger.CmdText);
                                 startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-                                if (CurrentMqttTrigger.CmdParameters.Length > 2)
+                                if (currentMqttTrigger.CmdParameters.Length > 2)
                                 {
-                                    startInfo.Arguments = CurrentMqttTrigger.CmdParameters;
+                                    startInfo.Arguments = currentMqttTrigger.CmdParameters;
                                 }
                                 Process.Start(startInfo);
                             }
@@ -466,30 +364,24 @@ namespace mqttclient
 
         }
         delegate void SetTextCallback(string text);
-        private string SetSubTopic(string Topic)
-        {
-            return GMqtttopic.Replace("#", Topic);
-        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             try
             {
 
-                if (_client.IsConnected == false)
+                if (_mqtt.IsConnected == false)
                 {
-                    MqttConnect();
+                    _mqtt.MqttConnect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
                 }
 
-                if (_client.IsConnected == true)
+                if (_mqtt.IsConnected == true)
                 {
-
-
-
                     if (Convert.ToBoolean(Properties.Settings.Default["Cpusensor"].ToString()) == true)
                     {
                         try
                         {
-                            MqttPublish(SetSubTopic("cpuprosessortime"), Processor.GetCpuProcessorTime());
+                            _mqtt.Publish(_mqtt.SetSubTopic("cpuprosessortime"), Processor.GetCpuProcessorTime());
                         }
                         catch (Exception)
                         {
@@ -499,25 +391,24 @@ namespace mqttclient
 
                     if (Convert.ToBoolean(Properties.Settings.Default["Freememorysensor"].ToString()) == true)
                     {
-                        MqttPublish(SetSubTopic("freememory"), Memory.GetFreeMemory());
+                        _mqtt.Publish(_mqtt.SetSubTopic("freememory"), Memory.GetFreeMemory());
 
                     }
 
                     if (Convert.ToBoolean(Properties.Settings.Default["Volumesensor"].ToString()) == true)
                     {
-
-                        MqttPublish(SetSubTopic("volume"), _audioobj.GetVolume(), true);
+                        _mqtt.Publish(_mqtt.SetSubTopic("volume"), _audioobj.GetVolume(), true);
                     }
 
                     try
                     {
                         if (_audioobj.IsMuted() == true)
                         {
-                            MqttPublish(SetSubTopic("mute"), "1");
+                            _mqtt.Publish(_mqtt.SetSubTopic("mute"), "1");
                         }
                         else
                         {
-                            MqttPublish(SetSubTopic("mute"), "0");
+                            _mqtt.Publish(_mqtt.SetSubTopic("mute"), "0");
                         }
                     }
                     catch (Exception)
@@ -541,11 +432,11 @@ namespace mqttclient
 
                     if (Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString()) == true)
                     {
-                        MqttPublish(SetSubTopic("/Power/BatteryChargeStatus"), Power.BatteryChargeStatus());
-                        MqttPublish(SetSubTopic("/Power/BatteryFullLifetime"), Power.BatteryFullLifetime());
-                        MqttPublish(SetSubTopic("/Power/BatteryLifePercent"), Power.BatteryLifePercent());
-                        MqttPublish(SetSubTopic("/Power/BatteryLifeRemaining"), Power.BatteryLifeRemaining());
-                        MqttPublish(SetSubTopic("/Power/PowerLineStatus"), Power.PowerLineStatus());
+                        _mqtt.Publish(_mqtt.SetSubTopic("/Power/BatteryChargeStatus"), Power.BatteryChargeStatus());
+                        _mqtt.Publish(_mqtt.SetSubTopic("/Power/BatteryFullLifetime"), Power.BatteryFullLifetime());
+                        _mqtt.Publish(_mqtt.SetSubTopic("/Power/BatteryLifePercent"), Power.BatteryLifePercent());
+                        _mqtt.Publish(_mqtt.SetSubTopic("/Power/BatteryLifeRemaining"), Power.BatteryLifeRemaining());
+                        _mqtt.Publish(_mqtt.SetSubTopic("/Power/PowerLineStatus"), Power.PowerLineStatus());
                     }
 
                     if (Convert.ToBoolean(Properties.Settings.Default["DiskSensor"].ToString()) == true)
@@ -572,9 +463,9 @@ namespace mqttclient
 
                     string rawdrivename = drive.Name.Replace(":\\", "");
 
-                    MqttPublish(SetSubTopic("drive/" + rawdrivename + "/totalsize"), drive.TotalSize.ToString());
-                    MqttPublish(SetSubTopic("drive/" + rawdrivename + "/percentfree"), Convert.ToString(Math.Round(Convert.ToDouble(percentFree.ToString()), 0)));
-                    MqttPublish(SetSubTopic("drive/" + rawdrivename + "/availablefreespace"), drive.AvailableFreeSpace.ToString());
+                    _mqtt.Publish(_mqtt.SetSubTopic("drive/" + rawdrivename + "/totalsize"), drive.TotalSize.ToString());
+                    _mqtt.Publish(_mqtt.SetSubTopic("drive/" + rawdrivename + "/percentfree"), Convert.ToString(Math.Round(Convert.ToDouble(percentFree.ToString()), 0)));
+                    _mqtt.Publish(_mqtt.SetSubTopic("drive/" + rawdrivename + "/availablefreespace"), drive.AvailableFreeSpace.ToString());
                 }
             }
             catch (Exception)
@@ -613,7 +504,7 @@ namespace mqttclient
                             if (Convert.ToBoolean(Properties.Settings.Default["ScreenshotMqtt"]) == true)
                             {
                                 bmpScreenshot.Save(GLocalScreetshotFile, ImageFormat.Png);
-                                MqttPublishImage("mqttcamera", GLocalScreetshotFile);
+                                _mqtt.PublishImage("mqttcamera", GLocalScreetshotFile);
                             }
                             else
                             {
@@ -635,7 +526,7 @@ namespace mqttclient
             var rand = new Random();
             var files = Directory.GetFiles(folder, "*.jpg");
             string topic = "slideshow";
-            _client.Publish(SetSubTopic(topic), File.ReadAllBytes(files[rand.Next(files.Length)]));
+            _mqtt.PublishByte(topic, File.ReadAllBytes(files[rand.Next(files.Length)]));
         }
         public void HandleUnhandledException(Exception e)
         {
@@ -669,7 +560,7 @@ namespace mqttclient
             try
             {
                 bool isRunning = Process.GetProcessesByName(exename)
-                            .FirstOrDefault(p => p.MainModule.FileName.StartsWith(location)) != default(Process);
+                                        .FirstOrDefault(p => p.MainModule.FileName.StartsWith(location)) != default(Process);
                 if (isRunning == true)
                 {
                     return "1";
@@ -705,29 +596,14 @@ namespace mqttclient
             frmSettingsFrom.Show();
         }
         public string FrmOptionExitVal { get; set; }
+
         public void ReloadApp()
         {
-            try
-            {
-                if (_client != null)
-                {
-                    if (_client.IsConnected == true)
-                    {
-                        _client.Disconnect();
-                    }
-                }
+            _mqtt.Disconnect();
 
-                MqttConnect();
-                SetupTimer();
-                LoadTriggerlist();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-
+            _mqtt.MqttConnect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+            SetupTimer();
+            LoadTriggerlist();
         }
         private void FrmMqttMain_Resize(object sender, EventArgs e)
         {

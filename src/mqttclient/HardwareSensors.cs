@@ -11,8 +11,7 @@ namespace mqttclient
         {
             try
             {
-                PerformanceCounter ramCounter;
-                ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+                var ramCounter = new PerformanceCounter("Memory", "Available MBytes");
                 return ramCounter.NextValue() + "MB";
             }
             catch (Exception)
@@ -26,8 +25,7 @@ namespace mqttclient
         {
             try
             {
-                PerformanceCounter cpuCounter;
-                cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
                 cpuCounter.NextValue();
                 Thread.Sleep(1000);
 

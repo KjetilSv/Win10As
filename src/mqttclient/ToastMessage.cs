@@ -8,7 +8,7 @@ namespace mqttclient
     {
         private const string appID = "Win Mqtt Client";
 
-        private void Toastmessage(string line1, string line2, string line3, string fileUri, ToastTemplateType ts)
+        public void Toastmessage(string line1, string line2, string line3, string fileUri, ToastTemplateType ts)
         {
             switch (ts)
             {

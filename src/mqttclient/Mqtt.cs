@@ -18,27 +18,28 @@ namespace mqttclient
         {
             if (_client.IsConnected == true)
             {
-                _client.Publish(SetSubTopic(topic), File.ReadAllBytes(file));
+                _client.Publish(FullTopic(topic), File.ReadAllBytes(file));
             }
         }
 
         public void PublishByte(string topic, byte[] bytes)
         {
-            _client.Publish(SetSubTopic(topic), bytes);
+            _client.Publish(FullTopic(topic), bytes);
         }
 
         public void Publish(string topic, string message, bool retain = false)
         {
+            var fullTopic = FullTopic(topic);
             if (_client.IsConnected == true)
             {
                 if (retain == true)
                 {
 
-                    _client.Publish(topic, Encoding.UTF8.GetBytes(message), 0, retain);
+                    _client.Publish(fullTopic, Encoding.UTF8.GetBytes(message), 0, retain);
                 }
                 else
                 {
-                    _client.Publish(topic, Encoding.UTF8.GetBytes(message));
+                    _client.Publish(fullTopic, Encoding.UTF8.GetBytes(message));
                 }
             }
         }
@@ -64,7 +65,7 @@ namespace mqttclient
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception("not connected,check connection settings error:" + ex.Message);
+                        throw new Exception("not connected, check connection settings error:" + ex.Message);
                     }
 
                     try
@@ -96,7 +97,7 @@ namespace mqttclient
 
         }
 
-        public string SetSubTopic(string topic)
+        public string FullTopic(string topic)
         {
             return GMqtttopic.Replace("#", topic);
         }

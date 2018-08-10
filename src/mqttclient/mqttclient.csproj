@@ -54,7 +54,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>2D488D0616A52D56116E686371953FCF60C70802</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>10165045D85395FA9E2F39F866341C286C2B09F6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>mqttclient_TemporaryKey.pfx</ManifestKeyFile>

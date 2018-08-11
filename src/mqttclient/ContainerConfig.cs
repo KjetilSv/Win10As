@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using mqttclient.HardwareSensors;
-using uPLibrary.Networking.M2Mqtt;
+using mqttclient.Mqtt;
 
 namespace mqttclient
 {
@@ -12,7 +11,7 @@ namespace mqttclient
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<Mqtt>().As<IMqtt>().SingleInstance();
+            builder.RegisterType<Mqtt.Mqtt>().As<IMqtt>().SingleInstance();
             builder.RegisterType<MqttPublish>().As<IMqttPublish>();
             builder.RegisterType<Audio>().As<IAudio>();
             builder.RegisterType<ToastMessage>().As<IToastMessage>();

@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using mqttclient.HardwareSensors;
 
-namespace mqttclient
+namespace mqttclient.Mqtt
 {
     public class MqttPublish : IMqttPublish
     {

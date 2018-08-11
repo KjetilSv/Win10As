@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Threading;
 using System.Reflection;
+using mqttclient.Mqtt;
 
 namespace mqttclient
 {

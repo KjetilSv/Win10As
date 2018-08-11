@@ -1,4 +1,4 @@
-﻿namespace mqttclient
+﻿namespace mqttclient.Mqtt
 {
     public interface IMqttPublish
     {

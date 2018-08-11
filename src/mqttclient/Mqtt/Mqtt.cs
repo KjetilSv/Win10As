@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace mqttclient
+namespace mqttclient.Mqtt
 {
     public class Mqtt : IMqtt
     {

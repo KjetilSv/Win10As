@@ -1,9 +1,11 @@
-﻿using Windows.UI.Notifications;
+﻿using System.Collections.Generic;
+using Windows.UI.Notifications;
 
 namespace mqttclient
 {
     public interface IToastMessage
     {
-        void Show(string line1, string line2, string line3, string fileUri, ToastTemplateType ts);
+        void ShowText(IList<string> lines);
+        void ShowImage(IList<string> lines, string imageUrl);
     }
 }

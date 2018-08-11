@@ -108,11 +108,8 @@ namespace mqttclient
 
         public void ReloadApp()
         {
-            _mqtt.Disconnect();
-
             _mqtt.Connect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
             SetupTimer();
-            _mqtt.LoadTriggerlist();
         }
 
         private void FrmMqttMain_Resize(object sender, EventArgs e)

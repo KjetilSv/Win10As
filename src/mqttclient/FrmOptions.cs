@@ -203,10 +203,7 @@ namespace mqttclient
             }
             else
             {
-
-                BindingList<MqttTrigger> tmpMqttTriggerList;
-
-                tmpMqttTriggerList = MqttTriggerList;
+                var tmpMqttTriggerList = MqttTriggerList;
 
                 foreach (MqttTrigger t in MqttTriggerList)
                 {

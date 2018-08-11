@@ -75,6 +75,9 @@
     <Reference Include="AudioSwitcher.AudioApi.CoreAudio, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
       <HintPath>..\packages\AudioSwitcher.AudioApi.CoreAudio.3.0.0.1\lib\net40\AudioSwitcher.AudioApi.CoreAudio.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
     </Reference>
@@ -102,6 +105,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerConfig.cs" />
+    <Compile Include="HardwareSensors\IAudio.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IMqtt.cs" />
+    <Compile Include="IMqttPublish.cs" />
+    <Compile Include="IToastMessage.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Process.cs" />
     <Compile Include="HardwareSensors\Audio.cs" />
     <Compile Include="DataModel.cs" />

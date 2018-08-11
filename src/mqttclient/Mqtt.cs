@@ -7,25 +7,25 @@ using System.Speech.Synthesis;
 using System.Text;
 using System.Windows.Forms;
 using Windows.UI.Notifications;
+using mqttclient.HardwareSensors;
 using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace mqttclient
 {
-    public class Mqtt
+    public class Mqtt : IMqtt
     {
-        private readonly ToastMessage _toastMessage = new ToastMessage();
-        private readonly Audio _audioobj = new Audio();
-
+        private readonly IToastMessage _toastMessage;
+        private readonly IAudio _audio;
+        private readonly ILogger _logger;
         private MqttClient _client;
 
         public string GMqtttopic { get; set; }
 
         public bool IsConnected => _client.IsConnected;
-
         
-        private string GTriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
+        private readonly string _gTriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
         BindingList<MqttTrigger> MqttTriggerList = new BindingList<MqttTrigger>();
 
         #region monitor onoff
@@ -42,8 +42,11 @@ namespace mqttclient
 
         #endregion
 
-        public Mqtt()
+        public Mqtt(IAudio audio, IToastMessage toastMessage)
         {
+            _audio = audio;
+            _toastMessage = toastMessage;
+
             LoadTriggerlist();
         }
 
@@ -107,6 +110,8 @@ namespace mqttclient
                         {
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
                             _client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+                            //_client.MqttMsgSubscribed += client_MqttMsgSubscribed;
+                            //_client.MqttMsgPublished += client_MqttMsgPublished;
                             //_client.ConnectionClosed += client_MqttConnectionClosed;
                             _client.Subscribe(new string[] { GMqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
                             return true;
@@ -150,11 +155,11 @@ namespace mqttclient
         {
             try
             {
-                //WriteToLog("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
+                _logger.Log("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
             }
             catch (Exception ex)
             {
-                //WriteToLog("error: " + ex.Message);
+                _logger.Log("error: " + ex.Message);
             }
 
         }
@@ -162,11 +167,11 @@ namespace mqttclient
         {
             try
             {
-                //WriteToLog("Subscribed for id = " + e.MessageId);
+                _logger.Log("Subscribed for id = " + e.MessageId);
             }
             catch (Exception ex)
             {
-                //WriteToLog("error: " + ex.Message);
+                _logger.Log("error: " + ex.Message);
             }
 
         }
@@ -176,7 +181,7 @@ namespace mqttclient
             {
                 string message = Encoding.UTF8.GetString(e.Message);
                 MqttTrigger currentMqttTrigger = new MqttTrigger();
-                //WriteToLog("Message recived " + e.Topic + " value " + message);
+                //_logger.Log("Message recived " + e.Topic + " value " + message);
 
                 string TopLevel = Properties.Settings.Default["mqtttopic"].ToString().Replace("/#", "");
                 string subtopic = e.Topic.Replace(TopLevel + "/", "");
@@ -224,11 +229,11 @@ namespace mqttclient
 
                             if (message == "1")
                             {
-                                _audioobj.Mute(true);
+                                _audio.Mute(true);
                             }
                             else
                             {
-                                _audioobj.Mute(false);
+                                _audio.Mute(false);
                             }
 
                             Publish("mute", message);
@@ -238,7 +243,7 @@ namespace mqttclient
                         case "volume":
                             break;
                         case "volume/set":
-                            _audioobj.Volume(Convert.ToInt32(message));
+                            _audio.Volume(Convert.ToInt32(message));
                             break;
                         case "hibernate":
                             Application.SetSuspendState(PowerState.Hibernate, true, true);
@@ -291,7 +296,7 @@ namespace mqttclient
                                 }
                                 i = i + 1;
                             }
-                            _toastMessage.Toastmessage(Line1, Line2, Line3, FileURI, ToastTemplateType.ToastImageAndText04);
+                            _toastMessage.Show(Line1, Line2, Line3, FileURI, ToastTemplateType.ToastImageAndText04);
 
 
                             break;
@@ -315,17 +320,16 @@ namespace mqttclient
             }
             catch (Exception ex)
             {
-                //WriteToLog("error: " + ex.Message);
-
+                //_logger.Log("error: " + ex.Message);
             }
 
         }
 
         public void LoadTriggerlist()
         {
-            if (File.Exists(GTriggerFile))
+            if (File.Exists(_gTriggerFile))
             {
-                string s = File.ReadAllText(GTriggerFile);
+                string s = File.ReadAllText(_gTriggerFile);
                 BindingList<MqttTrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
                 MqttTriggerList = deserializedProduct;
 

@@ -1,4 +1,4 @@
-﻿namespace mqttclient
+﻿namespace mqttclient.HardwareSensors
 {
     public class Power
     {

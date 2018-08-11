@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace mqttclient
+namespace mqttclient.HardwareSensors
 {
     public class Memory
     {

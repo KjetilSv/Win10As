@@ -4,11 +4,11 @@ using Windows.UI.Notifications;
 
 namespace mqttclient
 {
-    public class ToastMessage
+    public class ToastMessage : IToastMessage
     {
         private const string appID = "Win Mqtt Client";
 
-        public void Toastmessage(string line1, string line2, string line3, string fileUri, ToastTemplateType ts)
+        public void Show(string line1, string line2, string line3, string fileUri, ToastTemplateType ts)
         {
             switch (ts)
             {

@@ -3,18 +3,20 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using mqttclient.HardwareSensors;
 
 namespace mqttclient
 {
-    public class MqttPublish
+    public class MqttPublish : IMqttPublish
     {
-        private readonly Audio _audioobj = new Audio();
-        private readonly Mqtt _mqtt;
+        private readonly IAudio _audioobj;
+        private readonly IMqtt _mqtt;
         private readonly string GLocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
 
-        public MqttPublish(Mqtt mqtt)
+        public MqttPublish(IMqtt mqtt, IAudio audio)
         {
             _mqtt = mqtt;
+            _audioobj = audio;
         }
 
         public void PublishSystemData()
@@ -131,7 +133,7 @@ namespace mqttclient
 
         }
 
-        public bool NetworkUp()
+        private bool NetworkUp()
         {
 
             try

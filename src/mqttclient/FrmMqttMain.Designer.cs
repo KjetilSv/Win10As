@@ -135,7 +135,7 @@
         #endregion
         private System.ServiceProcess.ServiceController serviceController1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ListBox listBox1;
+        public System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon notifyIcon1;

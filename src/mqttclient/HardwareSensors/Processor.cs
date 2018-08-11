@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 
-namespace mqttclient
+namespace mqttclient.HardwareSensors
 {
     public class Processor
     {

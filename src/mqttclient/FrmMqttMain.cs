@@ -8,17 +8,18 @@ namespace mqttclient
 {
     public partial class FrmMqttMain : Form
     {
-        private readonly MqttPublish _mqttPublish;
-        private readonly Mqtt _mqtt = new Mqtt();
+        private readonly IMqttPublish _mqttPublish;
+        private readonly IMqtt _mqtt;
 
         private const string NotifyIconText = "Mqtt client";
         private const string NotifyIconBalloonTipText = "Mqtt client minimized to systemtray";
         private const int NotifyIconBalloonTipTimer = 200;
 
-        private string GTriggerFile { get; set; }
-
-        public FrmMqttMain()
+        public FrmMqttMain(IMqtt mqtt, IMqttPublish mqttPublish)
         {
+            _mqtt = mqtt;
+            _mqttPublish = mqttPublish;
+
             try
             {
                 InitializeComponent();
@@ -28,7 +29,6 @@ namespace mqttclient
                 Properties.Settings.Default.Upgrade();
                 try
                 {
-                    _mqttPublish = new MqttPublish(_mqtt);
                     _mqtt.Connect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
                 }
                 catch (Exception e)
@@ -46,7 +46,6 @@ namespace mqttclient
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private void SetupTimer()
@@ -62,60 +61,9 @@ namespace mqttclient
         }
         private void client_MqttConnectionClosed(object sender, EventArgs e)
         {
-            try
-            {
-                toolStripStatusLabel1.Text = "not connected";
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-        
-        void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
-        {
-            try
-            {
-                WriteToLog("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
-            }
-            catch (Exception ex)
-            {
-                WriteToLog("error: " + ex.Message);
-            }
-
-        }
-        void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
-        {
-            try
-            {
-                WriteToLog("Subscribed for id = " + e.MessageId);
-            }
-            catch (Exception ex)
-            {
-                WriteToLog("error: " + ex.Message);
-            }
-
+            toolStripStatusLabel1.Text = "not connected";
         }
 
-        private void WriteToLog(string logtext)
-        {
-            try
-            {
-                this.Invoke((MethodInvoker)(() => listBox1.Items.Insert(0, logtext)));
-                if (listBox1.Items.Count > 20)
-                {
-                    this.Invoke((MethodInvoker)(() => listBox1.Items.RemoveAt(20)));
-                }
-            }
-            catch (Exception)
-            {
-
-                // throw;
-            }
-
-        }
         delegate void SetTextCallback(string text);
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -136,6 +84,7 @@ namespace mqttclient
         {
             this.HandleUnhandledException(e.Exception);
         }
+
         private void listBox1_KeyUp(object sender, KeyEventArgs e)
         {
             if (sender != listBox1) return;
@@ -165,6 +114,7 @@ namespace mqttclient
             SetupTimer();
             _mqtt.LoadTriggerlist();
         }
+
         private void FrmMqttMain_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)

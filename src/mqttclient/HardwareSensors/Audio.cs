@@ -1,9 +1,9 @@
 ﻿using System;
 using AudioSwitcher.AudioApi.CoreAudio;
 
-namespace mqttclient
+namespace mqttclient.HardwareSensors
 {
-    public class Audio
+    public class Audio : IAudio
     {
         CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
 

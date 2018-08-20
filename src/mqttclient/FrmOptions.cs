@@ -12,7 +12,7 @@ namespace mqttclient
 {
     public partial class FrmOptions : Form
     {
-        BindingList<mqtttrigger> MqttTriggerList = new BindingList<mqtttrigger>();
+        BindingList<MqttTrigger> MqttTriggerList = new BindingList<MqttTrigger>();
         string appID = "win iot";
         public string g_TriggerFile { get; set; }
         public string g_LocalScreetshotFile { get; set; }
@@ -75,13 +75,13 @@ namespace mqttclient
             if (File.Exists(g_TriggerFile))
             {
                 string s = File.ReadAllText(g_TriggerFile);
-                BindingList<mqtttrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<mqtttrigger>>(s);
+                BindingList<MqttTrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
                 MqttTriggerList = deserializedProduct;
-                foreach (mqtttrigger t in MqttTriggerList)
+                foreach (MqttTrigger t in MqttTriggerList)
                 {
                     if (t.Predefined == true)
                     {
-                        switch (t.name.ToLower())
+                        switch (t.Name.ToLower())
                         {
                             case "mute/set":
                                 chkmute.Checked = true;
@@ -196,21 +196,18 @@ namespace mqttclient
         {
             if (Add == true)
             {
-                mqtttrigger t = new mqtttrigger();
-                t.name = name;
+                MqttTrigger t = new MqttTrigger();
+                t.Name = name;
                 t.Predefined = true;
                 MqttTriggerList.Add(t);
             }
             else
             {
+                var tmpMqttTriggerList = MqttTriggerList;
 
-                BindingList<mqtttrigger> tmpMqttTriggerList;
-
-                tmpMqttTriggerList = MqttTriggerList;
-
-                foreach (mqtttrigger t in MqttTriggerList)
+                foreach (MqttTrigger t in MqttTriggerList)
                 {
-                    if (t.name == name)
+                    if (t.Name == name)
                     {
                         tmpMqttTriggerList.Remove(t);
                         break;
@@ -282,10 +279,10 @@ namespace mqttclient
         {
             try
             {
-                mqtttrigger newtrigger = new mqtttrigger();
-                newtrigger.name = txtSubTopic.Text;
-                newtrigger.cmdtext = txtCmd.Text;
-                newtrigger.cmdparameters = txtCmdParameter.Text;
+                MqttTrigger newtrigger = new MqttTrigger();
+                newtrigger.Name = txtSubTopic.Text;
+                newtrigger.CmdText = txtCmd.Text;
+                newtrigger.CmdParameters = txtCmdParameter.Text;
                 newtrigger.Predefined = false;
                 MqttTriggerList.Add(newtrigger);
                 SaveTriggerlist();

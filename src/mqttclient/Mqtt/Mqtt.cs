@@ -237,6 +237,7 @@ namespace mqttclient.Mqtt
                     case "app/running":
                         Publish("app/running/" + message, Process.IsRunning(message, ""));
                         break;
+
                     case "app/close":
                         Publish("app/running/" + message, Process.Close(message));
                         break;
@@ -258,7 +259,6 @@ namespace mqttclient.Mqtt
                         break;
 
                     case "mute/set":
-
                         if (message == "1" || message == "on")
                         {
                             _audio.Mute(true);
@@ -267,31 +267,36 @@ namespace mqttclient.Mqtt
                         {
                             _audio.Mute(false);
                         }
-
                         Publish("mute", message);
                         break;
+
                     case "volume/set":
                         _audio.Volume(Convert.ToInt32(message));
                         break;
+
                     case "hibernate":
                         Application.SetSuspendState(PowerState.Hibernate, true, true);
                         break;
+
                     case "suspend":
                         Application.SetSuspendState(PowerState.Suspend, true, true);
                         break;
+
                     case "reboot":
-                        System.Diagnostics.Process.Start("shutdown.exe", "-r -t 10");
+                        System.Diagnostics.Process.Start("shutdown.exe", $"-r -t {GetDelay(message)}");
                         break;
+
                     case "shutdown":
-                        System.Diagnostics.Process.Start("shutdown.exe", "-s -t 10");
+                        System.Diagnostics.Process.Start("shutdown.exe", $"-s -t {GetDelay(message)}");
                         break;
+
                     case "tts":
                         SpeechSynthesizer synthesizer = new SpeechSynthesizer();
                         synthesizer.Volume = 100;  // 0...100
                         synthesizer.SpeakAsync(message);
                         break;
-                    case "toast":
 
+                    case "toast":
                         string[] words = message.Split(',');
                         if (words.Length >= 3)
                         {
@@ -303,6 +308,7 @@ namespace mqttclient.Mqtt
                             _toastMessage.ShowText(words);
                         }
                         break;
+
                     default:
                         if (currentMqttTrigger.CmdText.Length > 2)
                         {
@@ -325,6 +331,20 @@ namespace mqttclient.Mqtt
             }
 
         }
+
+        private int GetDelay(string message)
+        {
+            var result = Int32.TryParse(message, out var delay);
+            if (result)
+            {
+                return delay;
+            }
+            else
+            {
+                return 10;
+            }
+        }
+        
 
         public void LoadTriggerList()
         {

@@ -245,12 +245,12 @@ namespace mqttclient.Mqtt
                     case "monitor/set":
                         using (var f = new Form())
                         {
-                            if (message == "1")
+                            if (message == "1" || message == "on")
                             {
                                 NativeMethods.SendMessage(f.Handle, WM_SYSCOMMAND, (IntPtr)SC_MONITORPOWER, (IntPtr)MonitorTurnOn);
                                 Publish("monitor", "1");
                             }
-                            else
+                            else if (message == "0" || message == "off")
                             {
                                 NativeMethods.SendMessage(f.Handle, WM_SYSCOMMAND, (IntPtr)SC_MONITORPOWER, (IntPtr)MonitorShutoff);
                                 Publish("monitor", "0");

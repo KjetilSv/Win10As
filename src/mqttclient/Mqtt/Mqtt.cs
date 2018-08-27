@@ -125,10 +125,10 @@ namespace mqttclient.Mqtt
                         if (_client.IsConnected == true)
                         {
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
-                            _client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                            _client.MqttMsgSubscribed += client_MqttMsgSubscribed;
-                            _client.MqttMsgPublished += client_MqttMsgPublished;
-                            _client.ConnectionClosed += client_MqttConnectionClosed;
+                            _client.MqttMsgPublishReceived += ClientMqttMsgPublishReceived;
+                            _client.MqttMsgSubscribed += ClientMqttMsgSubscribed;
+                            _client.MqttMsgPublished += ClientMqttMsgPublished;
+                            _client.ConnectionClosed += ClientMqttConnectionClosed;
 
                             LoadTriggerList();
                             string[] topics = GetTopicsFromTriggerList();
@@ -197,7 +197,7 @@ namespace mqttclient.Mqtt
             }
         }
 
-        void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
+        private void ClientMqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
             try
             {
@@ -209,7 +209,8 @@ namespace mqttclient.Mqtt
             }
 
         }
-        void client_MqttConnectionClosed(object sender, System.EventArgs e)
+
+        private void ClientMqttConnectionClosed(object sender, System.EventArgs e)
         {
             try
             {
@@ -221,7 +222,8 @@ namespace mqttclient.Mqtt
             }
 
         }
-        void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
+
+        private void ClientMqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
             try
             {
@@ -233,7 +235,8 @@ namespace mqttclient.Mqtt
             }
 
         }
-        void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+
+        private void ClientMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             try
             {

@@ -15,10 +15,12 @@ namespace mqttclient
         private const string NotifyIconBalloonTipText = "Mqtt client minimized to systemtray";
         private const int NotifyIconBalloonTipTimer = 200;
 
-        public FrmMqttMain(IMqtt mqtt, IMqttPublish mqttPublish)
+        public FrmMqttMain(IMqtt mqtt, IMqttPublish mqttPublish, MainFormContainer mainFormContainer)
         {
             _mqtt = mqtt;
             _mqttPublish = mqttPublish;
+
+            mainFormContainer.MainForm = this;
 
             try
             {
@@ -128,6 +130,7 @@ namespace mqttclient
                 this.Show();
             }
         }
+
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             this.Show();

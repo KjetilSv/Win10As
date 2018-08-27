@@ -5,21 +5,22 @@ namespace mqttclient
 {
     public class Logger : ILogger
     {
-        private readonly FrmMqttMain _frmMqttMain;
+        private readonly MainFormContainer _mainFormContainer;
 
-        public Logger(FrmMqttMain frmMqttMain)
+        public Logger(MainFormContainer mainFormContainer)
         {
-            _frmMqttMain = frmMqttMain;
+            _mainFormContainer = mainFormContainer;
         }
 
         public void Log(string message)
         {
             try
             {
-                _frmMqttMain.Invoke((MethodInvoker)(() => _frmMqttMain.listBox1.Items.Insert(0, message)));
-                if (_frmMqttMain.listBox1.Items.Count > 20)
+                var mainForm = _mainFormContainer.MainForm;
+                mainForm.Invoke((MethodInvoker)(() => mainForm.listBox1.Items.Insert(0, message)));
+                if (mainForm.listBox1.Items.Count > 20)
                 {
-                    _frmMqttMain.Invoke((MethodInvoker)(() => _frmMqttMain.listBox1.Items.RemoveAt(20)));
+                    mainForm.Invoke((MethodInvoker)(() => mainForm.listBox1.Items.RemoveAt(20)));
                 }
             }
             catch (Exception)

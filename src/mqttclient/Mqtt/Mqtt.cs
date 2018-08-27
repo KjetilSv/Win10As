@@ -52,10 +52,11 @@ namespace mqttclient.Mqtt
 
         #endregion
 
-        public Mqtt(IAudio audio, IToastMessage toastMessage)
+        public Mqtt(IAudio audio, IToastMessage toastMessage, ILogger logger)
         {
             _audio = audio;
             _toastMessage = toastMessage;
+            _logger = logger;
 
             LoadTriggerList();
         }
@@ -125,8 +126,8 @@ namespace mqttclient.Mqtt
                         {
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
                             _client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
-                            //_client.MqttMsgSubscribed += client_MqttMsgSubscribed;
-                            //_client.MqttMsgPublished += client_MqttMsgPublished;
+                            _client.MqttMsgSubscribed += client_MqttMsgSubscribed;
+                            _client.MqttMsgPublished += client_MqttMsgPublished;
                             //_client.ConnectionClosed += client_MqttConnectionClosed;
 
                             LoadTriggerList();
@@ -226,7 +227,7 @@ namespace mqttclient.Mqtt
             {
                 string message = Encoding.UTF8.GetString(e.Message);
                 MqttTrigger currentMqttTrigger = new MqttTrigger();
-                //_logger.Log("Message recived " + e.Topic + " value " + message);
+                _logger.Log("Message recived " + e.Topic + " value " + message);
 
                 string TopLevel = GMqtttopic.Replace("/#", "");
                 string subtopic = e.Topic.Replace(TopLevel + "/", "");
@@ -258,7 +259,7 @@ namespace mqttclient.Mqtt
 
                     case "mute/set":
 
-                        if (message == "1")
+                        if (message == "1" || message == "on")
                         {
                             _audio.Mute(true);
                         }

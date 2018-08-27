@@ -55,7 +55,7 @@ namespace mqttclient.Mqtt
 
                 if (Convert.ToBoolean(Properties.Settings.Default["screenshotenable"]) == true)
                 {
-                    TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
+                    PublishScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
                 }
 
                 if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true)
@@ -147,7 +147,7 @@ namespace mqttclient.Mqtt
 
         }
 
-        private void TakeScreenshot(string fileUri)
+        private void PublishScreenshot(string fileUri)
         {
             try
             {

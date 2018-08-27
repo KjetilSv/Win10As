@@ -110,6 +110,7 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="IToastMessage.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="MainFormContainer.cs" />
     <Compile Include="MqttSettings.cs" />
     <Compile Include="Mqtt\IMqtt.cs" />
     <Compile Include="Mqtt\IMqttPublish.cs" />

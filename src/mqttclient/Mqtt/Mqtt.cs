@@ -263,7 +263,7 @@ namespace mqttclient.Mqtt
                         {
                             _audio.Mute(true);
                         }
-                        else
+                        else if (message == "0" || message == "off")
                         {
                             _audio.Mute(false);
                         }

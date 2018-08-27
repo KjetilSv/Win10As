@@ -128,7 +128,7 @@ namespace mqttclient.Mqtt
                             _client.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
                             _client.MqttMsgSubscribed += client_MqttMsgSubscribed;
                             _client.MqttMsgPublished += client_MqttMsgPublished;
-                            //_client.ConnectionClosed += client_MqttConnectionClosed;
+                            _client.ConnectionClosed += client_MqttConnectionClosed;
 
                             LoadTriggerList();
                             string[] topics = GetTopicsFromTriggerList();
@@ -202,6 +202,18 @@ namespace mqttclient.Mqtt
             try
             {
                 _logger.Log("MessageId = " + e.MessageId + " Published = " + e.IsPublished);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log("error: " + ex.Message);
+            }
+
+        }
+        void client_MqttConnectionClosed(object sender, System.EventArgs e)
+        {
+            try
+            {
+                _logger.Log("Mqtt Connection closed");
             }
             catch (Exception ex)
             {
@@ -327,7 +339,7 @@ namespace mqttclient.Mqtt
             }
             catch (Exception ex)
             {
-                //_logger.Log("error: " + ex.Message);
+                _logger.Log("error: " + ex.Message);
             }
 
         }

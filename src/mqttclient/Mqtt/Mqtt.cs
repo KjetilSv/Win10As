@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Speech.Synthesis;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using mqttclient.HardwareSensors;
 using Newtonsoft.Json;
@@ -35,17 +34,12 @@ namespace mqttclient.Mqtt
 
 
         private readonly string _gTriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
-        BindingList<MqttTrigger> MqttTriggerList = new BindingList<MqttTrigger>();
-        private readonly MqttReceive mqttReceive;
 
         public Mqtt(IAudio audio, IToastMessage toastMessage, ILogger logger)
         {
             _audio = audio;
             _toastMessage = toastMessage;
             _logger = logger;
-
-            LoadTriggerList();
-            mqttReceive = new MqttReceive(this);
         }
 
         public void PublishImage(string topic, string file)
@@ -80,6 +74,11 @@ namespace mqttclient.Mqtt
 
         public bool Connect(string hostname, int portNumber, string username, string password)
         {
+            if (!TryConnection(hostname, portNumber, username, password))
+            {
+                throw new Exception("Cannot connect to MQTT broker. Check connection data");
+            }
+
             if (IsConnected)
             {
                 _client.Disconnect();
@@ -117,7 +116,6 @@ namespace mqttclient.Mqtt
                             _client.MqttMsgPublished += ClientMqttMsgPublished;
                             _client.ConnectionClosed += ClientMqttConnectionClosed;
 
-                            LoadTriggerList();
                             string[] topics = GetTopicsFromTriggerList();
                             byte[] qos = GetQos(topics.Length);
 
@@ -144,6 +142,28 @@ namespace mqttclient.Mqtt
             return false;
         }
 
+        public bool TryConnection(string hostname, int portNumber, string username, string password)
+        {
+            try
+            {
+                var client = new MqttClient(hostname, portNumber, false, null, null, MqttSslProtocols.None, null);
+
+                if (!username.IsEmptyOrWhitespaced())
+                {
+                    byte code = client.Connect(Guid.NewGuid().ToString());
+                }
+                else
+                {
+                    byte code = client.Connect(Guid.NewGuid().ToString(), username, password);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private byte[] GetQos(int topicsLength)
         {
             byte[] qos = new byte[topicsLength];
@@ -157,9 +177,10 @@ namespace mqttclient.Mqtt
 
         private string[] GetTopicsFromTriggerList()
         {
-            string[] topicsList = new string[MqttTriggerList.Count];
+            var mqttTriggerList = GetTriggerList();
+            string[] topicsList = new string[mqttTriggerList.Count];
             int i = 0;
-            foreach (var trigger in MqttTriggerList)
+            foreach (var trigger in mqttTriggerList)
             {
                 topicsList[i] = FullTopic(trigger.Name);
                 i++;
@@ -350,15 +371,14 @@ namespace mqttclient.Mqtt
         }
 
 
-        public void LoadTriggerList()
+        public BindingList<MqttTrigger> GetTriggerList()
         {
             if (File.Exists(_gTriggerFile))
             {
                 string s = File.ReadAllText(_gTriggerFile);
-                BindingList<MqttTrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
-                MqttTriggerList = deserializedProduct;
-
+                return JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
             }
+            return new BindingList<MqttTrigger>();
         }
     }
 }

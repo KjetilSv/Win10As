@@ -426,12 +426,9 @@ namespace mqttclient
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
-
             try
             {
-                MqttClient client;
-                client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
+                var client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
 
                 if (txtmqttusername.Text.Length == 0)
                 {

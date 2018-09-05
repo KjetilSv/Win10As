@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="HardwareSensors\IAudio.cs" />
+    <Compile Include="HardwareSensors\Monitor.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IToastMessage.cs" />
     <Compile Include="Logger.cs" />
@@ -192,12 +193,12 @@
   <ItemGroup>
     <PublishFile Include="Windows">
       <Visible>False</Visible>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>

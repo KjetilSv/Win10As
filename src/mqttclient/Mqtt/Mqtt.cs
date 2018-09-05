@@ -44,7 +44,7 @@ namespace mqttclient.Mqtt
 
         public void PublishImage(string topic, string file)
         {
-            if (_client.IsConnected == true)
+            if (_client.IsConnected)
             {
                 _client.Publish(FullTopic(topic), File.ReadAllBytes(file));
             }
@@ -58,11 +58,10 @@ namespace mqttclient.Mqtt
         public void Publish(string topic, string message, bool retain = false)
         {
             var fullTopic = FullTopic(topic);
-            if (_client.IsConnected == true)
+            if (_client.IsConnected)
             {
-                if (retain == true)
+                if (retain)
                 {
-
                     _client.Publish(fullTopic, Encoding.UTF8.GetBytes(message), 0, retain);
                 }
                 else
@@ -108,7 +107,7 @@ namespace mqttclient.Mqtt
 
                     try
                     {
-                        if (_client.IsConnected == true)
+                        if (_client.IsConnected)
                         {
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
                             _client.MqttMsgPublishReceived += ClientMqttMsgPublishReceived;

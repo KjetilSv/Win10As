@@ -31,6 +31,10 @@ namespace mqttclient.Mqtt
 
             if (_mqtt.IsConnected == true)
             {
+                if (Convert.ToBoolean(Properties.Settings.Default["IsComputerUsed"].ToString()))
+                {
+                    PublishStatus();
+                }
                 if (Convert.ToBoolean(Properties.Settings.Default["Cpusensor"].ToString()) == true)
                 {
                     try
@@ -97,6 +101,19 @@ namespace mqttclient.Mqtt
             catch (Exception)
             {
             }
+        }
+
+        private void PublishStatus()
+        {
+            if (UsingComputer.IsUsing())
+            {
+                _mqtt.Publish("", "on");
+            }
+            else
+            {
+                _mqtt.Publish("", "off");
+            }
+            
         }
 
         private void PublishBattery()

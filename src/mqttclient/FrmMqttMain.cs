@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Threading;
 using System.Reflection;
+using mqttclient.HardwareSensors;
 using mqttclient.Mqtt;
 
 namespace mqttclient
@@ -99,7 +100,6 @@ namespace mqttclient
                 catch (Exception)
                 {
                 }
-
         }
        
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -112,6 +112,7 @@ namespace mqttclient
         {
             _mqtt.Connect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
             SetupTimer();
+            new SystemShutdown(_mqtt).Subscribe();
         }
 
         private void FrmMqttMain_Resize(object sender, EventArgs e)

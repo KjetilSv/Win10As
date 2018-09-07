@@ -155,6 +155,7 @@ namespace mqttclient.Mqtt
                 {
                     byte code = client.Connect(Guid.NewGuid().ToString(), username, password);
                 }
+                client.Disconnect();
                 return true;
             }
             catch (Exception)

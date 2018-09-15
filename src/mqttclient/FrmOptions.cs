@@ -5,6 +5,8 @@ using System.Data;
 using System.IO;
 using System.Speech.Synthesis;
 using System.Windows.Forms;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace mqttclient
 {
@@ -45,7 +47,7 @@ namespace mqttclient
             }
 
         }
-        
+
         private void SaveTriggerlist()
 
         {
@@ -352,10 +354,44 @@ namespace mqttclient
         {
             try
             {
-                SaveTriggerlist();
-                savesettings();
-                parentform.ReloadApp();
-                Close();
+                try
+                {
+                    SaveTriggerlist();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error durring SaveTriggerlist error:" + ex.Message);
+                    throw;
+                }
+                try
+                {
+                    savesettings();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error durring savesettings error:" + ex.Message);
+                    throw;
+                }
+
+                try
+                {
+                    parentform.ReloadApp();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error durring ReloadApp error:" + ex.Message);
+                    throw;
+                }
+                try
+                {
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error durring Close error:" + ex.Message);
+
+                    throw;
+                }
             }
             catch (Exception ex)
             {
@@ -386,6 +422,35 @@ namespace mqttclient
                 Properties.Settings.Default["RunAtStart"] = chkStartUp.Checked;
             }
         }
-        
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+
+            try
+            {
+                MqttClient client;
+                client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
+
+                if (txtmqttusername.Text.Length == 0)
+                {
+                    byte code = client.Connect(Guid.NewGuid().ToString());
+                }
+                else
+                {
+                    byte code = client.Connect(Guid.NewGuid().ToString(), txtmqttusername.Text, txtmqttpassword.Text);
+                }
+                MessageBox.Show("connection ok id: " + client.ClientId);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Connection failed");
+                //throw;
+            }
+
+
+
+
+        }
     }
 }

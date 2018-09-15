@@ -50,19 +50,54 @@ namespace mqttclient
 
         public void Mute(Boolean Enable)
         {
-            defaultPlaybackDevice.Mute(Enable);
+            try
+            {
+                defaultPlaybackDevice.Mute(Enable);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
         public Boolean isMuted()
         {
-            return defaultPlaybackDevice.IsMuted;
+            try
+            {
+                return defaultPlaybackDevice.IsMuted;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
         public void Volume(int level)
         {
-            defaultPlaybackDevice.Volume = Convert.ToDouble(level);
+            try
+            {
+                defaultPlaybackDevice.Volume = Convert.ToDouble(level);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
         public string GetVolume()
         {
-            return defaultPlaybackDevice.Volume + "%";
+            try
+            {
+                return defaultPlaybackDevice.Volume + "%";
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
     }
     public class power

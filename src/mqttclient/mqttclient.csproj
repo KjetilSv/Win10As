@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>36</ApplicationRevision>
+    <ApplicationRevision>38</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -54,7 +54,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>2D488D0616A52D56116E686371953FCF60C70802</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>10165045D85395FA9E2F39F866341C286C2B09F6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>mqttclient_TemporaryKey.pfx</ManifestKeyFile>
@@ -74,6 +74,9 @@
     </Reference>
     <Reference Include="AudioSwitcher.AudioApi.CoreAudio, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
       <HintPath>..\packages\AudioSwitcher.AudioApi.CoreAudio.3.0.0.1\lib\net40\AudioSwitcher.AudioApi.CoreAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
@@ -102,7 +105,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataModel.cs" />
+    <Compile Include="ContainerConfig.cs" />
+    <Compile Include="HardwareSensors\IAudio.cs" />
+    <Compile Include="HardwareSensors\IdleTimeFinder.cs" />
+    <Compile Include="HardwareSensors\Monitor.cs" />
+    <Compile Include="HardwareSensors\SystemShutdown.cs" />
+    <Compile Include="HardwareSensors\UsingComputer.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IToastMessage.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="MainFormContainer.cs" />
+    <Compile Include="MqttSettings.cs" />
+    <Compile Include="Mqtt\IMqtt.cs" />
+    <Compile Include="Mqtt\IMqttPublish.cs" />
+    <Compile Include="Mqtt\Mqtt.cs" />
+    <Compile Include="Mqtt\MqttPublish.cs" />
+    <Compile Include="Process.cs" />
+    <Compile Include="HardwareSensors\Audio.cs" />
+    <Compile Include="MqttTrigger.cs" />
     <Compile Include="FrmMqttMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,9 +135,13 @@
     <Compile Include="FrmOptions.Designer.cs">
       <DependentUpon>FrmOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="HardwareSensors.cs" />
+    <Compile Include="HardwareSensors\Memory.cs" />
+    <Compile Include="HardwareSensors\Power.cs" />
+    <Compile Include="HardwareSensors\Processor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="ToastMessage.cs" />
     <EmbeddedResource Include="FrmMqttMain.resx">
       <DependentUpon>FrmMqttMain.cs</DependentUpon>
     </EmbeddedResource>

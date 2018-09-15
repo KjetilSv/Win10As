@@ -59,7 +59,7 @@ Displays a message on the windows computer.
 Message exsample "Home Assistant,kom ned!,Kjetil,c:\temp\iselin.jpg".
 The the image must be visable from the windows computer.
 #### TTS
-[maintopic]/hibrernate
+[maintopic]/tts
 Mqtt message is sendt to the synthesizer.
 Currently the volume is set to 100%
 #### app/running sensor

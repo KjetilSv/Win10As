@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chkVolumeSensor = new System.Windows.Forms.CheckBox();
+            this.chkCpuSensor = new System.Windows.Forms.CheckBox();
+            this.chkMemorySensor = new System.Windows.Forms.CheckBox();
             this.ChkDiskSensor = new System.Windows.Forms.CheckBox();
             this.ChkBatterySensor = new System.Windows.Forms.CheckBox();
             this.chkStartUp = new System.Windows.Forms.CheckBox();
@@ -88,6 +91,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.ChkSlideshow = new System.Windows.Forms.CheckBox();
             this.txtSlideshowFolder = new System.Windows.Forms.TextBox();
+            this.ChkComputerUsed = new System.Windows.Forms.CheckBox();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -100,19 +104,53 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.ChkComputerUsed);
+            this.groupBox6.Controls.Add(this.chkVolumeSensor);
+            this.groupBox6.Controls.Add(this.chkCpuSensor);
+            this.groupBox6.Controls.Add(this.chkMemorySensor);
             this.groupBox6.Controls.Add(this.ChkDiskSensor);
             this.groupBox6.Controls.Add(this.ChkBatterySensor);
-            this.groupBox6.Location = new System.Drawing.Point(12, 295);
+            this.groupBox6.Location = new System.Drawing.Point(317, 310);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(285, 50);
+            this.groupBox6.Size = new System.Drawing.Size(387, 101);
             this.groupBox6.TabIndex = 40;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Sensors";
             // 
+            // chkVolumeSensor
+            // 
+            this.chkVolumeSensor.AutoSize = true;
+            this.chkVolumeSensor.Location = new System.Drawing.Point(10, 46);
+            this.chkVolumeSensor.Name = "chkVolumeSensor";
+            this.chkVolumeSensor.Size = new System.Drawing.Size(61, 17);
+            this.chkVolumeSensor.TabIndex = 4;
+            this.chkVolumeSensor.Text = "Volume";
+            this.chkVolumeSensor.UseVisualStyleBackColor = true;
+            // 
+            // chkCpuSensor
+            // 
+            this.chkCpuSensor.AutoSize = true;
+            this.chkCpuSensor.Location = new System.Drawing.Point(95, 46);
+            this.chkCpuSensor.Name = "chkCpuSensor";
+            this.chkCpuSensor.Size = new System.Drawing.Size(45, 17);
+            this.chkCpuSensor.TabIndex = 3;
+            this.chkCpuSensor.Text = "Cpu";
+            this.chkCpuSensor.UseVisualStyleBackColor = true;
+            // 
+            // chkMemorySensor
+            // 
+            this.chkMemorySensor.AutoSize = true;
+            this.chkMemorySensor.Location = new System.Drawing.Point(10, 69);
+            this.chkMemorySensor.Name = "chkMemorySensor";
+            this.chkMemorySensor.Size = new System.Drawing.Size(63, 17);
+            this.chkMemorySensor.TabIndex = 2;
+            this.chkMemorySensor.Text = "Memory";
+            this.chkMemorySensor.UseVisualStyleBackColor = true;
+            // 
             // ChkDiskSensor
             // 
             this.ChkDiskSensor.AutoSize = true;
-            this.ChkDiskSensor.Location = new System.Drawing.Point(95, 19);
+            this.ChkDiskSensor.Location = new System.Drawing.Point(95, 23);
             this.ChkDiskSensor.Name = "ChkDiskSensor";
             this.ChkDiskSensor.Size = new System.Drawing.Size(52, 17);
             this.ChkDiskSensor.TabIndex = 1;
@@ -123,7 +161,7 @@
             // ChkBatterySensor
             // 
             this.ChkBatterySensor.AutoSize = true;
-            this.ChkBatterySensor.Location = new System.Drawing.Point(21, 20);
+            this.ChkBatterySensor.Location = new System.Drawing.Point(10, 23);
             this.ChkBatterySensor.Name = "ChkBatterySensor";
             this.ChkBatterySensor.Size = new System.Drawing.Size(56, 17);
             this.ChkBatterySensor.TabIndex = 0;
@@ -134,7 +172,7 @@
             // chkStartUp
             // 
             this.chkStartUp.AutoSize = true;
-            this.chkStartUp.Location = new System.Drawing.Point(322, 480);
+            this.chkStartUp.Location = new System.Drawing.Point(322, 558);
             this.chkStartUp.Name = "chkStartUp";
             this.chkStartUp.Size = new System.Drawing.Size(81, 17);
             this.chkStartUp.TabIndex = 39;
@@ -191,6 +229,7 @@
             this.chkScreenshot.TabIndex = 0;
             this.chkScreenshot.Text = "Enable";
             this.chkScreenshot.UseVisualStyleBackColor = true;
+            this.chkScreenshot.CheckedChanged += new System.EventHandler(this.chkScreenshot_CheckedChanged);
             this.chkScreenshot.Click += new System.EventHandler(this.chkScreenshotMqtt_CheckedChanged);
             // 
             // dataGridView1
@@ -455,7 +494,7 @@
             // chkShutdown
             // 
             this.chkShutdown.AutoSize = true;
-            this.chkShutdown.Location = new System.Drawing.Point(23, 88);
+            this.chkShutdown.Location = new System.Drawing.Point(24, 88);
             this.chkShutdown.Name = "chkShutdown";
             this.chkShutdown.Size = new System.Drawing.Size(74, 17);
             this.chkShutdown.TabIndex = 15;
@@ -466,7 +505,7 @@
             // chkSuspend
             // 
             this.chkSuspend.AutoSize = true;
-            this.chkSuspend.Location = new System.Drawing.Point(23, 66);
+            this.chkSuspend.Location = new System.Drawing.Point(24, 66);
             this.chkSuspend.Name = "chkSuspend";
             this.chkSuspend.Size = new System.Drawing.Size(68, 17);
             this.chkSuspend.TabIndex = 14;
@@ -609,7 +648,7 @@
             // chkMinimizeToTray
             // 
             this.chkMinimizeToTray.AutoSize = true;
-            this.chkMinimizeToTray.Location = new System.Drawing.Point(322, 519);
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(322, 590);
             this.chkMinimizeToTray.Name = "chkMinimizeToTray";
             this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);
             this.chkMinimizeToTray.TabIndex = 41;
@@ -639,15 +678,15 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(394, 315);
+            this.comboBox1.Location = new System.Drawing.Point(80, 307);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(219, 21);
+            this.comboBox1.Size = new System.Drawing.Size(166, 21);
             this.comboBox1.TabIndex = 44;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(319, 318);
+            this.label11.Location = new System.Drawing.Point(5, 310);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(69, 13);
             this.label11.TabIndex = 45;
@@ -655,9 +694,9 @@
             // 
             // CmdTestSpeaker
             // 
-            this.CmdTestSpeaker.Location = new System.Drawing.Point(636, 313);
+            this.CmdTestSpeaker.Location = new System.Drawing.Point(255, 307);
             this.CmdTestSpeaker.Name = "CmdTestSpeaker";
-            this.CmdTestSpeaker.Size = new System.Drawing.Size(75, 23);
+            this.CmdTestSpeaker.Size = new System.Drawing.Size(42, 23);
             this.CmdTestSpeaker.TabIndex = 46;
             this.CmdTestSpeaker.Text = "test";
             this.CmdTestSpeaker.UseVisualStyleBackColor = true;
@@ -668,7 +707,7 @@
             this.groupBox7.Controls.Add(this.label12);
             this.groupBox7.Controls.Add(this.ChkSlideshow);
             this.groupBox7.Controls.Add(this.txtSlideshowFolder);
-            this.groupBox7.Location = new System.Drawing.Point(322, 357);
+            this.groupBox7.Location = new System.Drawing.Point(322, 439);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(352, 109);
             this.groupBox7.TabIndex = 49;
@@ -700,6 +739,17 @@
             this.txtSlideshowFolder.Name = "txtSlideshowFolder";
             this.txtSlideshowFolder.Size = new System.Drawing.Size(219, 20);
             this.txtSlideshowFolder.TabIndex = 49;
+            // 
+            // ChkComputerUsed
+            // 
+            this.ChkComputerUsed.AutoSize = true;
+            this.ChkComputerUsed.Location = new System.Drawing.Point(95, 70);
+            this.ChkComputerUsed.Name = "ChkComputerUsed";
+            this.ChkComputerUsed.Size = new System.Drawing.Size(107, 17);
+            this.ChkComputerUsed.TabIndex = 5;
+            this.ChkComputerUsed.Text = "Is computer used";
+            this.ChkComputerUsed.UseVisualStyleBackColor = true;
+            this.ChkComputerUsed.CheckedChanged += new System.EventHandler(this.isComputerUsed_CheckedChanged);
             // 
             // FrmOptions
             // 
@@ -804,5 +854,9 @@
         private System.Windows.Forms.CheckBox ChkSlideshow;
         private System.Windows.Forms.TextBox txtSlideshowFolder;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chkVolumeSensor;
+        private System.Windows.Forms.CheckBox chkCpuSensor;
+        private System.Windows.Forms.CheckBox chkMemorySensor;
+        private System.Windows.Forms.CheckBox ChkComputerUsed;
     }
 }

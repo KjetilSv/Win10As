@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using Autofac;
 
 namespace mqttclient
 {
@@ -12,9 +13,16 @@ namespace mqttclient
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            FrmMqttMain form1 = new FrmMqttMain();
-            Application.ThreadException += new ThreadExceptionEventHandler(form1.UnhandledThreadExceptionHandler);
-            Application.Run(form1);
+            var container = ContainerConfig.Configure();
+
+            using (var scope = container.BeginLifetimeScope())
+            {
+                FrmMqttMain form1 = scope.Resolve<FrmMqttMain>();
+                Application.ThreadException += new ThreadExceptionEventHandler(form1.UnhandledThreadExceptionHandler);
+                Application.Run(form1);
+            }
+
+            
         }
     }
 }

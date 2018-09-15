@@ -6,13 +6,12 @@ using System.IO;
 using System.Speech.Synthesis;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace mqttclient
 {
     public partial class FrmOptions : Form
     {
-        BindingList<mqtttrigger> MqttTriggerList = new BindingList<mqtttrigger>();
+        BindingList<MqttTrigger> MqttTriggerList = new BindingList<MqttTrigger>();
         string appID = "win iot";
         public string g_TriggerFile { get; set; }
         public string g_LocalScreetshotFile { get; set; }
@@ -47,7 +46,6 @@ namespace mqttclient
             }
 
         }
-
         private void SaveTriggerlist()
 
         {
@@ -76,13 +74,13 @@ namespace mqttclient
             if (File.Exists(g_TriggerFile))
             {
                 string s = File.ReadAllText(g_TriggerFile);
-                BindingList<mqtttrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<mqtttrigger>>(s);
+                BindingList<MqttTrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
                 MqttTriggerList = deserializedProduct;
-                foreach (mqtttrigger t in MqttTriggerList)
+                foreach (MqttTrigger t in MqttTriggerList)
                 {
                     if (t.Predefined == true)
                     {
-                        switch (t.name.ToLower())
+                        switch (t.Name.ToLower())
                         {
                             case "mute/set":
                                 chkmute.Checked = true;
@@ -129,8 +127,13 @@ namespace mqttclient
             txtmqttpassword.Text = Properties.Settings.Default["mqttpassword"].ToString();
             txtmqtttopic.Text = Properties.Settings.Default["mqtttopic"].ToString();
             txtMqttTimerInterval.Text = Properties.Settings.Default["mqtttimerinterval"].ToString();
+
             ChkBatterySensor.Checked = Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString());
             ChkDiskSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["DiskSensor"].ToString());
+            chkCpuSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Cpusensor"].ToString());
+            chkMemorySensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Freememorysensor"].ToString());
+            chkVolumeSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Volumesensor"].ToString());
+            ChkComputerUsed.Checked = Convert.ToBoolean(Properties.Settings.Default["IsComputerUsed"].ToString());
 
             chkMinimizeToTray.Checked = Convert.ToBoolean(Properties.Settings.Default["MinimizeToTray"].ToString());
 
@@ -165,7 +168,6 @@ namespace mqttclient
         }
         private void savesettings()
         {
-
             Properties.Settings.Default["mqttserver"] = txtmqttserver.Text;
             Properties.Settings.Default["mqttusername"] = txtmqttusername.Text;
             Properties.Settings.Default["mqttpassword"] = txtmqttpassword.Text;
@@ -177,7 +179,9 @@ namespace mqttclient
             Properties.Settings.Default["MinimizeToTray"] = chkMinimizeToTray.Checked;
             Properties.Settings.Default["MqttSlideshow"] = ChkSlideshow.Checked;
             Properties.Settings.Default["MqttSlideshowFolder"] = txtSlideshowFolder.Text;
-
+            Properties.Settings.Default["Cpusensor"] = chkCpuSensor.Checked;
+            Properties.Settings.Default["Freememorysensor"] = chkMemorySensor.Checked;
+            Properties.Settings.Default["Volumesensor"] = chkVolumeSensor.Checked;
 
             if (comboBox1.SelectedItem != null)
             {
@@ -191,21 +195,18 @@ namespace mqttclient
         {
             if (Add == true)
             {
-                mqtttrigger t = new mqtttrigger();
-                t.name = name;
+                MqttTrigger t = new MqttTrigger();
+                t.Name = name;
                 t.Predefined = true;
                 MqttTriggerList.Add(t);
             }
             else
             {
+                var tmpMqttTriggerList = MqttTriggerList;
 
-                BindingList<mqtttrigger> tmpMqttTriggerList;
-
-                tmpMqttTriggerList = MqttTriggerList;
-
-                foreach (mqtttrigger t in MqttTriggerList)
+                foreach (MqttTrigger t in MqttTriggerList)
                 {
-                    if (t.name == name)
+                    if (t.Name == name)
                     {
                         tmpMqttTriggerList.Remove(t);
                         break;
@@ -214,9 +215,6 @@ namespace mqttclient
                 MqttTriggerList = tmpMqttTriggerList;
             }
             SaveTriggerlist();
-
-
-
         }
         private void refreshgridandsavefile()
         {
@@ -277,10 +275,10 @@ namespace mqttclient
         {
             try
             {
-                mqtttrigger newtrigger = new mqtttrigger();
-                newtrigger.name = txtSubTopic.Text;
-                newtrigger.cmdtext = txtCmd.Text;
-                newtrigger.cmdparameters = txtCmdParameter.Text;
+                MqttTrigger newtrigger = new MqttTrigger();
+                newtrigger.Name = txtSubTopic.Text;
+                newtrigger.CmdText = txtCmd.Text;
+                newtrigger.CmdParameters = txtCmdParameter.Text;
                 newtrigger.Predefined = false;
                 MqttTriggerList.Add(newtrigger);
                 SaveTriggerlist();
@@ -315,6 +313,12 @@ namespace mqttclient
         {
             Properties.Settings.Default["DiskSensor"] = ChkDiskSensor.Checked;
             Properties.Settings.Default.Save();
+        }
+        private void isComputerUsed_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default["IsComputerUsed"] = ChkComputerUsed.Checked;
+            Properties.Settings.Default.Save();
+
         }
         private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs anError)
         {
@@ -422,15 +426,11 @@ namespace mqttclient
                 Properties.Settings.Default["RunAtStart"] = chkStartUp.Checked;
             }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-
-
             try
             {
-                MqttClient client;
-                client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
+                var client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
 
                 if (txtmqttusername.Text.Length == 0)
                 {
@@ -450,6 +450,10 @@ namespace mqttclient
 
 
 
+
+        }
+        private void chkScreenshot_CheckedChanged(object sender, EventArgs e)
+        {
 
         }
     }

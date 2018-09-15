@@ -6,7 +6,6 @@ using System.IO;
 using System.Speech.Synthesis;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
-//using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace mqttclient
 {
@@ -128,12 +127,13 @@ namespace mqttclient
             txtmqttpassword.Text = Properties.Settings.Default["mqttpassword"].ToString();
             txtmqtttopic.Text = Properties.Settings.Default["mqtttopic"].ToString();
             txtMqttTimerInterval.Text = Properties.Settings.Default["mqtttimerinterval"].ToString();
+
             ChkBatterySensor.Checked = Convert.ToBoolean(Properties.Settings.Default["BatterySensor"].ToString());
             ChkDiskSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["DiskSensor"].ToString());
-
             chkCpuSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Cpusensor"].ToString());
             chkMemorySensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Freememorysensor"].ToString());
             chkVolumeSensor.Checked = Convert.ToBoolean(Properties.Settings.Default["Volumesensor"].ToString());
+            ChkComputerUsed.Checked = Convert.ToBoolean(Properties.Settings.Default["IsComputerUsed"].ToString());
 
             chkMinimizeToTray.Checked = Convert.ToBoolean(Properties.Settings.Default["MinimizeToTray"].ToString());
 
@@ -168,7 +168,6 @@ namespace mqttclient
         }
         private void savesettings()
         {
-
             Properties.Settings.Default["mqttserver"] = txtmqttserver.Text;
             Properties.Settings.Default["mqttusername"] = txtmqttusername.Text;
             Properties.Settings.Default["mqttpassword"] = txtmqttpassword.Text;
@@ -216,9 +215,6 @@ namespace mqttclient
                 MqttTriggerList = tmpMqttTriggerList;
             }
             SaveTriggerlist();
-
-
-
         }
         private void refreshgridandsavefile()
         {
@@ -317,6 +313,12 @@ namespace mqttclient
         {
             Properties.Settings.Default["DiskSensor"] = ChkDiskSensor.Checked;
             Properties.Settings.Default.Save();
+        }
+        private void isComputerUsed_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default["IsComputerUsed"] = ChkComputerUsed.Checked;
+            Properties.Settings.Default.Save();
+
         }
         private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs anError)
         {
@@ -426,12 +428,9 @@ namespace mqttclient
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
-
             try
             {
-                MqttClient client;
-                client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
+                var client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
 
                 if (txtmqttusername.Text.Length == 0)
                 {

@@ -31,6 +31,10 @@ namespace mqttclient.Mqtt
 
             if (_mqtt.IsConnected == true)
             {
+                if (Convert.ToBoolean(Properties.Settings.Default["IsComputerUsed"].ToString()))
+                {
+                    PublishStatus();
+                }
                 if (Convert.ToBoolean(Properties.Settings.Default["Cpusensor"].ToString()) == true)
                 {
                     try
@@ -55,7 +59,7 @@ namespace mqttclient.Mqtt
 
                 if (Convert.ToBoolean(Properties.Settings.Default["screenshotenable"]) == true)
                 {
-                    TakeScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
+                    PublishScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
                 }
 
                 if (Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString()) == true)
@@ -97,6 +101,19 @@ namespace mqttclient.Mqtt
             catch (Exception)
             {
             }
+        }
+
+        private void PublishStatus()
+        {
+            if (UsingComputer.IsUsing())
+            {
+                _mqtt.Publish("", "on");
+            }
+            else
+            {
+                _mqtt.Publish("", "off");
+            }
+            
         }
 
         private void PublishBattery()
@@ -147,7 +164,7 @@ namespace mqttclient.Mqtt
 
         }
 
-        private void TakeScreenshot(string fileUri)
+        private void PublishScreenshot(string fileUri)
         {
             try
             {

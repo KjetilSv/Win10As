@@ -107,9 +107,14 @@
   <ItemGroup>
     <Compile Include="ContainerConfig.cs" />
     <Compile Include="HardwareSensors\IAudio.cs" />
+    <Compile Include="HardwareSensors\IdleTimeFinder.cs" />
+    <Compile Include="HardwareSensors\Monitor.cs" />
+    <Compile Include="HardwareSensors\SystemShutdown.cs" />
+    <Compile Include="HardwareSensors\UsingComputer.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IToastMessage.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="MainFormContainer.cs" />
     <Compile Include="MqttSettings.cs" />
     <Compile Include="Mqtt\IMqtt.cs" />
     <Compile Include="Mqtt\IMqttPublish.cs" />

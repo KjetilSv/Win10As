@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chkVolumeSensor = new System.Windows.Forms.CheckBox();
+            this.chkCpuSensor = new System.Windows.Forms.CheckBox();
+            this.chkMemorySensor = new System.Windows.Forms.CheckBox();
             this.ChkDiskSensor = new System.Windows.Forms.CheckBox();
             this.ChkBatterySensor = new System.Windows.Forms.CheckBox();
             this.chkStartUp = new System.Windows.Forms.CheckBox();
@@ -88,9 +91,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.ChkSlideshow = new System.Windows.Forms.CheckBox();
             this.txtSlideshowFolder = new System.Windows.Forms.TextBox();
-            this.chkMemorySensor = new System.Windows.Forms.CheckBox();
-            this.chkCpuSensor = new System.Windows.Forms.CheckBox();
-            this.chkVolumeSensor = new System.Windows.Forms.CheckBox();
+            this.ChkComputerUsed = new System.Windows.Forms.CheckBox();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -103,6 +104,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.ChkComputerUsed);
             this.groupBox6.Controls.Add(this.chkVolumeSensor);
             this.groupBox6.Controls.Add(this.chkCpuSensor);
             this.groupBox6.Controls.Add(this.chkMemorySensor);
@@ -114,6 +116,36 @@
             this.groupBox6.TabIndex = 40;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Sensors";
+            // 
+            // chkVolumeSensor
+            // 
+            this.chkVolumeSensor.AutoSize = true;
+            this.chkVolumeSensor.Location = new System.Drawing.Point(10, 46);
+            this.chkVolumeSensor.Name = "chkVolumeSensor";
+            this.chkVolumeSensor.Size = new System.Drawing.Size(61, 17);
+            this.chkVolumeSensor.TabIndex = 4;
+            this.chkVolumeSensor.Text = "Volume";
+            this.chkVolumeSensor.UseVisualStyleBackColor = true;
+            // 
+            // chkCpuSensor
+            // 
+            this.chkCpuSensor.AutoSize = true;
+            this.chkCpuSensor.Location = new System.Drawing.Point(95, 46);
+            this.chkCpuSensor.Name = "chkCpuSensor";
+            this.chkCpuSensor.Size = new System.Drawing.Size(45, 17);
+            this.chkCpuSensor.TabIndex = 3;
+            this.chkCpuSensor.Text = "Cpu";
+            this.chkCpuSensor.UseVisualStyleBackColor = true;
+            // 
+            // chkMemorySensor
+            // 
+            this.chkMemorySensor.AutoSize = true;
+            this.chkMemorySensor.Location = new System.Drawing.Point(10, 69);
+            this.chkMemorySensor.Name = "chkMemorySensor";
+            this.chkMemorySensor.Size = new System.Drawing.Size(63, 17);
+            this.chkMemorySensor.TabIndex = 2;
+            this.chkMemorySensor.Text = "Memory";
+            this.chkMemorySensor.UseVisualStyleBackColor = true;
             // 
             // ChkDiskSensor
             // 
@@ -708,35 +740,16 @@
             this.txtSlideshowFolder.Size = new System.Drawing.Size(219, 20);
             this.txtSlideshowFolder.TabIndex = 49;
             // 
-            // chkMemorySensor
+            // ChkComputerUsed
             // 
-            this.chkMemorySensor.AutoSize = true;
-            this.chkMemorySensor.Location = new System.Drawing.Point(10, 69);
-            this.chkMemorySensor.Name = "chkMemorySensor";
-            this.chkMemorySensor.Size = new System.Drawing.Size(63, 17);
-            this.chkMemorySensor.TabIndex = 2;
-            this.chkMemorySensor.Text = "Memory";
-            this.chkMemorySensor.UseVisualStyleBackColor = true;
-            // 
-            // chkCpuSensor
-            // 
-            this.chkCpuSensor.AutoSize = true;
-            this.chkCpuSensor.Location = new System.Drawing.Point(95, 46);
-            this.chkCpuSensor.Name = "chkCpuSensor";
-            this.chkCpuSensor.Size = new System.Drawing.Size(45, 17);
-            this.chkCpuSensor.TabIndex = 3;
-            this.chkCpuSensor.Text = "Cpu";
-            this.chkCpuSensor.UseVisualStyleBackColor = true;
-            // 
-            // chkVolumeSensor
-            // 
-            this.chkVolumeSensor.AutoSize = true;
-            this.chkVolumeSensor.Location = new System.Drawing.Point(10, 46);
-            this.chkVolumeSensor.Name = "chkVolumeSensor";
-            this.chkVolumeSensor.Size = new System.Drawing.Size(61, 17);
-            this.chkVolumeSensor.TabIndex = 4;
-            this.chkVolumeSensor.Text = "Volume";
-            this.chkVolumeSensor.UseVisualStyleBackColor = true;
+            this.ChkComputerUsed.AutoSize = true;
+            this.ChkComputerUsed.Location = new System.Drawing.Point(95, 70);
+            this.ChkComputerUsed.Name = "ChkComputerUsed";
+            this.ChkComputerUsed.Size = new System.Drawing.Size(107, 17);
+            this.ChkComputerUsed.TabIndex = 5;
+            this.ChkComputerUsed.Text = "Is computer used";
+            this.ChkComputerUsed.UseVisualStyleBackColor = true;
+            this.ChkComputerUsed.CheckedChanged += new System.EventHandler(this.isComputerUsed_CheckedChanged);
             // 
             // FrmOptions
             // 
@@ -844,5 +857,6 @@
         private System.Windows.Forms.CheckBox chkVolumeSensor;
         private System.Windows.Forms.CheckBox chkCpuSensor;
         private System.Windows.Forms.CheckBox chkMemorySensor;
+        private System.Windows.Forms.CheckBox ChkComputerUsed;
     }
 }

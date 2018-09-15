@@ -33,6 +33,7 @@ namespace mqttclient
                 try
                 {
                     _mqtt.Connect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+                    toolStripStatusLabel1.Text = "connected to " + Properties.Settings.Default["mqttserver"].ToString();
                 }
                 catch (Exception e)
                 {

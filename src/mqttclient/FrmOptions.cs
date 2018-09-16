@@ -44,6 +44,7 @@ namespace mqttclient
                 Properties.Settings.Default.Save();
 
             }
+            LoadAudioDevices();
 
         }
         private void SaveTriggerlist()
@@ -454,7 +455,17 @@ namespace mqttclient
         }
         private void chkScreenshot_CheckedChanged(object sender, EventArgs e)
         {
-
         }
+
+        private void LoadAudioDevices()
+        {
+            HardwareSensors.Audio _audio = new HardwareSensors.Audio();
+            foreach (string t in _audio.GetAudioDevices())
+            {
+                comboBox2.Items.Add(t);
+            }
+        }
+
+
     }
 }

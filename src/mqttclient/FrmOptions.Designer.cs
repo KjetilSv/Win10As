@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.ChkComputerUsed = new System.Windows.Forms.CheckBox();
             this.chkVolumeSensor = new System.Windows.Forms.CheckBox();
             this.chkCpuSensor = new System.Windows.Forms.CheckBox();
             this.chkMemorySensor = new System.Windows.Forms.CheckBox();
@@ -91,7 +92,9 @@
             this.label12 = new System.Windows.Forms.Label();
             this.ChkSlideshow = new System.Windows.Forms.CheckBox();
             this.txtSlideshowFolder = new System.Windows.Forms.TextBox();
-            this.ChkComputerUsed = new System.Windows.Forms.CheckBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -100,6 +103,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox6
@@ -116,6 +120,17 @@
             this.groupBox6.TabIndex = 40;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Sensors";
+            // 
+            // ChkComputerUsed
+            // 
+            this.ChkComputerUsed.AutoSize = true;
+            this.ChkComputerUsed.Location = new System.Drawing.Point(95, 70);
+            this.ChkComputerUsed.Name = "ChkComputerUsed";
+            this.ChkComputerUsed.Size = new System.Drawing.Size(107, 17);
+            this.ChkComputerUsed.TabIndex = 5;
+            this.ChkComputerUsed.Text = "Is computer used";
+            this.ChkComputerUsed.UseVisualStyleBackColor = true;
+            this.ChkComputerUsed.CheckedChanged += new System.EventHandler(this.isComputerUsed_CheckedChanged);
             // 
             // chkVolumeSensor
             // 
@@ -172,7 +187,7 @@
             // chkStartUp
             // 
             this.chkStartUp.AutoSize = true;
-            this.chkStartUp.Location = new System.Drawing.Point(322, 558);
+            this.chkStartUp.Location = new System.Drawing.Point(327, 574);
             this.chkStartUp.Name = "chkStartUp";
             this.chkStartUp.Size = new System.Drawing.Size(81, 17);
             this.chkStartUp.TabIndex = 39;
@@ -648,7 +663,7 @@
             // chkMinimizeToTray
             // 
             this.chkMinimizeToTray.AutoSize = true;
-            this.chkMinimizeToTray.Location = new System.Drawing.Point(322, 590);
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(327, 606);
             this.chkMinimizeToTray.Name = "chkMinimizeToTray";
             this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);
             this.chkMinimizeToTray.TabIndex = 41;
@@ -657,7 +672,7 @@
             // 
             // CmdSave
             // 
-            this.CmdSave.Location = new System.Drawing.Point(619, 600);
+            this.CmdSave.Location = new System.Drawing.Point(619, 651);
             this.CmdSave.Name = "CmdSave";
             this.CmdSave.Size = new System.Drawing.Size(95, 23);
             this.CmdSave.TabIndex = 42;
@@ -667,7 +682,7 @@
             // 
             // CmdClose
             // 
-            this.CmdClose.Location = new System.Drawing.Point(518, 600);
+            this.CmdClose.Location = new System.Drawing.Point(518, 651);
             this.CmdClose.Name = "CmdClose";
             this.CmdClose.Size = new System.Drawing.Size(95, 23);
             this.CmdClose.TabIndex = 43;
@@ -709,7 +724,7 @@
             this.groupBox7.Controls.Add(this.txtSlideshowFolder);
             this.groupBox7.Location = new System.Drawing.Point(322, 439);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(352, 109);
+            this.groupBox7.Size = new System.Drawing.Size(352, 74);
             this.groupBox7.TabIndex = 49;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Slideshow";
@@ -740,22 +755,40 @@
             this.txtSlideshowFolder.Size = new System.Drawing.Size(219, 20);
             this.txtSlideshowFolder.TabIndex = 49;
             // 
-            // ChkComputerUsed
+            // groupBox8
             // 
-            this.ChkComputerUsed.AutoSize = true;
-            this.ChkComputerUsed.Location = new System.Drawing.Point(95, 70);
-            this.ChkComputerUsed.Name = "ChkComputerUsed";
-            this.ChkComputerUsed.Size = new System.Drawing.Size(107, 17);
-            this.ChkComputerUsed.TabIndex = 5;
-            this.ChkComputerUsed.Text = "Is computer used";
-            this.ChkComputerUsed.UseVisualStyleBackColor = true;
-            this.ChkComputerUsed.CheckedChanged += new System.EventHandler(this.isComputerUsed_CheckedChanged);
+            this.groupBox8.Controls.Add(this.label13);
+            this.groupBox8.Controls.Add(this.comboBox2);
+            this.groupBox8.Location = new System.Drawing.Point(322, 519);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(352, 45);
+            this.groupBox8.TabIndex = 51;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Audio device";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(96, 18);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(213, 21);
+            this.comboBox2.TabIndex = 51;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(12, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.TabIndex = 52;
+            this.label13.Text = "Default";
             // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(716, 634);
+            this.ClientSize = new System.Drawing.Size(724, 689);
+            this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.CmdTestSpeaker);
             this.Controls.Add(this.label11);
@@ -787,6 +820,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -858,5 +893,8 @@
         private System.Windows.Forms.CheckBox chkCpuSensor;
         private System.Windows.Forms.CheckBox chkMemorySensor;
         private System.Windows.Forms.CheckBox ChkComputerUsed;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

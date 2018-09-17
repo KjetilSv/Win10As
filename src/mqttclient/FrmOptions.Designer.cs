@@ -95,6 +95,7 @@
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -783,11 +784,20 @@
             this.label13.TabIndex = 52;
             this.label13.Text = "Default";
             // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(461, 581);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(213, 21);
+            this.comboBox3.TabIndex = 52;
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 689);
+            this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.CmdTestSpeaker);
@@ -896,5 +906,6 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox3;
     }
 }

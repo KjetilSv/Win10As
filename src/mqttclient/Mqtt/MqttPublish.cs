@@ -80,6 +80,10 @@ namespace mqttclient.Mqtt
                 {
                     PublishDiskStatus();
                 }
+
+                PublishCamera();
+
+
             }
         }
 
@@ -193,6 +197,14 @@ namespace mqttclient.Mqtt
             catch (Exception)
             {
             }
+        }
+
+        private void PublishCamera()
+        {
+            HardwareSensors.Camera c = new Camera();
+            //todo some handling to select camera
+            string b = c.GetPicture("0");
+            _mqtt.PublishImage("mqttcamera", b);
         }
 
         private void MqttCameraSlide(string folder)

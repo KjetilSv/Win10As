@@ -45,7 +45,7 @@ namespace mqttclient
 
             }
             LoadAudioDevices();
-
+            LoadCameraDevices();
         }
         private void SaveTriggerlist()
 
@@ -466,6 +466,14 @@ namespace mqttclient
             }
         }
 
+        private void LoadCameraDevices()
+        {
+            HardwareSensors.Camera _cam = new HardwareSensors.Camera();
+            foreach (string t in _cam.GetDevices())
+            {
+                comboBox3.Items.Add(t);
+            }
+        }
 
     }
 }

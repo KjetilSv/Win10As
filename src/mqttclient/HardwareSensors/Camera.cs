@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using DirectShowLib;
 using AForge.Imaging;
 using AForge.Video.DirectShow;
 using AForge.Video;

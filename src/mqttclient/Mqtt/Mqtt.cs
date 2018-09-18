@@ -46,7 +46,11 @@ namespace mqttclient.Mqtt
         {
             if (_client.IsConnected)
             {
-                _client.Publish(FullTopic(topic), File.ReadAllBytes(file));
+                if (File.Exists(file))
+                {
+                    _client.Publish(FullTopic(topic), File.ReadAllBytes(file));
+                }
+
             }
         }
 

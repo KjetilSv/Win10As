@@ -23,8 +23,8 @@ namespace mqttclient.HardwareSensors
             {
                 bool finish = false;
                 File.Delete(Filename);
-
-                FinalVideo = new VideoCaptureDevice(VideoCaptureDevices[Convert.ToInt32(WebcamnameId)].MonikerString);
+                FilterInfoCollection VideoCaptureDev = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                FinalVideo = new VideoCaptureDevice(VideoCaptureDev[Convert.ToInt32(WebcamnameId)].MonikerString);
                 FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
                 FinalVideo.Start();
                 do

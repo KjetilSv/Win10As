@@ -63,6 +63,7 @@ namespace mqttclient
             timer1.Interval = Convert.ToInt32(Properties.Settings.Default["mqtttimerinterval"].ToString());
             timer1.Start();
         }
+
         private void client_MqttConnectionClosed(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = "not connected";
@@ -132,7 +133,6 @@ namespace mqttclient
                 this.Show();
             }
         }
-
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             this.Show();

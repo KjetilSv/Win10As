@@ -3,7 +3,6 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
-using System.Speech.Synthesis;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
 
@@ -154,13 +153,9 @@ namespace mqttclient
                 txtScreenshotPath.Text = Properties.Settings.Default["ScreenShotpath"].ToString();
             }
 
-            SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-            foreach (InstalledVoice i in synthesizer.GetInstalledVoices())
-            {
-                comboBox1.Items.Add(i.VoiceInfo.Name);
-            }
+            cmbSpeaker.DataSource = HardwareSensors.Speaker.GetSpeakers();
 
-            comboBox1.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
+            cmbSpeaker.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
             ChkSlideshow.Checked = Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString());
             txtSlideshowFolder.Text = Properties.Settings.Default["MqttSlideshowFolder"].ToString();
             chkStartUp.Checked = Convert.ToBoolean(Properties.Settings.Default["RunAtStart"]);
@@ -184,9 +179,9 @@ namespace mqttclient
             Properties.Settings.Default["Freememorysensor"] = chkMemorySensor.Checked;
             Properties.Settings.Default["Volumesensor"] = chkVolumeSensor.Checked;
 
-            if (comboBox1.SelectedItem != null)
+            if (cmbSpeaker.SelectedItem != null)
             {
-                Properties.Settings.Default["TTSSpeaker"] = comboBox1.SelectedItem.ToString();
+                Properties.Settings.Default["TTSSpeaker"] = cmbSpeaker.SelectedItem.ToString();
             }
 
             Properties.Settings.Default.Save();
@@ -407,9 +402,10 @@ namespace mqttclient
         }
         private void CmdTestSpeaker_Click(object sender, EventArgs e)
         {
-            SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-            synthesizer.SelectVoice(comboBox1.SelectedItem.ToString());
-            synthesizer.Speak("testing");
+            if (cmbSpeaker.SelectedItem.ToString().Length > 0)
+            {
+                HardwareSensors.Speaker.Speak("testing", cmbSpeaker.SelectedItem.ToString());
+            }
         }
         private void chkStartUp_CheckedChanged(object sender, EventArgs e)
         {
@@ -456,24 +452,20 @@ namespace mqttclient
         private void chkScreenshot_CheckedChanged(object sender, EventArgs e)
         {
         }
-
         private void LoadAudioDevices()
         {
-            HardwareSensors.Audio _audio = new HardwareSensors.Audio();
-            foreach (string t in _audio.GetAudioDevices())
-            {
-                comboBox2.Items.Add(t);
-            }
+            cmbAudioOutput.DataSource = HardwareSensors.Audio.GetAudioDevices();
         }
-
         private void LoadCameraDevices()
         {
-            HardwareSensors.Camera _cam = new HardwareSensors.Camera();
-            foreach (string t in _cam.GetDevices())
-            {
-                comboBox3.Items.Add(t);
-            }
+            cmbWebcam.DataSource = HardwareSensors.Camera.GetDevices();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            HardwareSensors.Camera c = new HardwareSensors.Camera();
+            c.Filename = @"c:\temp\test.bmp";
+            c.GetPicture(cmbWebcam.SelectedIndex.ToString());
+        }
     }
 }

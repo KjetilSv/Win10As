@@ -59,7 +59,7 @@ namespace mqttclient.HardwareSensors
             }
 
         }
-        public List<string> GetAudioDevices()
+        static public List<string> GetAudioDevices()
         {
             CoreAudioController cac = new CoreAudioController();
             List<string> tmp = new List<string>();

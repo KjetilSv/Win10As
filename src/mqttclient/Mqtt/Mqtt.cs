@@ -44,10 +44,14 @@ namespace mqttclient.Mqtt
 
         public void PublishImage(string topic, string file)
         {
-            if (_client.IsConnected)
+            if (File.Exists(file))
             {
-                _client.Publish(FullTopic(topic), File.ReadAllBytes(file));
+                if (_client.IsConnected)
+                {
+                    _client.Publish(FullTopic(topic), File.ReadAllBytes(file));
+                }
             }
+
         }
 
         public void PublishByte(string topic, byte[] bytes)

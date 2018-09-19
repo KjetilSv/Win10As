@@ -16,39 +16,45 @@ namespace mqttclient.HardwareSensors
     {
         private FilterInfoCollection VideoCaptureDevices;
         private VideoCaptureDevice FinalVideo;
-        public string GetPicture(string Webcamname)
+        public string Filename { get; set; }
+        public string GetPicture(string WebcamnameId)
         {
-
-            bool finish = false;
-            string filename = @"c:\temp\picture.jpg";
-
-            File.Delete(filename);
-            FinalVideo = new VideoCaptureDevice(VideoCaptureDevices[1].MonikerString);
-            FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
-            FinalVideo.Start();
-            do
+            if (Filename != null)
             {
-                if (File.Exists(filename))
-                {
-                    finish = true;
-                    FinalVideo.SignalToStop();
-                 }
-            } while (finish != true);
-            return filename;
+                bool finish = false;
+                File.Delete(Filename);
 
+                FinalVideo = new VideoCaptureDevice(VideoCaptureDevices[Convert.ToInt32(WebcamnameId)].MonikerString);
+                FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+                FinalVideo.Start();
+                do
+                {
+                    if (File.Exists(Filename))
+                    {
+                        finish = true;
+                        FinalVideo.SignalToStop();
+                    }
+                } while (finish != true);
+                return Filename;
+
+            }
+            else
+            {
+                return "";
+            }
         }
         void FinalVideo_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
- 
+
             Bitmap bitmap = (Bitmap)eventArgs.Frame;
-            bitmap.Save(@"C:\temp\picture.jpg");
+            bitmap.Save(Filename);
 
         }
-        public List<string> GetDevices()
+        public static List<string> GetDevices()
         {
             List<string> Result = new List<string>();
-            VideoCaptureDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            foreach (FilterInfo VideoCaptureDevice in VideoCaptureDevices)
+            FilterInfoCollection VideoCaptureDev = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            foreach (FilterInfo VideoCaptureDevice in VideoCaptureDev)
             {
                 Result.Add(VideoCaptureDevice.Name);
             }

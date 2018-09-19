@@ -14,7 +14,7 @@ namespace mqttclient.HardwareSensors
 {
     public class Camera
     {
-        private FilterInfoCollection VideoCaptureDevices;
+        //private FilterInfoCollection VideoCaptureDevices;
         private VideoCaptureDevice FinalVideo;
         public string Filename { get; set; }
         public string GetPicture(string WebcamnameId)

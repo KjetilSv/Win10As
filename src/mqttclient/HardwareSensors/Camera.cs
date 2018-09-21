@@ -9,6 +9,7 @@ using AForge.Imaging;
 using AForge.Video.DirectShow;
 using AForge.Video;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace mqttclient.HardwareSensors
 {
@@ -39,11 +40,15 @@ namespace mqttclient.HardwareSensors
                         }
                     }
 
+
+
                     FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
                     FinalVideo.Start();
                     do
                     {
+                        FinalVideo.Start();
                         if (File.Exists(Filename))
+                        //if (memoryStream.Length != 0)
                         {
                             finish = true;
                             FinalVideo.SignalToStop();
@@ -78,10 +83,10 @@ namespace mqttclient.HardwareSensors
                 //FileStream stream = new FileStream;
                 Bitmap bitmap = (Bitmap)eventArgs.Frame;
                 //Bitmap bitclone = (Bitmap)bitmap.Clone();
-                bitmap.Save(Filename, System.Drawing.Imaging.ImageFormat.Png);
-                bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+              bitmap.Save(Filename, System.Drawing.Imaging.ImageFormat.Png);
+                //bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
                 //stream.CopyTo(memoryStream);
-                bitmap.Dispose();
+                //bitmap.Dispose();
 
                 //}
 

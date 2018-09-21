@@ -12,6 +12,7 @@ namespace mqttclient.Mqtt
         private readonly IAudio _audioobj;
         private readonly IMqtt _mqtt;
         private readonly string GLocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
+        private readonly string GLocalWebcamFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "webcam.png");
 
         public MqttPublish(IMqtt mqtt, IAudio audio)
         {
@@ -84,22 +85,8 @@ namespace mqttclient.Mqtt
                 if (Convert.ToBoolean(Properties.Settings.Default["EnableWebCamPublish"].ToString()) == true)
                 {
 
-                    string filename = @"C:\temp\test.png";
-                    PublishCamera(filename);
-
-
-                   // _mqtt.PublishByte("webcamera", File.ReadAllBytes(filename));
-
+                    PublishCamera(GLocalWebcamFile);              
                 }
-
-
-
-
-                //PublishCamera
-
-                //PublishCamera();
-
-
             }
         }
 
@@ -219,20 +206,12 @@ namespace mqttclient.Mqtt
         {
             try
             {
-                // string filename = @"c:\temp\test.png";
-
                 Camera c = new Camera();
                 c.Filename = filename;
                 string retur = c.GetPicture(Convert.ToString(Properties.Settings.Default["WebCamToPublish"].ToString()));
                 _mqtt.PublishByte("webcamera", c.memoryStream.ToArray());
                 c.memoryStream = null;
                 c = null;
-               //return retur;
-
-
-
-
-
             }
             catch (Exception)
             {

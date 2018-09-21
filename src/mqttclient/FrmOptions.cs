@@ -482,13 +482,16 @@ namespace mqttclient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (cmbWebcam.SelectedText.Length > 0)
+            if (cmbWebcam.SelectedValue.ToString().Length > 0)
             {
                 HardwareSensors.Camera c = new HardwareSensors.Camera();
                 c.Filename = @"c:\temp\test.bmp";
-                c.GetPicture(cmbWebcam.SelectedText);
+                c.GetPicture(cmbWebcam.SelectedValue.ToString());
+                //using (FileStream file = new FileStream(c.Filename, FileMode.Create, FileAccess.Write))
+                //{
+                //    c.memoryStream.WriteTo(file);
+                //}
 
-                
             }
         }
 

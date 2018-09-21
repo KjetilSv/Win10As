@@ -44,7 +44,7 @@ namespace mqttclient
 
             }
             LoadAudioDevices();
-            LoadCameraDevices();
+
         }
         private void SaveTriggerlist()
 
@@ -159,6 +159,19 @@ namespace mqttclient
             ChkSlideshow.Checked = Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString());
             txtSlideshowFolder.Text = Properties.Settings.Default["MqttSlideshowFolder"].ToString();
             chkStartUp.Checked = Convert.ToBoolean(Properties.Settings.Default["RunAtStart"]);
+            ChkEnableWebCamPublish.Checked = Convert.ToBoolean(Properties.Settings.Default["EnableWebCamPublish"]);
+            if (ChkEnableWebCamPublish.Checked == true)
+            {
+                LoadCameraDevices();
+                if (Convert.ToString(Properties.Settings.Default["WebCamToPublish"]).Length > 0)
+                {
+                    cmbWebcam.SelectedText = Convert.ToString(Properties.Settings.Default["WebCamToPublish"]);
+                }
+            }
+            else
+            {
+                cmbWebcam.Visible = false;
+            }
 
 
         }
@@ -178,10 +191,16 @@ namespace mqttclient
             Properties.Settings.Default["Cpusensor"] = chkCpuSensor.Checked;
             Properties.Settings.Default["Freememorysensor"] = chkMemorySensor.Checked;
             Properties.Settings.Default["Volumesensor"] = chkVolumeSensor.Checked;
+            Properties.Settings.Default["EnableWebCamPublish"] = ChkEnableWebCamPublish.Checked;
 
             if (cmbSpeaker.SelectedItem != null)
             {
                 Properties.Settings.Default["TTSSpeaker"] = cmbSpeaker.SelectedItem.ToString();
+            }
+
+            if (cmbWebcam.SelectedItem != null)
+            {
+                Properties.Settings.Default["WebCamToPublish"] = cmbWebcam.SelectedItem.ToString();
             }
 
             Properties.Settings.Default.Save();
@@ -463,9 +482,29 @@ namespace mqttclient
 
         private void button2_Click(object sender, EventArgs e)
         {
-            HardwareSensors.Camera c = new HardwareSensors.Camera();
-            c.Filename = @"c:\temp\test.bmp";
-            c.GetPicture(cmbWebcam.SelectedIndex.ToString());
+            if (cmbWebcam.SelectedText.Length > 0)
+            {
+                HardwareSensors.Camera c = new HardwareSensors.Camera();
+                c.Filename = @"c:\temp\test.bmp";
+                c.GetPicture(cmbWebcam.SelectedText);
+
+                
+            }
+        }
+
+        private void ChkEnableWebCamPublish_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ChkEnableWebCamPublish.Checked)
+            {
+                cmbWebcam.Visible = true;
+                LoadCameraDevices();
+
+            }
+            else
+            {
+                cmbWebcam.DataSource = null;
+                cmbWebcam.Visible = true;
+            }
         }
     }
 }

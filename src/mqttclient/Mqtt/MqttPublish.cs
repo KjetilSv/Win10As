@@ -81,7 +81,23 @@ namespace mqttclient.Mqtt
                     PublishDiskStatus();
                 }
 
-                PublishCamera();
+                if (Convert.ToBoolean(Properties.Settings.Default["EnableWebCamPublish"].ToString()) == true)
+                {
+
+                    string filename = @"C:\temp\test.png";
+                    PublishCamera(filename);
+
+
+                   // _mqtt.PublishByte("webcamera", File.ReadAllBytes(filename));
+
+                }
+
+
+
+
+                //PublishCamera
+
+                //PublishCamera();
 
 
             }
@@ -117,7 +133,7 @@ namespace mqttclient.Mqtt
             {
                 _mqtt.Publish("", "off");
             }
-            
+
         }
 
         private void PublishBattery()
@@ -199,12 +215,31 @@ namespace mqttclient.Mqtt
             }
         }
 
-        private void PublishCamera()
+        private void PublishCamera(string filename)
         {
-            HardwareSensors.Camera c = new Camera();
-            //todo some handling to select camera
-            string b = c.GetPicture("0");
-            _mqtt.PublishImage("mqttcamera", b);
+            try
+            {
+                // string filename = @"c:\temp\test.png";
+
+                Camera c = new Camera();
+                c.Filename = filename;
+                string retur = c.GetPicture(Convert.ToString(Properties.Settings.Default["WebCamToPublish"].ToString()));
+                _mqtt.PublishByte("webcamera", c.memoryStream.ToArray());
+                c.memoryStream = null;
+                c = null;
+               //return retur;
+
+
+
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private void MqttCameraSlide(string folder)

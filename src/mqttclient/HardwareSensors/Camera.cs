@@ -13,41 +13,85 @@ using System.IO;
 namespace mqttclient.HardwareSensors
 {
     public class Camera
+
     {
-        //private FilterInfoCollection VideoCaptureDevices;
         private VideoCaptureDevice FinalVideo;
         public string Filename { get; set; }
+        public MemoryStream memoryStream = new MemoryStream();
         public string GetPicture(string WebcamnameId)
-        {
-            if (Filename != null)
-            {
-                bool finish = false;
-                File.Delete(Filename);
-                FilterInfoCollection VideoCaptureDev = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-                FinalVideo = new VideoCaptureDevice(VideoCaptureDev[Convert.ToInt32(WebcamnameId)].MonikerString);
-                FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
-                FinalVideo.Start();
-                do
-                {
-                    if (File.Exists(Filename))
-                    {
-                        finish = true;
-                        FinalVideo.SignalToStop();
-                    }
-                } while (finish != true);
-                return Filename;
 
-            }
-            else
+        {
+            try
             {
-                return "";
+                if (Filename != null)
+                {
+                    bool finish = false;
+                    File.Delete(Filename);
+
+                    FilterInfoCollection VideoCaptureDev = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+                    foreach (FilterInfo VideoCaptureDevice in VideoCaptureDev)
+                    {
+
+                        if (VideoCaptureDevice.Name == WebcamnameId)
+                        {
+                            FinalVideo = new VideoCaptureDevice(VideoCaptureDevice.MonikerString);
+                        }
+                    }
+
+                    FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+                    FinalVideo.Start();
+                    do
+                    {
+                        if (File.Exists(Filename))
+                        {
+                            finish = true;
+                            FinalVideo.SignalToStop();
+                        }
+                    } while (finish != true);
+                    return Filename;
+
+                }
+                else
+                {
+                    return "";
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
         void FinalVideo_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
+            try
+            {
 
-            Bitmap bitmap = (Bitmap)eventArgs.Frame;
-            bitmap.Save(Filename);
+                //using (FileStream stream = new FileStream(Filename + "1", FileMode.OpenOrCreate, FileAccess.Write))
+                //{
+
+                //}
+                //using (FileStream stream = new FileStream(Filename, FileMode.OpenOrCreate, FileAccess.Write))
+                //{
+                //FileStream stream = new FileStream;
+                Bitmap bitmap = (Bitmap)eventArgs.Frame;
+                //Bitmap bitclone = (Bitmap)bitmap.Clone();
+                bitmap.Save(Filename, System.Drawing.Imaging.ImageFormat.Png);
+                bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                //stream.CopyTo(memoryStream);
+                bitmap.Dispose();
+
+                //}
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
 
         }
         public static List<string> GetDevices()

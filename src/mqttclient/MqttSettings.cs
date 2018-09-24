@@ -133,6 +133,15 @@ namespace mqttclient
             get => (string)Properties.Settings.Default["WebCamToPublish"];
             set => Properties.Settings.Default["WebCamToPublish"] = value.ToString();
         }
+        public static bool EnableTTS
+        {
+            get => (bool)Properties.Settings.Default["EnableTTS"];
+            set => Properties.Settings.Default["EnableTTS"] = value.ToString();
+        }
+
+        
+
+
         public static string TTSSpeaker { get; internal set; }
 
         internal static void Save()

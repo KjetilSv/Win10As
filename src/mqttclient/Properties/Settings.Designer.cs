@@ -298,5 +298,17 @@ namespace mqttclient.Properties {
                 this["WebCamToPublish"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableTTS {
+            get {
+                return ((bool)(this["EnableTTS"]));
+            }
+            set {
+                this["EnableTTS"] = value;
+            }
+        }
     }
 }

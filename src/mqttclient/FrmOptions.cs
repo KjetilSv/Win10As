@@ -135,6 +135,7 @@ namespace mqttclient
             ChkComputerUsed.Checked = MqttSettings.IsComputerUsed;
             chkMinimizeToTray.Checked = MqttSettings.MinimizeToTray;
             chkScreenshot.Checked = MqttSettings.ScreenshotEnable;
+            chkTtsEnabled.Checked = MqttSettings.EnableTTS;
 
             if (MqttSettings.ScreenshotMqtt)
             {
@@ -147,9 +148,13 @@ namespace mqttclient
                 txtScreenshotPath.Text = MqttSettings.ScreenShotPath;
             }
 
-            cmbSpeaker.DataSource = HardwareSensors.Speaker.GetSpeakers();
-            
-            cmbSpeaker.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
+            if (chkTtsEnabled.Checked == true)
+            {
+                cmbSpeaker.DataSource = HardwareSensors.Speaker.GetSpeakers();
+                cmbSpeaker.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
+            }
+
+
             ChkSlideshow.Checked = Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString());
             txtSlideshowFolder.Text = Properties.Settings.Default["MqttSlideshowFolder"].ToString();
             chkStartUp.Checked = Convert.ToBoolean(Properties.Settings.Default["RunAtStart"]);
@@ -186,6 +191,7 @@ namespace mqttclient
             MqttSettings.FreeMemorySensor = chkMemorySensor.Checked;
             MqttSettings.VolumeSensor = chkVolumeSensor.Checked;
             MqttSettings.EnableWebCamPublish = ChkEnableWebCamPublish.Checked;
+            MqttSettings.EnableTTS = chkTtsEnabled.Checked;
             if (cmbSpeaker.SelectedItem != null)
             {
                 MqttSettings.TTSSpeaker = cmbSpeaker.SelectedItem.ToString();
@@ -497,13 +503,13 @@ namespace mqttclient
                 cmbWebcam.Visible = true;
             }
         }
-
-
-
-        private void CmdDiscovery_Click(object sender, EventArgs e)
+        private void chkTtsEnabled_CheckedChanged(object sender, EventArgs e)
         {
-       
-
+            if (chkTtsEnabled.Checked == true)
+            {
+                cmbSpeaker.DataSource = HardwareSensors.Speaker.GetSpeakers();
+                cmbSpeaker.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
+            }
         }
     }
 }

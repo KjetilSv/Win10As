@@ -105,7 +105,6 @@
             this.cmbSpeaker = new System.Windows.Forms.ComboBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.cmbAudioOutput = new System.Windows.Forms.ComboBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
@@ -849,9 +848,9 @@
             this.groupBox9.Controls.Add(this.CmdTestSpeaker);
             this.groupBox9.Controls.Add(this.label11);
             this.groupBox9.Controls.Add(this.cmbSpeaker);
-            this.groupBox9.Location = new System.Drawing.Point(7, 138);
+            this.groupBox9.Location = new System.Drawing.Point(7, 106);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(352, 107);
+            this.groupBox9.Size = new System.Drawing.Size(352, 108);
             this.groupBox9.TabIndex = 56;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Text to speach";
@@ -861,14 +860,15 @@
             this.chkTtsEnabled.AutoSize = true;
             this.chkTtsEnabled.Location = new System.Drawing.Point(24, 20);
             this.chkTtsEnabled.Name = "chkTtsEnabled";
-            this.chkTtsEnabled.Size = new System.Drawing.Size(80, 17);
+            this.chkTtsEnabled.Size = new System.Drawing.Size(83, 17);
             this.chkTtsEnabled.TabIndex = 59;
-            this.chkTtsEnabled.Text = "checkBox1";
+            this.chkTtsEnabled.Text = "Enable TTS";
             this.chkTtsEnabled.UseVisualStyleBackColor = true;
+            this.chkTtsEnabled.CheckedChanged += new System.EventHandler(this.chkTtsEnabled_CheckedChanged);
             // 
             // CmdTestSpeaker
             // 
-            this.CmdTestSpeaker.Location = new System.Drawing.Point(271, 80);
+            this.CmdTestSpeaker.Location = new System.Drawing.Point(286, 43);
             this.CmdTestSpeaker.Name = "CmdTestSpeaker";
             this.CmdTestSpeaker.Size = new System.Drawing.Size(42, 23);
             this.CmdTestSpeaker.TabIndex = 58;
@@ -879,7 +879,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(21, 83);
+            this.label11.Location = new System.Drawing.Point(36, 46);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(69, 13);
             this.label11.TabIndex = 57;
@@ -888,7 +888,7 @@
             // cmbSpeaker
             // 
             this.cmbSpeaker.FormattingEnabled = true;
-            this.cmbSpeaker.Location = new System.Drawing.Point(96, 80);
+            this.cmbSpeaker.Location = new System.Drawing.Point(111, 43);
             this.cmbSpeaker.Name = "cmbSpeaker";
             this.cmbSpeaker.Size = new System.Drawing.Size(166, 21);
             this.cmbSpeaker.TabIndex = 56;
@@ -896,12 +896,11 @@
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.checkBox2);
-            this.groupBox8.Controls.Add(this.checkBox1);
             this.groupBox8.Controls.Add(this.label13);
             this.groupBox8.Controls.Add(this.cmbAudioOutput);
             this.groupBox8.Location = new System.Drawing.Point(7, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(352, 129);
+            this.groupBox8.Size = new System.Drawing.Size(352, 97);
             this.groupBox8.TabIndex = 52;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Audio device";
@@ -909,27 +908,18 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(30, 59);
+            this.checkBox2.Enabled = false;
+            this.checkBox2.Location = new System.Drawing.Point(24, 19);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(136, 17);
             this.checkBox2.TabIndex = 61;
             this.checkBox2.Text = "Use non-default device";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(15, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 60;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(27, 105);
+            this.label13.Location = new System.Drawing.Point(27, 45);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(69, 13);
             this.label13.TabIndex = 52;
@@ -938,7 +928,7 @@
             // cmbAudioOutput
             // 
             this.cmbAudioOutput.FormattingEnabled = true;
-            this.cmbAudioOutput.Location = new System.Drawing.Point(111, 102);
+            this.cmbAudioOutput.Location = new System.Drawing.Point(111, 42);
             this.cmbAudioOutput.Name = "cmbAudioOutput";
             this.cmbAudioOutput.Size = new System.Drawing.Size(213, 21);
             this.cmbAudioOutput.TabIndex = 51;
@@ -987,6 +977,7 @@
             // 
             // CmdDiscovery
             // 
+            this.CmdDiscovery.Enabled = false;
             this.CmdDiscovery.Location = new System.Drawing.Point(40, 24);
             this.CmdDiscovery.Name = "CmdDiscovery";
             this.CmdDiscovery.Size = new System.Drawing.Size(155, 23);
@@ -1123,7 +1114,6 @@
         private System.Windows.Forms.CheckBox ChkEnableWebCamPublish;
         private System.Windows.Forms.CheckBox chkTtsEnabled;
         private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.Button CmdDiscovery;
     }

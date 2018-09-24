@@ -103,11 +103,11 @@ namespace mqttclient.Mqtt
             {
                 if (_audioobj.IsMuted() == true)
                 {
-                    _mqtt.Publish("switch/mute", "1");
+                    _mqtt.Publish("mute", "1");
                 }
                 else
                 {
-                    _mqtt.Publish("switch/mute", "0");
+                    _mqtt.Publish("mute", "0");
                 }
             }
             catch (Exception)
@@ -119,11 +119,11 @@ namespace mqttclient.Mqtt
         {
             if (UsingComputer.IsUsing())
             {
-                _mqtt.Publish("", "on");
+                _mqtt.Publish("binary_sensor/inUse", "on");
             }
             else
             {
-                _mqtt.Publish("", "off");
+                _mqtt.Publish("binary_sensor/inUse", "off");
             }
 
         }

@@ -984,7 +984,7 @@
             this.CmdDiscovery.TabIndex = 0;
             this.CmdDiscovery.Text = "Send discovery";
             this.CmdDiscovery.UseVisualStyleBackColor = true;
-            this.CmdDiscovery.Click += new System.EventHandler(this.CmdDiscovery_Click);
+            
             // 
             // FrmOptions
             // 

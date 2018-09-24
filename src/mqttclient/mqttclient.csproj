@@ -153,6 +153,7 @@
     <Compile Include="Mqtt\IMqtt.cs" />
     <Compile Include="Mqtt\IMqttPublish.cs" />
     <Compile Include="Mqtt\Mqtt.cs" />
+    <Compile Include="Mqtt\MqttConfig.cs" />
     <Compile Include="Mqtt\MqttPublish.cs" />
     <Compile Include="Process.cs" />
     <Compile Include="HardwareSensors\Audio.cs" />

@@ -10,7 +10,7 @@ namespace mqttclient
     {
         public static string MqttServer
         {
-            get => (string) Properties.Settings.Default["mqttserver"];
+            get => (string)Properties.Settings.Default["mqttserver"];
             set => Properties.Settings.Default["mqttserver"] = value;
         }
 
@@ -20,21 +20,36 @@ namespace mqttclient
             set => Properties.Settings.Default["mqttusername"] = value;
         }
 
-        public string MqttPassword
+        public static string MqttPassword
         {
-            get => (string) Properties.Settings.Default["mqttpassword"];
+            get => (string)Properties.Settings.Default["mqttpassword"];
             set => Properties.Settings.Default["mqttpassword"] = value;
         }
 
         public static string MqttTopic
         {
-            get => (string) Properties.Settings.Default["mqtttopic"];
+            get => (string)Properties.Settings.Default["mqtttopic"];
             set => Properties.Settings.Default["mqtttopic"] = value;
         }
 
-        public static int MqttTimerInterval
+        public static int MqttPort
         {
-            get => (int)Properties.Settings.Default["mqtttimerinterval"];
+            get => (int)Properties.Settings.Default["mqttport"];
+            set => Properties.Settings.Default["mqttport"] = value.ToString();
+        }
+
+        public static string MqttTimerInterval
+        {
+            get => (string)Properties.Settings.Default["mqtttimerinterval"];
+            //{
+            //    if (string.IsNullOrEmpty(Properties.Settings.Default["mqtttimerinterval"].ToString()))
+            //    {
+            //        Properties.Settings.Default["mqtttimerinterval"] = 6000;
+            //        Properties.Settings.Default.Save();
+            //    }
+            //    => (Int)Properties.Settings.Default["mqtttimerinterval"];
+            //}
+
             set => Properties.Settings.Default["mqtttimerinterval"] = value.ToString();
         }
 
@@ -46,7 +61,7 @@ namespace mqttclient
 
         public static bool ScreenshotMqtt
         {
-            get => (bool) Properties.Settings.Default["ScreenshotMqtt"];
+            get => (bool)Properties.Settings.Default["ScreenshotMqtt"];
             set => Properties.Settings.Default["ScreenshotMqtt"] = value.ToString();
         }
 
@@ -70,7 +85,7 @@ namespace mqttclient
 
         public static string MqttSlideshowFolder
         {
-            get => (string) Properties.Settings.Default["MqttSlideshowFolder"];
+            get => (string)Properties.Settings.Default["MqttSlideshowFolder"];
             set => Properties.Settings.Default["MqttSlideshowFolder"] = value;
         }
 
@@ -90,6 +105,39 @@ namespace mqttclient
         {
             get => (bool)Properties.Settings.Default["Volumesensor"];
             set => Properties.Settings.Default["Volumesensor"] = value.ToString();
+        }
+
+        public static bool IsComputerUsed
+        {
+            get => (bool)Properties.Settings.Default["IsComputerUsed"];
+            set => Properties.Settings.Default["IsComputerUsed"] = value.ToString();
+        }
+
+        public static bool BatterySensor
+        {
+            get => (bool)Properties.Settings.Default["BatterySensor"];
+            set => Properties.Settings.Default["BatterySensor"] = value.ToString();
+        }
+        public static bool DiskSensor
+        {
+            get => (bool)Properties.Settings.Default["DiskSensor"];
+            set => Properties.Settings.Default["DiskSensor"] = value.ToString();
+        }
+        public static bool EnableWebCamPublish
+        {
+            get => (bool)Properties.Settings.Default["EnableWebCamPublish"];
+            set => Properties.Settings.Default["EnableWebCamPublish"] = value.ToString();
+        }
+        public static string WebCamToPublish
+        {
+            get => (string)Properties.Settings.Default["WebCamToPublish"];
+            set => Properties.Settings.Default["WebCamToPublish"] = value.ToString();
+        }
+        public static string TTSSpeaker { get; internal set; }
+
+        internal static void Save()
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

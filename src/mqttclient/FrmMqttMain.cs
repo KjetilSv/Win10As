@@ -15,12 +15,11 @@ namespace mqttclient
         private const string NotifyIconText = "Mqtt client";
         private const string NotifyIconBalloonTipText = "Mqtt client minimized to systemtray";
         private const int NotifyIconBalloonTipTimer = 200;
-
         public FrmMqttMain(IMqtt mqtt, IMqttPublish mqttPublish, MainFormContainer mainFormContainer)
         {
             _mqtt = mqtt;
             _mqttPublish = mqttPublish;
-
+            
             mainFormContainer.MainForm = this;
 
             try
@@ -30,16 +29,7 @@ namespace mqttclient
                 toolStripStatusLabel2.Text = "";
 
                 Properties.Settings.Default.Upgrade();
-                try
-                {
-                    _mqtt.Connect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
-                    toolStripStatusLabel1.Text = "connected to " + Properties.Settings.Default["mqttserver"].ToString();
-                }
-                catch (Exception e)
-                {
-                    toolStripStatusLabel1.Text = e.Message;
-                }
-                SetupTimer();
+                
 
                 notifyIcon1.Visible = false;
                 notifyIcon1.Text = NotifyIconText;
@@ -51,31 +41,20 @@ namespace mqttclient
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void SetupTimer()
         {
-            if (string.IsNullOrEmpty(Properties.Settings.Default["mqtttimerinterval"].ToString()))
-            {
-                Properties.Settings.Default["mqtttimerinterval"] = 6000;
-                Properties.Settings.Default.Save();
-            }
-
-            timer1.Interval = Convert.ToInt32(Properties.Settings.Default["mqtttimerinterval"].ToString());
+            timer1.Interval = Convert.ToInt32(MqttSettings.MqttTimerInterval);
             timer1.Start();
         }
-
         private void client_MqttConnectionClosed(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = "not connected";
         }
-
         delegate void SetTextCallback(string text);
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             _mqttPublish.PublishSystemData();
         }
-
         public void HandleUnhandledException(Exception e)
         {
             if (MessageBox.Show("An unexpected error has occurred. details:" + e.Message + "innerException:" + e.InnerException + "Continue?",
@@ -89,7 +68,6 @@ namespace mqttclient
         {
             this.HandleUnhandledException(e.Exception);
         }
-
         private void listBox1_KeyUp(object sender, KeyEventArgs e)
         {
             if (sender != listBox1) return;
@@ -103,25 +81,22 @@ namespace mqttclient
                 {
                 }
         }
-       
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frmSettingsFrom = new FrmOptions(this);
             frmSettingsFrom.Show();
         }
-
         public void ReloadApp()
         {
-            _mqtt.Connect(Properties.Settings.Default["mqttserver"].ToString(), Convert.ToInt32(Properties.Settings.Default["mqttport"].ToString()), Properties.Settings.Default["mqttusername"].ToString(), Properties.Settings.Default["mqttpassword"].ToString());
+            _mqtt.Connect(MqttSettings.MqttServer, MqttSettings.MqttPort, MqttSettings.MqttUsername, MqttSettings.MqttPassword);
             SetupTimer();
             new SystemShutdown(_mqtt).Subscribe();
         }
-
         private void FrmMqttMain_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                if (Convert.ToBoolean(Properties.Settings.Default["MinimizeToTray"].ToString()) == true)
+                if (MqttSettings.MinimizeToTray == true)
                 {
                     notifyIcon1.Visible = true;
                     this.ShowInTaskbar = false;
@@ -150,6 +125,29 @@ namespace mqttclient
         }
         private void toolStripStatusLabel2_Click(object sender, EventArgs e)
         {
+
+        }
+        private void FrmMqttMain_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                _mqtt.Connect(MqttSettings.MqttServer, MqttSettings.MqttPort, MqttSettings.MqttUsername, MqttSettings.MqttPassword);
+                if (_mqtt.IsConnected == true)
+                {
+                    toolStripStatusLabel1.Text = "connected to " + MqttSettings.MqttServer;
+                }
+                else
+                {
+                    toolStripStatusLabel1.Text = "not connected";
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            SetupTimer();
 
         }
     }

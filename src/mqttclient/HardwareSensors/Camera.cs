@@ -43,6 +43,7 @@ namespace mqttclient.HardwareSensors
 
 
                     FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+                   // FinalVideo.FramesReceived
                     FinalVideo.Start();
                     do
                     {
@@ -81,12 +82,16 @@ namespace mqttclient.HardwareSensors
                 //using (FileStream stream = new FileStream(Filename, FileMode.OpenOrCreate, FileAccess.Write))
                 //{
                 //FileStream stream = new FileStream;
-                Bitmap bitmap = (Bitmap)eventArgs.Frame;
+
+
+               Bitmap bitmap= (Bitmap)eventArgs.Frame;
+                // (Bitmap)eventArgs.Frame.Save(Filename, System.Drawing.Imaging.ImageFormat.Png);
+                //Bitmap bitmap = ();
                 //Bitmap bitclone = (Bitmap)bitmap.Clone();
-              bitmap.Save(Filename, System.Drawing.Imaging.ImageFormat.Png);
+                bitmap.Save(Filename, System.Drawing.Imaging.ImageFormat.Png);
                 //bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
                 //stream.CopyTo(memoryStream);
-                //bitmap.Dispose();
+                bitmap.Dispose();
 
                 //}
 

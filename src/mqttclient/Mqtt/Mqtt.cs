@@ -20,6 +20,10 @@ namespace mqttclient.Mqtt
         private readonly ILogger _logger;
         private MqttClient _client;
 
+
+
+        public enum SensorType { Binary_sensor, Switch, Light, Sensor };
+
         public string GMqtttopic { get; set; }
 
         public bool IsConnected
@@ -48,15 +52,21 @@ namespace mqttclient.Mqtt
             {
                 if (_client.IsConnected)
                 {
-                    _client.Publish(FullTopic(topic), File.ReadAllBytes(file));
+                    var fullTopic = FullTopic(topic);
+                    _client.Publish(fullTopic, File.ReadAllBytes(file));
+                    _logger.Log("image published:" + fullTopic);
                 }
             }
-
         }
 
         public void PublishByte(string topic, byte[] bytes)
         {
-            _client.Publish(FullTopic(topic), bytes);
+            if (_client.IsConnected)
+            {
+                var fullTopic = FullTopic(topic);
+                _client.Publish(fullTopic, bytes);
+                _logger.Log("bytes published:" + fullTopic);
+            }
         }
 
         public void Publish(string topic, string message, bool retain = false)
@@ -72,6 +82,7 @@ namespace mqttclient.Mqtt
                 {
                     _client.Publish(fullTopic, Encoding.UTF8.GetBytes(message));
                 }
+                _logger.Log("message published:" + fullTopic + " value " + message);
             }
         }
 
@@ -111,6 +122,7 @@ namespace mqttclient.Mqtt
 
                     try
                     {
+                        
                         if (_client.IsConnected)
                         {
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
@@ -118,7 +130,7 @@ namespace mqttclient.Mqtt
                             _client.MqttMsgSubscribed += ClientMqttMsgSubscribed;
                             _client.MqttMsgPublished += ClientMqttMsgPublished;
                             _client.ConnectionClosed += ClientMqttConnectionClosed;
-
+                            _logger.Log("connected");
                             string[] topics = GetTopicsFromTriggerList();
                             byte[] qos = GetQos(topics.Length);
 
@@ -374,6 +386,25 @@ namespace mqttclient.Mqtt
             }
         }
 
+        public void PublishDiscovery(string topic, Mqtt.SensorType sensorType)
+        {
+            switch (sensorType)
+            {
+                case SensorType.Binary_sensor:
+                    break;
+                case SensorType.Light:
+                    break;
+                case SensorType.Sensor:
+                    break;
+                case SensorType.Switch:
+                    break;
+            }
+
+
+            //public enum SensorType { Binary_sensor, Switch, Light, Sensor };
+
+
+    }
 
         public BindingList<MqttTrigger> GetTriggerList()
         {

@@ -74,6 +74,7 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.chkScreenDumpPrimonitor = new System.Windows.Forms.CheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.ChkEnableWebCamPublish = new System.Windows.Forms.CheckBox();
             this.button2 = new System.Windows.Forms.Button();
             this.cmbWebcam = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -98,16 +99,20 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.chkTtsEnabled = new System.Windows.Forms.CheckBox();
             this.CmdTestSpeaker = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.cmbSpeaker = new System.Windows.Forms.ComboBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.cmbAudioOutput = new System.Windows.Forms.ComboBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.chkMinimizeToTray = new System.Windows.Forms.CheckBox();
             this.chkStartUp = new System.Windows.Forms.CheckBox();
-            this.ChkEnableWebCamPublish = new System.Windows.Forms.CheckBox();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.CmdDiscovery = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -127,6 +132,7 @@
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.tabPage8.SuspendLayout();
             this.SuspendLayout();
             // 
             // CmdSave
@@ -158,6 +164,7 @@
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Location = new System.Drawing.Point(1, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -603,6 +610,17 @@
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Webcam";
             // 
+            // ChkEnableWebCamPublish
+            // 
+            this.ChkEnableWebCamPublish.AutoSize = true;
+            this.ChkEnableWebCamPublish.Location = new System.Drawing.Point(15, 29);
+            this.ChkEnableWebCamPublish.Name = "ChkEnableWebCamPublish";
+            this.ChkEnableWebCamPublish.Size = new System.Drawing.Size(59, 17);
+            this.ChkEnableWebCamPublish.TabIndex = 56;
+            this.ChkEnableWebCamPublish.Text = "Enable";
+            this.ChkEnableWebCamPublish.UseVisualStyleBackColor = true;
+            this.ChkEnableWebCamPublish.CheckedChanged += new System.EventHandler(this.ChkEnableWebCamPublish_CheckedChanged);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(226, 78);
@@ -827,19 +845,30 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.chkTtsEnabled);
             this.groupBox9.Controls.Add(this.CmdTestSpeaker);
             this.groupBox9.Controls.Add(this.label11);
             this.groupBox9.Controls.Add(this.cmbSpeaker);
-            this.groupBox9.Location = new System.Drawing.Point(7, 54);
+            this.groupBox9.Location = new System.Drawing.Point(7, 138);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(352, 61);
+            this.groupBox9.Size = new System.Drawing.Size(352, 107);
             this.groupBox9.TabIndex = 56;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Text to speach";
             // 
+            // chkTtsEnabled
+            // 
+            this.chkTtsEnabled.AutoSize = true;
+            this.chkTtsEnabled.Location = new System.Drawing.Point(24, 20);
+            this.chkTtsEnabled.Name = "chkTtsEnabled";
+            this.chkTtsEnabled.Size = new System.Drawing.Size(80, 17);
+            this.chkTtsEnabled.TabIndex = 59;
+            this.chkTtsEnabled.Text = "checkBox1";
+            this.chkTtsEnabled.UseVisualStyleBackColor = true;
+            // 
             // CmdTestSpeaker
             // 
-            this.CmdTestSpeaker.Location = new System.Drawing.Point(271, 19);
+            this.CmdTestSpeaker.Location = new System.Drawing.Point(271, 80);
             this.CmdTestSpeaker.Name = "CmdTestSpeaker";
             this.CmdTestSpeaker.Size = new System.Drawing.Size(42, 23);
             this.CmdTestSpeaker.TabIndex = 58;
@@ -850,7 +879,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(21, 22);
+            this.label11.Location = new System.Drawing.Point(21, 83);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(69, 13);
             this.label11.TabIndex = 57;
@@ -859,35 +888,57 @@
             // cmbSpeaker
             // 
             this.cmbSpeaker.FormattingEnabled = true;
-            this.cmbSpeaker.Location = new System.Drawing.Point(96, 19);
+            this.cmbSpeaker.Location = new System.Drawing.Point(96, 80);
             this.cmbSpeaker.Name = "cmbSpeaker";
             this.cmbSpeaker.Size = new System.Drawing.Size(166, 21);
             this.cmbSpeaker.TabIndex = 56;
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.checkBox2);
+            this.groupBox8.Controls.Add(this.checkBox1);
             this.groupBox8.Controls.Add(this.label13);
             this.groupBox8.Controls.Add(this.cmbAudioOutput);
             this.groupBox8.Location = new System.Drawing.Point(7, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(352, 45);
+            this.groupBox8.Size = new System.Drawing.Size(352, 129);
             this.groupBox8.TabIndex = 52;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Audio device";
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(30, 59);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(136, 17);
+            this.checkBox2.TabIndex = 61;
+            this.checkBox2.Text = "Use non-default device";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(15, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.TabIndex = 60;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 21);
+            this.label13.Location = new System.Drawing.Point(27, 105);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 13);
+            this.label13.Size = new System.Drawing.Size(69, 13);
             this.label13.TabIndex = 52;
-            this.label13.Text = "Default";
+            this.label13.Text = "Audio device";
             // 
             // cmbAudioOutput
             // 
             this.cmbAudioOutput.FormattingEnabled = true;
-            this.cmbAudioOutput.Location = new System.Drawing.Point(96, 18);
+            this.cmbAudioOutput.Location = new System.Drawing.Point(111, 102);
             this.cmbAudioOutput.Name = "cmbAudioOutput";
             this.cmbAudioOutput.Size = new System.Drawing.Size(213, 21);
             this.cmbAudioOutput.TabIndex = 51;
@@ -923,16 +974,26 @@
             this.chkStartUp.Text = "Run at start";
             this.chkStartUp.UseVisualStyleBackColor = true;
             // 
-            // ChkEnableWebCamPublish
+            // tabPage8
             // 
-            this.ChkEnableWebCamPublish.AutoSize = true;
-            this.ChkEnableWebCamPublish.Location = new System.Drawing.Point(15, 29);
-            this.ChkEnableWebCamPublish.Name = "ChkEnableWebCamPublish";
-            this.ChkEnableWebCamPublish.Size = new System.Drawing.Size(59, 17);
-            this.ChkEnableWebCamPublish.TabIndex = 56;
-            this.ChkEnableWebCamPublish.Text = "Enable";
-            this.ChkEnableWebCamPublish.UseVisualStyleBackColor = true;
-            this.ChkEnableWebCamPublish.CheckedChanged += new System.EventHandler(this.ChkEnableWebCamPublish_CheckedChanged);
+            this.tabPage8.Controls.Add(this.CmdDiscovery);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(694, 587);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "Discovery";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // CmdDiscovery
+            // 
+            this.CmdDiscovery.Location = new System.Drawing.Point(40, 24);
+            this.CmdDiscovery.Name = "CmdDiscovery";
+            this.CmdDiscovery.Size = new System.Drawing.Size(155, 23);
+            this.CmdDiscovery.TabIndex = 0;
+            this.CmdDiscovery.Text = "Send discovery";
+            this.CmdDiscovery.UseVisualStyleBackColor = true;
+            this.CmdDiscovery.Click += new System.EventHandler(this.CmdDiscovery_Click);
             // 
             // FrmOptions
             // 
@@ -974,6 +1035,7 @@
             this.groupBox8.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1059,5 +1121,10 @@
         private System.Windows.Forms.CheckBox chkScreenDumpPrimonitor;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox ChkEnableWebCamPublish;
+        private System.Windows.Forms.CheckBox chkTtsEnabled;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.Button CmdDiscovery;
     }
 }

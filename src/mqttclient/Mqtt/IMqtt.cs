@@ -14,5 +14,6 @@ namespace mqttclient.Mqtt
         void Publish(string topic, string message, bool retain = false);
         void PublishByte(string topic, byte[] bytes);
         void PublishImage(string topic, string file);
+        void PublishDiscovery(string topic, Mqtt.SensorType sensorType);
     }
 }

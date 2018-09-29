@@ -90,7 +90,8 @@ namespace mqttclient.Mqtt
         {
             if (!TryConnection(hostname, portNumber, username, password))
             {
-                throw new Exception("Cannot connect to MQTT broker. Check connection data");
+                _logger.Log("Cannot connect to MQTT broker. Check connection data");
+               // \throw new Exception("Cannot connect to MQTT broker. Check connection data");
             }
 
             if (IsConnected)

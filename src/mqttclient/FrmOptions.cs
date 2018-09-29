@@ -170,7 +170,9 @@ namespace mqttclient
             else
             {
                 cmbWebcam.Visible = false;
+                CmdWebCamTest.Visible = false;
             }
+     
 
 
         }
@@ -181,8 +183,8 @@ namespace mqttclient
             MqttSettings.MqttPassword = txtmqttpassword.Text;
             MqttSettings.MqttTopic = txtmqtttopic.Text;
             MqttSettings.MqttTimerInterval = txtMqttTimerInterval.Text;
-            MqttSettings.ScreenshotEnable = chkScreenshot.Checked;
-            MqttSettings.ScreenshotMqtt = chkScreenshotMqtt.Checked;
+            MqttSettings.ScreenshotEnable = Convert.ToBoolean(chkScreenshot.Checked);
+            MqttSettings.ScreenshotMqtt = Convert.ToBoolean(chkScreenshotMqtt.Checked);
             MqttSettings.ScreenShotPath = txtScreenshotPath.Text;
             MqttSettings.MinimizeToTray = chkMinimizeToTray.Checked;
             MqttSettings.MqttSlideshow = ChkSlideshow.Checked;
@@ -191,6 +193,15 @@ namespace mqttclient
             MqttSettings.FreeMemorySensor = chkMemorySensor.Checked;
             MqttSettings.VolumeSensor = chkVolumeSensor.Checked;
             MqttSettings.EnableWebCamPublish = ChkEnableWebCamPublish.Checked;
+            if (ChkEnableWebCamPublish.Checked == true)
+            {
+                CmdWebCamTest.Visible = true;
+            }
+            else
+            {
+                CmdWebCamTest.Visible = false;
+            }
+
             MqttSettings.EnableTTS = chkTtsEnabled.Checked;
             if (cmbSpeaker.SelectedItem != null)
             {
@@ -495,12 +506,13 @@ namespace mqttclient
             {
                 cmbWebcam.Visible = true;
                 LoadCameraDevices();
-
+                CmdWebCamTest.Visible = true;
             }
             else
             {
                 cmbWebcam.DataSource = null;
-                cmbWebcam.Visible = true;
+                cmbWebcam.Visible = false;
+                CmdWebCamTest.Visible = false;
             }
         }
         private void chkTtsEnabled_CheckedChanged(object sender, EventArgs e)

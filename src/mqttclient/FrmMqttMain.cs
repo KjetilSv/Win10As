@@ -19,7 +19,7 @@ namespace mqttclient
         {
             _mqtt = mqtt;
             _mqttPublish = mqttPublish;
-            
+
             mainFormContainer.MainForm = this;
 
             try
@@ -29,7 +29,7 @@ namespace mqttclient
                 toolStripStatusLabel2.Text = "";
 
                 Properties.Settings.Default.Upgrade();
-                
+
 
                 notifyIcon1.Visible = false;
                 notifyIcon1.Text = NotifyIconText;
@@ -131,17 +131,24 @@ namespace mqttclient
         {
             try
             {
-                
-                _mqtt.Connect(MqttSettings.MqttServer, MqttSettings.MqttPort, MqttSettings.MqttUsername, MqttSettings.MqttPassword);
-                if (_mqtt.IsConnected == true)
+                if (MqttSettings.MqttServer.Length > 3)
                 {
-                    toolStripStatusLabel1.Text = "connected to " + MqttSettings.MqttServer;
+                    _mqtt.Connect(MqttSettings.MqttServer, MqttSettings.MqttPort, MqttSettings.MqttUsername, MqttSettings.MqttPassword);
+                    if (_mqtt.IsConnected == true)
+                    {
+                        toolStripStatusLabel1.Text = "connected to " + MqttSettings.MqttServer;
+                    }
+                    else
+                    {
+                        toolStripStatusLabel1.Text = "not connected";
+                    }
                 }
                 else
                 {
                     toolStripStatusLabel1.Text = "not connected";
+                    var frmSettingsFrom = new FrmOptions(this);
+                    frmSettingsFrom.Show();
                 }
-
             }
             catch (Exception)
             {

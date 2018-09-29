@@ -75,7 +75,7 @@
             this.chkScreenDumpPrimonitor = new System.Windows.Forms.CheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.ChkEnableWebCamPublish = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.CmdWebCamTest = new System.Windows.Forms.Button();
             this.cmbWebcam = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkScreenshotMqtt = new System.Windows.Forms.CheckBox();
@@ -600,7 +600,7 @@
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.ChkEnableWebCamPublish);
-            this.groupBox10.Controls.Add(this.button2);
+            this.groupBox10.Controls.Add(this.CmdWebCamTest);
             this.groupBox10.Controls.Add(this.cmbWebcam);
             this.groupBox10.Location = new System.Drawing.Point(7, 159);
             this.groupBox10.Name = "groupBox10";
@@ -620,15 +620,15 @@
             this.ChkEnableWebCamPublish.UseVisualStyleBackColor = true;
             this.ChkEnableWebCamPublish.CheckedChanged += new System.EventHandler(this.ChkEnableWebCamPublish_CheckedChanged);
             // 
-            // button2
+            // CmdWebCamTest
             // 
-            this.button2.Location = new System.Drawing.Point(226, 78);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(80, 24);
-            this.button2.TabIndex = 55;
-            this.button2.Text = "Test";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.CmdWebCamTest.Location = new System.Drawing.Point(226, 78);
+            this.CmdWebCamTest.Name = "CmdWebCamTest";
+            this.CmdWebCamTest.Size = new System.Drawing.Size(80, 24);
+            this.CmdWebCamTest.TabIndex = 55;
+            this.CmdWebCamTest.Text = "Test";
+            this.CmdWebCamTest.UseVisualStyleBackColor = true;
+            this.CmdWebCamTest.Click += new System.EventHandler(this.button2_Click);
             // 
             // cmbWebcam
             // 
@@ -984,7 +984,6 @@
             this.CmdDiscovery.TabIndex = 0;
             this.CmdDiscovery.Text = "Send discovery";
             this.CmdDiscovery.UseVisualStyleBackColor = true;
-            
             // 
             // FrmOptions
             // 
@@ -1110,7 +1109,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.CheckBox chkScreenDumpPrimonitor;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button CmdWebCamTest;
         private System.Windows.Forms.CheckBox ChkEnableWebCamPublish;
         private System.Windows.Forms.CheckBox chkTtsEnabled;
         private System.Windows.Forms.CheckBox checkBox2;

@@ -56,13 +56,13 @@ namespace mqttclient
         public static bool ScreenshotEnable
         {
             get => (bool)Properties.Settings.Default["screenshotenable"];
-            set => Properties.Settings.Default["screenshotenable"] = value.ToString();
+            set => Properties.Settings.Default["screenshotenable"] = Convert.ToBoolean(value.ToString());
         }
 
         public static bool ScreenshotMqtt
         {
             get => (bool)Properties.Settings.Default["ScreenshotMqtt"];
-            set => Properties.Settings.Default["ScreenshotMqtt"] = value.ToString();
+            set => Properties.Settings.Default["ScreenshotMqtt"] = Convert.ToBoolean(value.ToString());
         }
 
         public static string ScreenShotPath
@@ -74,13 +74,13 @@ namespace mqttclient
         public static bool MinimizeToTray
         {
             get => (bool)Properties.Settings.Default["MinimizeToTray"];
-            set => Properties.Settings.Default["MinimizeToTray"] = value.ToString();
+            set => Properties.Settings.Default["MinimizeToTray"] = Convert.ToBoolean(value.ToString());
         }
 
         public static bool MqttSlideshow
         {
             get => (bool)Properties.Settings.Default["MqttSlideshow"];
-            set => Properties.Settings.Default["MqttSlideshow"] = value.ToString();
+            set => Properties.Settings.Default["MqttSlideshow"] = Convert.ToBoolean(value.ToString());
         }
 
         public static string MqttSlideshowFolder
@@ -92,31 +92,31 @@ namespace mqttclient
         public static bool CpuSensor
         {
             get => (bool)Properties.Settings.Default["Cpusensor"];
-            set => Properties.Settings.Default["Cpusensor"] = value.ToString();
+            set => Properties.Settings.Default["Cpusensor"] = Convert.ToBoolean(value.ToString());
         }
 
         public static bool FreeMemorySensor
         {
             get => (bool)Properties.Settings.Default["Freememorysensor"];
-            set => Properties.Settings.Default["Freememorysensor"] = value.ToString();
+            set => Properties.Settings.Default["Freememorysensor"] = Convert.ToBoolean(value.ToString());
         }
 
         public static bool VolumeSensor
         {
             get => (bool)Properties.Settings.Default["Volumesensor"];
-            set => Properties.Settings.Default["Volumesensor"] = value.ToString();
+            set => Properties.Settings.Default["Volumesensor"] = Convert.ToBoolean(value.ToString());
         }
 
         public static bool IsComputerUsed
         {
             get => (bool)Properties.Settings.Default["IsComputerUsed"];
-            set => Properties.Settings.Default["IsComputerUsed"] = value.ToString();
+            set => Properties.Settings.Default["IsComputerUsed"] = Convert.ToBoolean(value.ToString());
         }
 
         public static bool BatterySensor
         {
             get => (bool)Properties.Settings.Default["BatterySensor"];
-            set => Properties.Settings.Default["BatterySensor"] = value.ToString();
+            set => Properties.Settings.Default["BatterySensor"] = Convert.ToBoolean(value.ToString());
         }
         public static bool DiskSensor
         {
@@ -126,7 +126,7 @@ namespace mqttclient
         public static bool EnableWebCamPublish
         {
             get => (bool)Properties.Settings.Default["EnableWebCamPublish"];
-            set => Properties.Settings.Default["EnableWebCamPublish"] = value.ToString();
+            set => Properties.Settings.Default["EnableWebCamPublish"] = Convert.ToBoolean(value.ToString());
         }
         public static string WebCamToPublish
         {
@@ -136,7 +136,7 @@ namespace mqttclient
         public static bool EnableTTS
         {
             get => (bool)Properties.Settings.Default["EnableTTS"];
-            set => Properties.Settings.Default["EnableTTS"] = value.ToString();
+            set => Properties.Settings.Default["EnableTTS"] = Convert.ToBoolean(value.ToString());
         }
 
         

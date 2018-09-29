@@ -24,6 +24,9 @@ if enabled published to [maintopic]/Power with subtopics
 - BatteryLifePercent
 - BatteryLifeRemaining
 - PowerLineStatus
+#### In use
+[maintopic]/binary_sensor/inUse
+Message "on" if the API GetLastInputInfo is less then 30 seconds else "off"
 
 #### Disk sensors
 [maintopic]/drive

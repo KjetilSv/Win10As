@@ -43,7 +43,16 @@ namespace mqttclient
         }
         private void SetupTimer()
         {
-            timer1.Interval = Convert.ToInt32(MqttSettings.MqttTimerInterval);
+            try
+            {
+                timer1.Interval = Convert.ToInt32(MqttSettings.MqttTimerInterval);
+            }
+            catch (Exception)
+            {
+
+                timer1.Interval = 6000;
+            }
+            
             timer1.Start();
         }
         private void client_MqttConnectionClosed(object sender, EventArgs e)

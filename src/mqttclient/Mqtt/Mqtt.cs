@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -91,7 +92,7 @@ namespace mqttclient.Mqtt
             if (!TryConnection(hostname, portNumber, username, password))
             {
                 _logger.Log("Cannot connect to MQTT broker. Check connection data");
-               // \throw new Exception("Cannot connect to MQTT broker. Check connection data");
+                // \throw new Exception("Cannot connect to MQTT broker. Check connection data");
             }
 
             if (IsConnected)
@@ -123,7 +124,7 @@ namespace mqttclient.Mqtt
 
                     try
                     {
-                        
+
                         if (_client.IsConnected)
                         {
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
@@ -133,9 +134,24 @@ namespace mqttclient.Mqtt
                             _client.ConnectionClosed += ClientMqttConnectionClosed;
                             _logger.Log("connected");
                             string[] topics = GetTopicsFromTriggerList();
+
+                            var r = new List<string>();
+
+                            r.Add(GMqtttopic);
+
+
                             byte[] qos = GetQos(topics.Length);
 
-                            _client.Subscribe(topics, qos);
+
+                            _client.Subscribe(r.ToArray(), new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+
+
+                            //if (topics.Length != 0)
+                            //{
+                            //_client.Subscribe(topics, qos);
+                            //     _client.Subscribe(GMqtttopic, qos);
+                            //}
+
 
                             return true;
                         }
@@ -164,7 +180,7 @@ namespace mqttclient.Mqtt
             {
                 var client = new MqttClient(hostname, portNumber, false, null, null, MqttSslProtocols.None, null);
 
-                if (!username.IsEmptyOrWhitespaced())
+                if (username.IsEmptyOrWhitespaced())
                 {
                     byte code = client.Connect(Guid.NewGuid().ToString());
                 }
@@ -283,94 +299,102 @@ namespace mqttclient.Mqtt
 
         private void MessageReceived(string subtopic, string message)
         {
-            switch (subtopic)
+            try
             {
-                case "app/running":
-                    Publish("app/running/" + message, Process.IsRunning(message, ""));
-                    break;
+                switch (subtopic)
+                {
+                    case "app/running":
+                        Publish("app/running/" + message, Process.IsRunning(message, ""));
+                        break;
 
-                case "app/close":
-                    Publish("app/running/" + message, Process.Close(message));
-                    break;
+                    case "app/close":
+                        Publish("app/running/" + message, Process.Close(message));
+                        break;
 
-                case "monitor/set":
-                    if (message == "1" || message == "on")
-                    {
-                        Monitor.TurnOn();
-                        Publish("monitor", "1");
-                    }
-                    else if (message == "0" || message == "off")
-                    {
-                        Monitor.TurnOff();
-                        Publish("monitor", "0");
-                    }
-                    break;
-
-                case "mute/set":
-                    if (message == "1" || message == "on")
-                    {
-                        _audio.Mute(true);
-                    }
-                    else if (message == "0" || message == "off")
-                    {
-                        _audio.Mute(false);
-                    }
-                    Publish("mute", message);
-                    break;
-
-                case "volume/set":
-                    _audio.Volume(Convert.ToInt32(message));
-                    break;
-
-                case "hibernate":
-                    Application.SetSuspendState(PowerState.Hibernate, true, true);
-                    break;
-
-                case "suspend":
-                    Application.SetSuspendState(PowerState.Suspend, true, true);
-                    break;
-
-                case "reboot":
-                    System.Diagnostics.Process.Start("shutdown.exe", $"-r -t {GetDelay(message)}");
-                    break;
-
-                case "shutdown":
-                    System.Diagnostics.Process.Start("shutdown.exe", $"-s -t {GetDelay(message)}");
-                    break;
-
-                case "tts":
-                    SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-                    synthesizer.Volume = 100; // 0...100
-                    synthesizer.SpeakAsync(message);
-                    break;
-
-                case "toast":
-                    string[] words = message.Split(',');
-                    if (words.Length >= 3)
-                    {
-                        string imageUrl = words[words.Length - 1];
-                        _toastMessage.ShowImage(words, imageUrl);
-                    }
-                    else
-                    {
-                        _toastMessage.ShowText(words);
-                    }
-                    break;
-
-                default:
-                    MqttTrigger currentMqttTrigger = new MqttTrigger();
-                    if (currentMqttTrigger.CmdText.Length > 2)
-                    {
-                        ProcessStartInfo startInfo = new ProcessStartInfo(currentMqttTrigger.CmdText);
-                        startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-                        if (currentMqttTrigger.CmdParameters.Length > 2)
+                    case "monitor/set":
+                        if (message == "1" || message == "on")
                         {
-                            startInfo.Arguments = currentMqttTrigger.CmdParameters;
+                            Monitor.TurnOn();
+                            Publish("monitor", "1");
                         }
-                        System.Diagnostics.Process.Start(startInfo);
-                    }
+                        else if (message == "0" || message == "off")
+                        {
+                            Monitor.TurnOff();
+                            Publish("monitor", "0");
+                        }
+                        break;
 
-                    break;
+                    case "mute/set":
+                        if (message == "1" || message == "on")
+                        {
+                            _audio.Mute(true);
+                        }
+                        else if (message == "0" || message == "off")
+                        {
+                            _audio.Mute(false);
+                        }
+                        Publish("mute", message);
+                        break;
+
+                    case "volume/set":
+                        _audio.Volume(Convert.ToInt32(message));
+                        break;
+
+                    case "hibernate":
+                        Application.SetSuspendState(PowerState.Hibernate, true, true);
+                        break;
+
+                    case "suspend":
+                        Application.SetSuspendState(PowerState.Suspend, true, true);
+                        break;
+
+                    case "reboot":
+                        System.Diagnostics.Process.Start("shutdown.exe", $"-r -t {GetDelay(message)}");
+                        break;
+
+                    case "shutdown":
+                        System.Diagnostics.Process.Start("shutdown.exe", $"-s -t {GetDelay(message)}");
+                        break;
+
+                    case "tts":
+                        SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+                        synthesizer.Volume = 100; // 0...100
+                        synthesizer.SpeakAsync(message);
+                        break;
+
+                    case "toast":
+                        string[] words = message.Split(',');
+                        if (words.Length >= 3)
+                        {
+                            string imageUrl = words[words.Length - 1];
+                            _toastMessage.ShowImage(words, imageUrl);
+                        }
+                        else
+                        {
+                            _toastMessage.ShowText(words);
+                        }
+                        break;
+
+                    case "cmd":
+                        MqttTrigger currentMqttTrigger = new MqttTrigger();
+                        if (currentMqttTrigger.CmdText.Length > 2)
+                        {
+                            ProcessStartInfo startInfo = new ProcessStartInfo(currentMqttTrigger.CmdText);
+                            startInfo.WindowStyle = ProcessWindowStyle.Maximized;
+                            if (currentMqttTrigger.CmdParameters.Length > 2)
+                            {
+                                startInfo.Arguments = currentMqttTrigger.CmdParameters;
+                            }
+                            System.Diagnostics.Process.Start(startInfo);
+                        }
+
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
@@ -405,7 +429,7 @@ namespace mqttclient.Mqtt
             //public enum SensorType { Binary_sensor, Switch, Light, Sensor };
 
 
-    }
+        }
 
         public BindingList<MqttTrigger> GetTriggerList()
         {

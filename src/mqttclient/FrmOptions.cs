@@ -523,5 +523,28 @@ namespace mqttclient
                 cmbSpeaker.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
             }
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
+
+                if (txtmqttusername.Text.Length == 0)
+                {
+                    byte code = client.Connect(Guid.NewGuid().ToString());
+                }
+                else
+                {
+                    byte code = client.Connect(Guid.NewGuid().ToString(), txtmqttusername.Text, txtmqttpassword.Text);
+                }
+                MessageBox.Show("connection ok id: " + client.ClientId);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Connection failed");
+                //throw;
+            }
+        }
     }
 }

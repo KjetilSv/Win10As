@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mqttclient", "mqttclient\mqttclient.csproj", "{61184F33-8C53-4A4F-83FB-3EAD95088218}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win10MqttLibrary", "Win10MqttLibrary\Win10MqttLibrary.csproj", "{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win10SensorLibrary", "Win10SensorLibrary\Win10SensorLibrary.csproj", "{34747F0B-64C0-445C-866D-4E378FBFE510}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,38 @@ Global
 		{61184F33-8C53-4A4F-83FB-3EAD95088218}.Release|x64.Build.0 = Release|Any CPU
 		{61184F33-8C53-4A4F-83FB-3EAD95088218}.Release|x86.ActiveCfg = Release|Any CPU
 		{61184F33-8C53-4A4F-83FB-3EAD95088218}.Release|x86.Build.0 = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|x64.Build.0 = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Debug|x86.Build.0 = Debug|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|ARM.Build.0 = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|x64.ActiveCfg = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|x64.Build.0 = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|x86.ActiveCfg = Release|Any CPU
+		{C7A61F18-4BC9-4F0D-91A0-6CD63BC5C64E}.Release|x86.Build.0 = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|ARM.Build.0 = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|x64.Build.0 = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Debug|x86.Build.0 = Debug|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|ARM.ActiveCfg = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|ARM.Build.0 = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|x64.ActiveCfg = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|x64.Build.0 = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|x86.ActiveCfg = Release|Any CPU
+		{34747F0B-64C0-445C-866D-4E378FBFE510}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

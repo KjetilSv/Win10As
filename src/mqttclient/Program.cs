@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Threading;
 using System.Windows.Forms;
-using Autofac;
+
 
 namespace mqttclient
 {
@@ -22,7 +23,7 @@ namespace mqttclient
                 Application.Run(form1);
             }
 
-            
+
         }
     }
 }

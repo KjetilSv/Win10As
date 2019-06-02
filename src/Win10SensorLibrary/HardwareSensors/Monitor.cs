@@ -21,8 +21,8 @@ namespace mqttclient.HardwareSensors
         {
             using (var f = new Form())
             {
-                NativeMethods.SendMessage(f.Handle, WmSyscommand, (IntPtr) ScMonitorpower,
-                    (IntPtr) MonitorTurnOn);
+                NativeMethods.SendMessage(f.Handle, WmSyscommand, (IntPtr)ScMonitorpower,
+                    (IntPtr)MonitorTurnOn);
             }
         }
 

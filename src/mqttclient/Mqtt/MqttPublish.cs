@@ -36,14 +36,9 @@ namespace mqttclient.Mqtt
                 }
                 if (MqttSettings.CpuSensor)
                 {
-                    try
-                    {
-                        _mqtt.Publish("cpuprosessortime", Processor.GetCpuProcessorTime());
-                    }
-                    catch (Exception)
-                    {
-                        //we ignore 
-                    }
+
+                    _mqtt.Publish("cpuprosessortime", Processor.GetCpuProcessorTime());
+
                 }
                 if (MqttSettings.FreeMemorySensor)
                 {
@@ -92,7 +87,7 @@ namespace mqttclient.Mqtt
                 _MqttConfig.state_topic = fullltopic + "/set";
                 string configTopic = "switch/mute/config";
                 string ConfigPayload = JsonConvert.SerializeObject(_MqttConfig, Newtonsoft.Json.Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                 _mqtt.Publish(configTopic, ConfigPayload);
+                _mqtt.Publish(configTopic, ConfigPayload);
             }
 
 
@@ -130,11 +125,11 @@ namespace mqttclient.Mqtt
 
         private void PublishBattery()
         {
-            _mqtt.Publish("Power/BatteryChargeStatus", Power.BatteryChargeStatus());
-            _mqtt.Publish("Power/BatteryFullLifetime", Power.BatteryFullLifetime());
-            _mqtt.Publish("Power/BatteryLifePercent", Power.BatteryLifePercent());
-            _mqtt.Publish("Power/BatteryLifeRemaining", Power.BatteryLifeRemaining());
-            _mqtt.Publish("Power/PowerLineStatus", Power.PowerLineStatus());
+            //_mqtt.Publish("Power/BatteryChargeStatus", Power.BatteryChargeStatus());
+            //_mqtt.Publish("Power/BatteryFullLifetime", Power.BatteryFullLifetime());
+            //_mqtt.Publish("Power/BatteryLifePercent", Power.BatteryLifePercent());
+            //_mqtt.Publish("Power/BatteryLifeRemaining", Power.BatteryLifeRemaining());
+            //_mqtt.Publish("Power/PowerLineStatus", Power.PowerLineStatus());
         }
 
         private void PublishDiskStatus()

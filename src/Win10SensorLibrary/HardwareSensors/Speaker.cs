@@ -7,7 +7,7 @@ using System.Speech.Synthesis;
 
 namespace mqttclient.HardwareSensors
 {
-    class Speaker
+    public class Speaker
     {
         public static List<string> GetSpeakers()
         {

@@ -10,7 +10,8 @@ using mqttclient.HardwareSensors;
 using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
-using Monitor = mqttclient.HardwareSensors.Monitor;
+using Win10MqttLibrary;
+
 
 namespace mqttclient.Mqtt
 {
@@ -21,12 +22,8 @@ namespace mqttclient.Mqtt
         private readonly ILogger _logger;
         private MqttClient _client;
 
-
-
-        public enum SensorType { Binary_sensor, Switch, Light, Sensor };
-
+        public enum SensorType { BinarySensor, Switch, Light, Sensor };
         public string GMqtttopic { get; set; }
-
         public bool IsConnected
         {
             get
@@ -36,17 +33,12 @@ namespace mqttclient.Mqtt
                 return _client.IsConnected;
             }
         }
-
-
-        private readonly string _gTriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
-
         public Mqtt(IAudio audio, IToastMessage toastMessage, ILogger logger)
         {
             _audio = audio;
             _toastMessage = toastMessage;
             _logger = logger;
         }
-
         public void PublishImage(string topic, string file)
         {
             if (File.Exists(file))
@@ -59,7 +51,6 @@ namespace mqttclient.Mqtt
                 }
             }
         }
-
         public void PublishByte(string topic, byte[] bytes)
         {
             if (_client.IsConnected)
@@ -69,7 +60,6 @@ namespace mqttclient.Mqtt
                 _logger.Log("bytes published:" + fullTopic);
             }
         }
-
         public void Publish(string topic, string message, bool retain = false)
         {
             var fullTopic = FullTopic(topic);
@@ -86,29 +76,18 @@ namespace mqttclient.Mqtt
                 _logger.Log("message published:" + fullTopic + " value " + message);
             }
         }
-
         public bool Connect(string hostname, int portNumber, string username, string password)
         {
-            if (!TryConnection(hostname, portNumber, username, password))
-            {
-                _logger.Log("Cannot connect to MQTT broker. Check connection data");
-                // \throw new Exception("Cannot connect to MQTT broker. Check connection data");
-            }
-
-            if (IsConnected)
-            {
-                _client.Disconnect();
-            }
-
             try
             {
-                if (!hostname.IsEmptyOrWhitespaced())
+                if (!Helpers.IsEmptyOrWhitespaced(hostname))
                 {
                     try
                     {
+
                         _client = new MqttClient(hostname, portNumber, false, null, null, MqttSslProtocols.None, null);
 
-                        if (username.IsEmptyOrWhitespaced())
+                        if (!Helpers.IsEmptyOrWhitespaced(username))
                         {
                             byte code = _client.Connect(Guid.NewGuid().ToString());
                         }
@@ -133,25 +112,7 @@ namespace mqttclient.Mqtt
                             _client.MqttMsgPublished += ClientMqttMsgPublished;
                             _client.ConnectionClosed += ClientMqttConnectionClosed;
                             _logger.Log("connected");
-                            string[] topics = GetTopicsFromTriggerList();
-
-                            var r = new List<string>();
-
-                            r.Add(GMqtttopic);
-
-
-                            byte[] qos = GetQos(topics.Length);
-
-
-                            _client.Subscribe(r.ToArray(), new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-
-
-                            //if (topics.Length != 0)
-                            //{
-                            //_client.Subscribe(topics, qos);
-                            //     _client.Subscribe(GMqtttopic, qos);
-                            //}
-
+                            _client.Subscribe(new string[] { GMqtttopic }, new byte[] { 2 });   
 
                             return true;
                         }
@@ -173,60 +134,10 @@ namespace mqttclient.Mqtt
             }
             return false;
         }
-
-        public bool TryConnection(string hostname, int portNumber, string username, string password)
-        {
-            try
-            {
-                var client = new MqttClient(hostname, portNumber, false, null, null, MqttSslProtocols.None, null);
-
-                if (username.IsEmptyOrWhitespaced())
-                {
-                    byte code = client.Connect(Guid.NewGuid().ToString());
-                }
-                else
-                {
-                    byte code = client.Connect(Guid.NewGuid().ToString(), username, password);
-                }
-                client.Disconnect();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        private byte[] GetQos(int topicsLength)
-        {
-            byte[] qos = new byte[topicsLength];
-            for (int i = 0; i < topicsLength; i++)
-            {
-                qos[i] = MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE;
-            }
-
-            return qos;
-        }
-
-        private string[] GetTopicsFromTriggerList()
-        {
-            var mqttTriggerList = GetTriggerList();
-            string[] topicsList = new string[mqttTriggerList.Count];
-            int i = 0;
-            foreach (var trigger in mqttTriggerList)
-            {
-                topicsList[i] = FullTopic(trigger.Name);
-                i++;
-            }
-
-            return topicsList;
-        }
-
         public string FullTopic(string topic)
         {
             return GMqtttopic.Replace("#", topic);
         }
-
         public void Disconnect()
         {
             if (_client != null)
@@ -237,7 +148,6 @@ namespace mqttclient.Mqtt
                 }
             }
         }
-
         private void ClientMqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
             try
@@ -250,7 +160,6 @@ namespace mqttclient.Mqtt
             }
 
         }
-
         private void ClientMqttConnectionClosed(object sender, System.EventArgs e)
         {
             try
@@ -263,20 +172,18 @@ namespace mqttclient.Mqtt
             }
 
         }
-
         private void ClientMqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
             try
             {
-                _logger.Log("Subscribed for id = " + e.MessageId);
+                _logger.Log($"Subscribed for id = {e.MessageId}");
             }
             catch (Exception ex)
             {
-                _logger.Log("error: " + ex.Message);
+                _logger.Log($"error: {ex.Message}");
             }
 
         }
-
         private void ClientMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             try
@@ -296,7 +203,6 @@ namespace mqttclient.Mqtt
             }
 
         }
-
         private void MessageReceived(string subtopic, string message)
         {
             try
@@ -304,11 +210,11 @@ namespace mqttclient.Mqtt
                 switch (subtopic)
                 {
                     case "app/running":
-                        Publish("app/running/" + message, Process.IsRunning(message, ""));
+                        Publish($"app/running/{message}", Process.IsRunning(message, ""));
                         break;
 
                     case "app/close":
-                        Publish("app/running/" + message, Process.Close(message));
+                        Publish($"app/running/{message}", Process.Close(message));
                         break;
 
                     case "monitor/set":
@@ -357,8 +263,10 @@ namespace mqttclient.Mqtt
                         break;
 
                     case "tts":
-                        SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-                        synthesizer.Volume = 100; // 0...100
+                        SpeechSynthesizer synthesizer = new SpeechSynthesizer
+                        {
+                            Volume = 100
+                        };
                         synthesizer.SpeakAsync(message);
                         break;
 
@@ -376,17 +284,12 @@ namespace mqttclient.Mqtt
                         break;
 
                     case "cmd":
-                        MqttTrigger currentMqttTrigger = new MqttTrigger();
-                        if (currentMqttTrigger.CmdText.Length > 2)
+                        ProcessStartInfo startInfo = new ProcessStartInfo(message)
                         {
-                            ProcessStartInfo startInfo = new ProcessStartInfo(currentMqttTrigger.CmdText);
-                            startInfo.WindowStyle = ProcessWindowStyle.Maximized;
-                            if (currentMqttTrigger.CmdParameters.Length > 2)
-                            {
-                                startInfo.Arguments = currentMqttTrigger.CmdParameters;
-                            }
-                            System.Diagnostics.Process.Start(startInfo);
-                        }
+                            WindowStyle = ProcessWindowStyle.Maximized
+                        };
+
+                        System.Diagnostics.Process.Start(startInfo);
 
                         break;
                 }
@@ -397,7 +300,6 @@ namespace mqttclient.Mqtt
                 throw;
             }
         }
-
         private int GetDelay(string message)
         {
             var result = Int32.TryParse(message, out var delay);
@@ -410,12 +312,11 @@ namespace mqttclient.Mqtt
                 return 10;
             }
         }
-
         public void PublishDiscovery(string topic, Mqtt.SensorType sensorType)
         {
             switch (sensorType)
             {
-                case SensorType.Binary_sensor:
+                case SensorType.BinarySensor:
                     break;
                 case SensorType.Light:
                     break;
@@ -429,16 +330,6 @@ namespace mqttclient.Mqtt
             //public enum SensorType { Binary_sensor, Switch, Light, Sensor };
 
 
-        }
-
-        public BindingList<MqttTrigger> GetTriggerList()
-        {
-            if (File.Exists(_gTriggerFile))
-            {
-                string s = File.ReadAllText(_gTriggerFile);
-                return JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
-            }
-            return new BindingList<MqttTrigger>();
         }
     }
 }

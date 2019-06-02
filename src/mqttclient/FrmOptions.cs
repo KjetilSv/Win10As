@@ -11,17 +11,17 @@ namespace mqttclient
     public partial class FrmOptions : Form
     {
         BindingList<MqttTrigger> MqttTriggerList = new BindingList<MqttTrigger>();
-        string appID = "win iot";
-        public string g_TriggerFile { get; set; }
-        public string g_LocalScreetshotFile { get; set; }
-        public FrmMqttMain parentform;
+        readonly string appID = "win iot";
+        public string TriggerFile { get; set; }
+
+        public FrmMqttMain ParentForm;
 
         public FrmOptions(FrmMqttMain Mainform)
         {
 
             InitializeComponent();
-            parentform = Mainform;
-            g_TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
+            ParentForm = Mainform;
+            TriggerFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "triggers.json");
             LoadSettings();
             if (txtmqtttopic.TextLength == 0)
             {
@@ -32,9 +32,6 @@ namespace mqttclient
             {
                 txtMqttTimerInterval.Text = "60000";
             }
-            LoadTriggerlist();
-            dataGridView1.DataSource = MqttTriggerList;
-            dataGridView1.Columns[0].Visible = false;
 
             if (txtmqtttopic.Text.Contains("#") == true)
             {
@@ -52,74 +49,24 @@ namespace mqttclient
             string output = JsonConvert.SerializeObject(MqttTriggerList);
             try
             {
-                File.WriteAllText(g_TriggerFile, output);
+                File.WriteAllText(TriggerFile, output);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("error durring file io:" + g_TriggerFile + " details:" + ex.Message);
+                MessageBox.Show($"error durring file io: {TriggerFile} details: {ex.Message}");
                 throw;
             }
 
 
         }
-        private void ClearNewTrigger()
-        {
-            txtSubTopic.Text = "";
-            txtCmd.Text = "";
-            txtCmdParameter.Text = "";
+        //private void ClearNewTrigger()
+        //{
+        //    txtSubTopic.Text = "";
+        //    txtCmd.Text = "";
+        //    txtCmdParameter.Text = "";
 
-        }
-        private void LoadTriggerlist()
-        {
-            if (File.Exists(g_TriggerFile))
-            {
-                string s = File.ReadAllText(g_TriggerFile);
-                BindingList<MqttTrigger> deserializedProduct = JsonConvert.DeserializeObject<BindingList<MqttTrigger>>(s);
-                MqttTriggerList = deserializedProduct;
-                foreach (MqttTrigger t in MqttTriggerList)
-                {
-                    if (t.Predefined == true)
-                    {
-                        switch (t.Name.ToLower())
-                        {
-                            case "mute/set":
-                                chkmute.Checked = true;
-                                break;
-                            case "volume":
-                                ChkVolume.Checked = true;
-                                break;
-                            case "suspend":
-                                chkSuspend.Checked = true;
-                                break;
-                            case "reboot":
-                                chkReboot.Checked = true;
-                                break;
-                            case "shutdown":
-                                chkShutdown.Checked = true;
-                                break;
-                            case "hibernate":
-                                chkHibernate.Checked = true;
-                                break;
-                            case "tts":
-                                chkTTS.Checked = true;
-                                break;
-                            case "toast":
-                                chktoast.Checked = true;
-                                break;
-                            case "monitor/set":
-                                ChkMonitor.Checked = true;
-                                break;
-                            case "app/running":
-                                ChkProcesses.Checked = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-
-        }
+        //}
+        
         private void LoadSettings()
         {
             txtmqttserver.Text = MqttSettings.MqttServer;
@@ -136,6 +83,16 @@ namespace mqttclient
             chkMinimizeToTray.Checked = MqttSettings.MinimizeToTray;
             chkScreenshot.Checked = MqttSettings.ScreenshotEnable;
             chkTtsEnabled.Checked = MqttSettings.EnableTTS;
+            ChkMonitor.Checked= MqttSettings.Monitor;
+            chktoast.Checked = MqttSettings.Toast;
+            ChkProcesses.Checked = MqttSettings.App;
+            chkTTS.Checked = MqttSettings.Tts;
+            chkHibernate.Checked = MqttSettings.Hibernate;
+            chkShutdown.Checked = MqttSettings.Shutdown;
+            chkReboot.Checked=MqttSettings.Reboot;
+            chkSuspend.Checked = MqttSettings.Suspend;
+            chkmute.Checked = MqttSettings.Mute;
+            ChkVolume.Checked = MqttSettings.Volume;
 
             if (MqttSettings.ScreenshotMqtt)
             {
@@ -172,11 +129,11 @@ namespace mqttclient
                 cmbWebcam.Visible = false;
                 CmdWebCamTest.Visible = false;
             }
-     
+
 
 
         }
-        private void savesettings()
+        private void SaveSettings()
         {
             MqttSettings.MqttServer = txtmqttserver.Text;
             MqttSettings.MqttUsername = txtmqttusername.Text;
@@ -193,6 +150,20 @@ namespace mqttclient
             MqttSettings.FreeMemorySensor = chkMemorySensor.Checked;
             MqttSettings.VolumeSensor = chkVolumeSensor.Checked;
             MqttSettings.EnableWebCamPublish = ChkEnableWebCamPublish.Checked;
+            MqttSettings.DiskSensor = (bool)ChkDiskSensor.Checked;
+            MqttSettings.IsComputerUsed = ChkComputerUsed.Checked;
+            MqttSettings.BatterySensor = ChkBatterySensor.Checked;
+            MqttSettings.Monitor = ChkMonitor.Checked;
+            MqttSettings.Toast = chktoast.Checked;
+            MqttSettings.App = ChkProcesses.Checked;
+            MqttSettings.Tts = chkTTS.Checked;
+            MqttSettings.Hibernate = chkHibernate.Checked;
+            MqttSettings.Shutdown = chkShutdown.Checked;
+            MqttSettings.Reboot = chkReboot.Checked;
+            MqttSettings.Suspend = chkSuspend.Checked;
+            MqttSettings.Mute = chkmute.Checked;
+            MqttSettings.Volume = ChkVolume.Checked;
+
             if (ChkEnableWebCamPublish.Checked == true)
             {
                 CmdWebCamTest.Visible = true;
@@ -217,9 +188,11 @@ namespace mqttclient
         {
             if (Add == true)
             {
-                MqttTrigger t = new MqttTrigger();
-                t.Name = name;
-                t.Predefined = true;
+                MqttTrigger t = new MqttTrigger
+                {
+                    Name = name,
+                    Predefined = true
+                };
                 MqttTriggerList.Add(t);
             }
             else
@@ -238,110 +211,36 @@ namespace mqttclient
             }
             SaveTriggerlist();
         }
-        private void refreshgridandsavefile()
-        {
+        //private void ChkScreenshotMqtt_CheckedChanged(object sender, EventArgs e)
+        //{
 
-            try
-            {
-                SaveTriggerlist();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-        private void checkbox_predefined_click(object sender, EventArgs e)
-        {
-            CheckBox chk = sender as CheckBox;
-
-            switch (chk.Name)
-            {
-                case "chkHibernate":
-                    AddRemovePrefinedItem("hibernate", chkHibernate.Checked);
-                    break;
-                case "chkSuspend":
-                    AddRemovePrefinedItem("suspend", chkSuspend.Checked);
-                    break;
-                case "chkShutdown":
-                    AddRemovePrefinedItem("shutdown", chkShutdown.Checked);
-                    break;
-                case "ChkVolume":
-                    AddRemovePrefinedItem("volume/set", ChkVolume.Checked);
-                    break;
-                case "chkmute":
-                    AddRemovePrefinedItem("mute/set", chkmute.Checked);
-                    break;
-                case "chkReboot":
-                    AddRemovePrefinedItem("reboot", chkReboot.Checked);
-                    break;
-                case "chkTTS":
-                    AddRemovePrefinedItem("tts", chkTTS.Checked);
-                    break;
-                case "chktoast":
-                    AddRemovePrefinedItem("toast", chktoast.Checked);
-                    break;
-                case "ChkMonitor":
-                    AddRemovePrefinedItem("monitor/set", chktoast.Checked);
-                    break;
-                case "ChkProcesses":
-                    AddRemovePrefinedItem("app/running", ChkProcesses.Checked);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-        private void CmdAddTrigger_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                MqttTrigger newtrigger = new MqttTrigger();
-                newtrigger.Name = txtSubTopic.Text;
-                newtrigger.CmdText = txtCmd.Text;
-                newtrigger.CmdParameters = txtCmdParameter.Text;
-                newtrigger.Predefined = false;
-                MqttTriggerList.Add(newtrigger);
-                SaveTriggerlist();
-                ClearNewTrigger();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("error" + ex.Message + " details: " + ex.InnerException);
-            }
-        }
-        private void chkScreenshotMqtt_CheckedChanged(object sender, EventArgs e)
-        {
-
-            if (chkScreenshotMqtt.Checked == true)
-            {
-                txtScreenshotPath.Visible = false;
-                LblScreenshotPath.Visible = false;
-            }
-            else
-            {
-                txtScreenshotPath.Visible = true;
-                LblScreenshotPath.Visible = true;
-            }
-            savesettings();
-        }
-        private void ChkBatterySensor_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default["BatterySensor"] = ChkBatterySensor.Checked;
-            Properties.Settings.Default.Save();
-        }
-        private void DiskSensor_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default["DiskSensor"] = ChkDiskSensor.Checked;
-            Properties.Settings.Default.Save();
-        }
-        private void isComputerUsed_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default["IsComputerUsed"] = ChkComputerUsed.Checked;
-            Properties.Settings.Default.Save();
-
-        }
+        //    if (chkScreenshotMqtt.Checked == true)
+        //    {
+        //        txtScreenshotPath.Visible = false;
+        //        LblScreenshotPath.Visible = false;
+        //    }
+        //    else
+        //    {
+        //        txtScreenshotPath.Visible = true;
+        //        LblScreenshotPath.Visible = true;
+        //    }
+        //    SaveSettings();
+        //}
+        //private void ChkBatterySensor_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    Properties.Settings.Default["BatterySensor"] = ChkBatterySensor.Checked;
+        //    Properties.Settings.Default.Save();
+        //}
+        //private void DiskSensor_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    Properties.Settings.Default["DiskSensor"] = ChkDiskSensor.Checked;
+        //    Properties.Settings.Default.Save();
+        //}
+        //private void IsComputerUsed_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    MqttSettings.IsComputerUsed = ChkComputerUsed.Checked;
+        //    MqttSettings.Save();
+        //}
         private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs anError)
         {
             MessageBox.Show(anError.RowIndex + " " + anError.ColumnIndex);
@@ -391,7 +290,7 @@ namespace mqttclient
                 }
                 try
                 {
-                    savesettings();
+                    SaveSettings();
                 }
                 catch (Exception ex)
                 {
@@ -401,7 +300,7 @@ namespace mqttclient
 
                 try
                 {
-                    parentform.ReloadApp();
+                    ParentForm.ReloadApp();
                 }
                 catch (Exception ex)
                 {
@@ -433,7 +332,7 @@ namespace mqttclient
                 HardwareSensors.Speaker.Speak("testing", cmbSpeaker.SelectedItem.ToString());
             }
         }
-        private void chkStartUp_CheckedChanged(object sender, EventArgs e)
+        private void ChkStartUp_CheckedChanged(object sender, EventArgs e)
         {
             {
                 Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -449,35 +348,6 @@ namespace mqttclient
                 Properties.Settings.Default["RunAtStart"] = chkStartUp.Checked;
             }
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
-
-                if (txtmqttusername.Text.Length == 0)
-                {
-                    byte code = client.Connect(Guid.NewGuid().ToString());
-                }
-                else
-                {
-                    byte code = client.Connect(Guid.NewGuid().ToString(), txtmqttusername.Text, txtmqttpassword.Text);
-                }
-                MessageBox.Show("connection ok id: " + client.ClientId);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Connection failed");
-                //throw;
-            }
-
-
-
-
-        }
-        private void chkScreenshot_CheckedChanged(object sender, EventArgs e)
-        {
-        }
         private void LoadAudioDevices()
         {
             cmbAudioOutput.DataSource = HardwareSensors.Audio.GetAudioDevices();
@@ -486,12 +356,14 @@ namespace mqttclient
         {
             cmbWebcam.DataSource = HardwareSensors.Camera.GetDevices();
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             if (cmbWebcam.SelectedValue.ToString().Length > 0)
             {
-                HardwareSensors.Camera c = new HardwareSensors.Camera();
-                c.Filename = @"c:\temp\test.bmp";
+                HardwareSensors.Camera c = new HardwareSensors.Camera
+                {
+                    Filename = @"c:\temp\test.bmp"
+                };
                 c.GetPicture(cmbWebcam.SelectedValue.ToString());
                 //using (FileStream file = new FileStream(c.Filename, FileMode.Create, FileAccess.Write))
                 //{
@@ -515,7 +387,7 @@ namespace mqttclient
                 CmdWebCamTest.Visible = false;
             }
         }
-        private void chkTtsEnabled_CheckedChanged(object sender, EventArgs e)
+        private void ChkTtsEnabled_CheckedChanged(object sender, EventArgs e)
         {
             if (chkTtsEnabled.Checked == true)
             {
@@ -523,8 +395,7 @@ namespace mqttclient
                 cmbSpeaker.SelectedItem = Properties.Settings.Default["TTSSpeaker"];
             }
         }
-
-        private void button1_Click_1(object sender, EventArgs e)
+        private void Button1_Click_1(object sender, EventArgs e)
         {
             try
             {
@@ -538,7 +409,7 @@ namespace mqttclient
                 {
                     byte code = client.Connect(Guid.NewGuid().ToString(), txtmqttusername.Text, txtmqttpassword.Text);
                 }
-                MessageBox.Show("connection ok id: " + client.ClientId);
+                MessageBox.Show($"connection ok id: {client.ClientId}");
             }
             catch (Exception)
             {

@@ -47,6 +47,7 @@
             this.txtmqttusername = new System.Windows.Forms.TextBox();
             this.txtmqttserver = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.ChkComputerUsed = new System.Windows.Forms.CheckBox();
             this.chkVolumeSensor = new System.Windows.Forms.CheckBox();
@@ -87,16 +88,6 @@
             this.ChkSlideshow = new System.Windows.Forms.CheckBox();
             this.txtSlideshowFolder = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.CmdAddTrigger = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.LblFQTopic = new System.Windows.Forms.Label();
-            this.txtCmdParameter = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.LblSubTopic = new System.Windows.Forms.Label();
-            this.txtCmd = new System.Windows.Forms.TextBox();
-            this.txtSubTopic = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.chkTtsEnabled = new System.Windows.Forms.CheckBox();
@@ -124,9 +115,6 @@
             this.groupBox10.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage6.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -211,7 +199,7 @@
             this.button1.TabIndex = 29;
             this.button1.Text = "test connection";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.button1.Click += new System.EventHandler(this.Button1_Click_1);
             // 
             // label10
             // 
@@ -315,6 +303,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.textBox4);
             this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -323,6 +312,14 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Sensors";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(27, 303);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(381, 154);
+            this.textBox4.TabIndex = 42;
             // 
             // groupBox6
             // 
@@ -438,6 +435,7 @@
             this.ChkProcesses.TabIndex = 33;
             this.ChkProcesses.Text = "Processes";
             this.ChkProcesses.UseVisualStyleBackColor = true;
+            this.ChkProcesses.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // ChkMonitor
             // 
@@ -448,6 +446,7 @@
             this.ChkMonitor.TabIndex = 32;
             this.ChkMonitor.Text = "Monitor";
             this.ChkMonitor.UseVisualStyleBackColor = true;
+            this.ChkMonitor.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // chktoast
             // 
@@ -458,6 +457,7 @@
             this.chktoast.TabIndex = 31;
             this.chktoast.Text = "Toast";
             this.chktoast.UseVisualStyleBackColor = true;
+            this.chktoast.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // chkTTS
             // 
@@ -468,6 +468,7 @@
             this.chkTTS.TabIndex = 30;
             this.chkTTS.Text = "TTS";
             this.chkTTS.UseVisualStyleBackColor = true;
+            this.chkTTS.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // chkReboot
             // 
@@ -478,6 +479,7 @@
             this.chkReboot.TabIndex = 18;
             this.chkReboot.Text = "Reboot";
             this.chkReboot.UseVisualStyleBackColor = true;
+            this.chkReboot.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // ChkVolume
             // 
@@ -488,6 +490,7 @@
             this.ChkVolume.TabIndex = 16;
             this.ChkVolume.Text = "Volume";
             this.ChkVolume.UseVisualStyleBackColor = true;
+            this.ChkVolume.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // chkHibernate
             // 
@@ -498,6 +501,7 @@
             this.chkHibernate.TabIndex = 16;
             this.chkHibernate.Text = "Hibernate";
             this.chkHibernate.UseVisualStyleBackColor = true;
+            this.chkHibernate.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // chkmute
             // 
@@ -508,6 +512,7 @@
             this.chkmute.TabIndex = 15;
             this.chkmute.Text = "Mute/Unmute";
             this.chkmute.UseVisualStyleBackColor = true;
+            this.chkmute.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // chkShutdown
             // 
@@ -518,6 +523,7 @@
             this.chkShutdown.TabIndex = 15;
             this.chkShutdown.Text = "Shutdown";
             this.chkShutdown.UseVisualStyleBackColor = true;
+            this.chkShutdown.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // chkSuspend
             // 
@@ -528,6 +534,7 @@
             this.chkSuspend.TabIndex = 14;
             this.chkSuspend.Text = "Suspend";
             this.chkSuspend.UseVisualStyleBackColor = true;
+            this.chkSuspend.CheckStateChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // tabPage4
             // 
@@ -629,7 +636,7 @@
             this.CmdWebCamTest.TabIndex = 55;
             this.CmdWebCamTest.Text = "Test";
             this.CmdWebCamTest.UseVisualStyleBackColor = true;
-            this.CmdWebCamTest.Click += new System.EventHandler(this.button2_Click);
+            this.CmdWebCamTest.Click += new System.EventHandler(this.Button2_Click);
             // 
             // cmbWebcam
             // 
@@ -728,8 +735,6 @@
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.groupBox4);
-            this.tabPage5.Controls.Add(this.dataGridView1);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -737,100 +742,6 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Commands";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.CmdAddTrigger);
-            this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Controls.Add(this.LblFQTopic);
-            this.groupBox4.Controls.Add(this.txtCmdParameter);
-            this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Controls.Add(this.LblSubTopic);
-            this.groupBox4.Controls.Add(this.txtCmd);
-            this.groupBox4.Controls.Add(this.txtSubTopic);
-            this.groupBox4.Location = new System.Drawing.Point(16, 405);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(285, 146);
-            this.groupBox4.TabIndex = 39;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Add custom command";
-            // 
-            // CmdAddTrigger
-            // 
-            this.CmdAddTrigger.Location = new System.Drawing.Point(95, 120);
-            this.CmdAddTrigger.Name = "CmdAddTrigger";
-            this.CmdAddTrigger.Size = new System.Drawing.Size(75, 20);
-            this.CmdAddTrigger.TabIndex = 27;
-            this.CmdAddTrigger.Text = "Add";
-            this.CmdAddTrigger.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 94);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 13);
-            this.label5.TabIndex = 25;
-            this.label5.Text = "Parameter";
-            // 
-            // LblFQTopic
-            // 
-            this.LblFQTopic.AutoSize = true;
-            this.LblFQTopic.Location = new System.Drawing.Point(351, 36);
-            this.LblFQTopic.Name = "LblFQTopic";
-            this.LblFQTopic.Size = new System.Drawing.Size(0, 13);
-            this.LblFQTopic.TabIndex = 24;
-            // 
-            // txtCmdParameter
-            // 
-            this.txtCmdParameter.Location = new System.Drawing.Point(95, 88);
-            this.txtCmdParameter.Name = "txtCmdParameter";
-            this.txtCmdParameter.Size = new System.Drawing.Size(115, 20);
-            this.txtCmdParameter.TabIndex = 23;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 65);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(54, 13);
-            this.label6.TabIndex = 22;
-            this.label6.Text = "Command";
-            // 
-            // LblSubTopic
-            // 
-            this.LblSubTopic.AutoSize = true;
-            this.LblSubTopic.Location = new System.Drawing.Point(18, 39);
-            this.LblSubTopic.Name = "LblSubTopic";
-            this.LblSubTopic.Size = new System.Drawing.Size(34, 13);
-            this.LblSubTopic.TabIndex = 21;
-            this.LblSubTopic.Text = "Topic";
-            // 
-            // txtCmd
-            // 
-            this.txtCmd.Location = new System.Drawing.Point(95, 62);
-            this.txtCmd.Name = "txtCmd";
-            this.txtCmd.Size = new System.Drawing.Size(115, 20);
-            this.txtCmd.TabIndex = 20;
-            // 
-            // txtSubTopic
-            // 
-            this.txtSubTopic.Location = new System.Drawing.Point(95, 36);
-            this.txtSubTopic.Name = "txtSubTopic";
-            this.txtSubTopic.Size = new System.Drawing.Size(100, 20);
-            this.txtSubTopic.TabIndex = 0;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 6);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(682, 365);
-            this.dataGridView1.TabIndex = 38;
             // 
             // tabPage6
             // 
@@ -865,7 +776,7 @@
             this.chkTtsEnabled.TabIndex = 59;
             this.chkTtsEnabled.Text = "Enable TTS";
             this.chkTtsEnabled.UseVisualStyleBackColor = true;
-            this.chkTtsEnabled.CheckedChanged += new System.EventHandler(this.chkTtsEnabled_CheckedChanged);
+            this.chkTtsEnabled.CheckedChanged += new System.EventHandler(this.ChkTtsEnabled_CheckedChanged);
             // 
             // CmdTestSpeaker
             // 
@@ -964,6 +875,7 @@
             this.chkStartUp.TabIndex = 42;
             this.chkStartUp.Text = "Run at start";
             this.chkStartUp.UseVisualStyleBackColor = true;
+            this.chkStartUp.CheckedChanged += new System.EventHandler(this.ChkStartUp_CheckedChanged);
             // 
             // tabPage8
             // 
@@ -1001,6 +913,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -1015,10 +928,6 @@
             this.groupBox5.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage6.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
@@ -1081,16 +990,6 @@
         private System.Windows.Forms.CheckBox ChkSlideshow;
         private System.Windows.Forms.TextBox txtSlideshowFolder;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button CmdAddTrigger;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label LblFQTopic;
-        private System.Windows.Forms.TextBox txtCmdParameter;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label LblSubTopic;
-        private System.Windows.Forms.TextBox txtCmd;
-        private System.Windows.Forms.TextBox txtSubTopic;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Button CmdTestSpeaker;
@@ -1116,5 +1015,6 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.Button CmdDiscovery;
+        private System.Windows.Forms.TextBox textBox4;
     }
 }

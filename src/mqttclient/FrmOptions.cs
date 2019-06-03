@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
@@ -14,7 +15,10 @@ namespace mqttclient
         readonly string appID = "win iot";
         public string TriggerFile { get; set; }
 
-        public FrmMqttMain ParentForm;
+
+        public FrmMqttMain ParentForm { get; set; }
+
+        
 
         public FrmOptions(FrmMqttMain Mainform)
         {
@@ -73,7 +77,7 @@ namespace mqttclient
             txtmqttusername.Text = MqttSettings.MqttUsername;
             txtmqttpassword.Text = MqttSettings.MqttPassword;
             txtmqtttopic.Text = MqttSettings.MqttTopic;
-            txtMqttTimerInterval.Text = MqttSettings.MqttTimerInterval.ToString();
+            txtMqttTimerInterval.Text = MqttSettings.MqttTimerInterval.ToString(CultureInfo.CurrentCulture);
             ChkBatterySensor.Checked = MqttSettings.BatterySensor;
             ChkDiskSensor.Checked = MqttSettings.DiskSensor;
             chkCpuSensor.Checked = MqttSettings.CpuSensor;
@@ -112,16 +116,16 @@ namespace mqttclient
             }
 
 
-            ChkSlideshow.Checked = Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString());
+            ChkSlideshow.Checked = Convert.ToBoolean(Properties.Settings.Default["MqttSlideshow"].ToString(), CultureInfo.CurrentCulture);
             txtSlideshowFolder.Text = Properties.Settings.Default["MqttSlideshowFolder"].ToString();
-            chkStartUp.Checked = Convert.ToBoolean(Properties.Settings.Default["RunAtStart"]);
-            ChkEnableWebCamPublish.Checked = Convert.ToBoolean(Properties.Settings.Default["EnableWebCamPublish"]);
+            chkStartUp.Checked = Convert.ToBoolean(Properties.Settings.Default["RunAtStart"], CultureInfo.CurrentCulture);
+            ChkEnableWebCamPublish.Checked = Convert.ToBoolean(Properties.Settings.Default["EnableWebCamPublish"], CultureInfo.CurrentCulture);
             if (ChkEnableWebCamPublish.Checked == true)
             {
                 LoadCameraDevices();
-                if (Convert.ToString(Properties.Settings.Default["WebCamToPublish"]).Length > 0)
+                if (Convert.ToString(Properties.Settings.Default["WebCamToPublish"], CultureInfo.CurrentCulture).Length > 0)
                 {
-                    cmbWebcam.SelectedText = Convert.ToString(Properties.Settings.Default["WebCamToPublish"]);
+                    cmbWebcam.SelectedText = Convert.ToString(Properties.Settings.Default["WebCamToPublish"], CultureInfo.CurrentCulture);
                 }
             }
             else
@@ -339,7 +343,7 @@ namespace mqttclient
 
                 if (chkStartUp.Checked)
                 {
-                    rk.SetValue(appID, Application.ExecutablePath.ToString());
+                    rk.SetValue(appID, Application.ExecutablePath.ToString(CultureInfo.CurrentCulture));
                 }
                 else
                 {
@@ -399,7 +403,7 @@ namespace mqttclient
         {
             try
             {
-                var client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text), false, null, null, MqttSslProtocols.None, null);
+                var client = new MqttClient(txtmqttserver.Text, Convert.ToInt16(textBox1.Text, CultureInfo.CurrentCulture), false, null, null, MqttSslProtocols.None, null);
 
                 if (txtmqttusername.Text.Length == 0)
                 {

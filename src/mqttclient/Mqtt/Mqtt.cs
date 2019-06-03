@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Speech.Synthesis;
 using System.Text;
@@ -243,7 +244,7 @@ namespace mqttclient.Mqtt
                         break;
 
                     case "volume/set":
-                        _audio.Volume(Convert.ToInt32(message));
+                        _audio.Volume(Convert.ToInt32(message, CultureInfo.CurrentCulture));
                         break;
 
                     case "hibernate":
@@ -294,13 +295,13 @@ namespace mqttclient.Mqtt
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
             }
         }
-        private int GetDelay(string message)
+        private static int GetDelay(string message)
         {
             var result = Int32.TryParse(message, out var delay);
             if (result)

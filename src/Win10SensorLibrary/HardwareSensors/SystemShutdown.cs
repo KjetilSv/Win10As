@@ -7,12 +7,12 @@ using Microsoft.Win32;
 
 namespace mqttclient.HardwareSensors
 {
-    public class SystemShutdown
-    {
-        public void Subscribe()
-        {
-           // SystemEvents.SessionEnding += (sender, args) => _mqtt.Publish("", "off", true);
-        }
+    //public static class SystemShutdown
+    //{
+    //    public static void Subscribe()
+    //    {
+    //       // SystemEvents.SessionEnding += (sender, args) => _mqtt.Publish("", "off", true);
+    //    }
 
-    }
+    //}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using AudioSwitcher.AudioApi.CoreAudio;
 
 namespace mqttclient.HardwareSensors
@@ -77,7 +78,7 @@ namespace mqttclient.HardwareSensors
             CoreAudioController cac = new CoreAudioController();
             foreach (CoreAudioDevice de in cac.GetPlaybackDevices())
             {
-                if (de.FullName.ToLower() == DeviceFullname.ToLower())
+                if (de.FullName.ToLower(CultureInfo.CurrentCulture) == DeviceFullname.ToLower(CultureInfo.CurrentCulture))
                 {
                     defaultPlaybackDevice = de;
                 }

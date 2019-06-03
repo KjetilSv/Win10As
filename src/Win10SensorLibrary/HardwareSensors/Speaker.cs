@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Speech.Synthesis;
+using System.Globalization;
 
 namespace mqttclient.HardwareSensors
 {
-    public class Speaker
+    public static class Speaker
     {
         public static List<string> GetSpeakers()
         {
             List<string> result = new List<string>() ;
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-                foreach (InstalledVoice i in synthesizer.GetInstalledVoices())
+                foreach (InstalledVoice i in synthesizer.GetInstalledVoices(CultureInfo.CurrentCulture))
                 {
                     result.Add((i.VoiceInfo.Name));
                 }

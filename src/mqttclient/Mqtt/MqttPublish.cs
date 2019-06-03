@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using mqttclient.HardwareSensors;
@@ -145,9 +146,9 @@ namespace mqttclient.Mqtt
 
                     string rawdrivename = drive.Name.Replace(":\\", "");
 
-                    _mqtt.Publish("drive/" + rawdrivename + "/totalsize", drive.TotalSize.ToString());
-                    _mqtt.Publish("drive/" + rawdrivename + "/percentfree", Convert.ToString(Math.Round(Convert.ToDouble(percentFree.ToString()), 0)));
-                    _mqtt.Publish("drive/" + rawdrivename + "/availablefreespace", drive.AvailableFreeSpace.ToString());
+                    _mqtt.Publish("drive/" + rawdrivename + "/totalsize", drive.TotalSize.ToString(CultureInfo.CurrentCulture));
+                    _mqtt.Publish("drive/" + rawdrivename + "/percentfree", Convert.ToString(Math.Round(Convert.ToDouble(percentFree.ToString(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture), 0), CultureInfo.CurrentCulture));
+                    _mqtt.Publish("drive/" + rawdrivename + "/availablefreespace", drive.AvailableFreeSpace.ToString(CultureInfo.CurrentCulture));
                 }
             }
             catch (Exception)
@@ -157,7 +158,7 @@ namespace mqttclient.Mqtt
 
         }
 
-        private bool NetworkUp()
+        private static bool NetworkUp()
         {
 
             try

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace mqttclient.HardwareSensors
 {
-    public class Monitor
+    public static class Monitor
     {
         private class NativeMethods
         {

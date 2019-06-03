@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace mqttclient
 {
-    public class Process
+    public static class Process
     {
         public static string IsRunning(string exename, string location)
         {

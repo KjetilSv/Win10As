@@ -13,7 +13,7 @@ namespace mqttclient.HardwareSensors
     /// <summary>
     /// Helps to find the idle time, (in milliseconds) spent since the last user input
     /// </summary>
-    public class IdleTimeFinder
+    public static class IdleTimeFinder
     {
         private class NativeMethods
         {

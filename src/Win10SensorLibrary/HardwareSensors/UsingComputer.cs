@@ -1,6 +1,6 @@
 ﻿namespace mqttclient.HardwareSensors
 {
-    public class UsingComputer
+    public static class UsingComputer
     {
         public static bool IsUsing()
         {

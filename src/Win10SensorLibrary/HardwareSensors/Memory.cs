@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace mqttclient.HardwareSensors
 {
-    public class Memory
+    public static class Memory
     {
         public static string GetFreeMemory()
         {

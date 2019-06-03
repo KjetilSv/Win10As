@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Reflection;
 using mqttclient.Mqtt;
+using System.Globalization;
 
 namespace mqttclient
 {
@@ -48,7 +49,7 @@ namespace mqttclient
         {
             try
             {
-                timer1.Interval = Convert.ToInt32(MqttSettings.MqttTimerInterval);
+                timer1.Interval = Convert.ToInt32(MqttSettings.MqttTimerInterval, CultureInfo.CurrentCulture);
             }
             catch (Exception)
             {

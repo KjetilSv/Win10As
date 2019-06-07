@@ -71,7 +71,8 @@ Tested with common applications like spotify/firefox/skype.
 Exsample: 
 mosquitto_pub -t kjetilsv/app/running -m Spotify
 if spotify is running kjetilsv/app/running/Spotify return message = 1 
-
+#### CMD
+{"CommandString": "Chrome","WindowStyle": "1","ExecParameters": "http://vg.no","MonitorId": "1"}
 #### Custom commands
 [maintopic]/[customcommandname]
 Message is currently not used, will be impemented in later versions.

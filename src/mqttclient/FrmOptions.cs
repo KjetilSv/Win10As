@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -18,7 +20,7 @@ namespace mqttclient
 
         public FrmMqttMain ParentForm { get; set; }
 
-        
+
 
         public FrmOptions(FrmMqttMain Mainform)
         {
@@ -70,7 +72,7 @@ namespace mqttclient
         //    txtCmdParameter.Text = "";
 
         //}
-        
+
         private void LoadSettings()
         {
             txtmqttserver.Text = MqttSettings.MqttServer;
@@ -87,13 +89,13 @@ namespace mqttclient
             chkMinimizeToTray.Checked = MqttSettings.MinimizeToTray;
             chkScreenshot.Checked = MqttSettings.ScreenshotEnable;
             chkTtsEnabled.Checked = MqttSettings.EnableTTS;
-            ChkMonitor.Checked= MqttSettings.Monitor;
+            ChkMonitor.Checked = MqttSettings.Monitor;
             chktoast.Checked = MqttSettings.Toast;
             ChkProcesses.Checked = MqttSettings.App;
             chkTTS.Checked = MqttSettings.Tts;
             chkHibernate.Checked = MqttSettings.Hibernate;
             chkShutdown.Checked = MqttSettings.Shutdown;
-            chkReboot.Checked=MqttSettings.Reboot;
+            chkReboot.Checked = MqttSettings.Reboot;
             chkSuspend.Checked = MqttSettings.Suspend;
             chkmute.Checked = MqttSettings.Mute;
             ChkVolume.Checked = MqttSettings.Volume;
@@ -364,11 +366,34 @@ namespace mqttclient
         {
             if (cmbWebcam.SelectedValue.ToString().Length > 0)
             {
-                HardwareSensors.Camera c = new HardwareSensors.Camera
+                try
                 {
-                    Filename = @"c:\temp\test.bmp"
-                };
-                c.GetPicture(cmbWebcam.SelectedValue.ToString());
+                    string Filename = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) +  @"\cameratest.jpeg";
+
+                    if (HardwareSensors.Camera.Save(Filename))
+                    {
+                        MessageBox.Show($"camera image saved to {Filename}");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Failed to save image");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+
+
+                //HardwareSensors.Camera c = new HardwareSensors.Camera
+                //{
+                //    Filename = @"c:\temp\test.bmp"
+                //};
+                //c.GetPicture(cmbWebcam.SelectedValue.ToString());
+
+
                 //using (FileStream file = new FileStream(c.Filename, FileMode.Create, FileAccess.Write))
                 //{
                 //    c.memoryStream.WriteTo(file);

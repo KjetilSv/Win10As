@@ -198,8 +198,9 @@ namespace mqttclient.Mqtt
                     }
                 }
             }
-            catch (Exception)
+            catch
             {
+                throw;
             }
         }
 
@@ -207,11 +208,15 @@ namespace mqttclient.Mqtt
         {
             try
             {
-                Camera c = new Camera();
-                c.Filename = filename;
-                string retur = c.GetPicture(MqttSettings.WebCamToPublish);
-                c = null;
-                _mqtt.PublishImage("webcamera", filename);
+
+
+
+
+                //Camera c = new Camera();
+                //c.Filename = filename;
+                //string retur = c.GetPicture(MqttSettings.WebCamToPublish);
+                //c = null;
+                //_mqtt.PublishImage("webcamera", filename);
             }
             catch (Exception)
             {

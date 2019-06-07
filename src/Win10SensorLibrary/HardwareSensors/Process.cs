@@ -38,7 +38,7 @@ namespace mqttclient
                 }
                 return "1";
             }
-            catch (Exception)
+            catch
             {
                 return "0";
             }

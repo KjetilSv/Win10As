@@ -24,9 +24,7 @@ namespace mqttclient
                 Version version = Assembly.GetExecutingAssembly().GetName().Version;
                 toolStripStatusLabel2.Text = "";
                 MqttSettings.Init();
-
                 SetupNotify();
-
 
             }
             catch (Exception ex)
@@ -173,6 +171,11 @@ namespace mqttclient
             }
             SetupTimer();
 
+        }
+
+        private void FrmMqttMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _mqtt.Disconnect();
         }
     }
 }

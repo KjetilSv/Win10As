@@ -22,7 +22,6 @@ namespace mqttclient.Mqtt
         private readonly IAudio _audio;
         private readonly ILogger _logger;
         private MqttClient _client;
-
         public enum SensorType { BinarySensor, Switch, Light, Sensor };
         public string GMqtttopic { get; set; }
         public bool IsConnected
@@ -97,7 +96,7 @@ namespace mqttclient.Mqtt
                             byte code = _client.Connect(Guid.NewGuid().ToString(), username, password);
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         throw new Exception($"not connected, check connection settings error: {ex.Message}");
                     }
@@ -107,49 +106,24 @@ namespace mqttclient.Mqtt
 
                         if (_client.IsConnected)
                         {
-                            
+
                             _client.MqttMsgPublishReceived += ClientMqttMsgPublishReceived;
                             _client.MqttMsgSubscribed += ClientMqttMsgSubscribed;
                             _client.MqttMsgPublished += ClientMqttMsgPublished;
                             _client.ConnectionClosed += ClientMqttConnectionClosed;
-                          
+
                             _logger.Log("connected");
 
-
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
-                            //_client.Subscribe(new string[] { "/" + GMqtttopic }, new byte[] { 2 });   
-                            //_client.Subscribe(new string[] { GMqtttopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-
 
                             var r = new List<string>();
-                            //r.Add("kjetildesktop/test");
                             r.Add(GMqtttopic);
                             _client.Subscribe(r.ToArray(), new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 
-
-
-
-
-                            //var r = new List<string>();
-
-                            //r.Add(GMqtttopic);
-
-
-                            //byte[] qos = GetQos(topics.Length);
-
-                            //_client.Subscribe(topics, qos);
-
-
-
-
-                            // _client.Subscribe(new string[] { "hello/world" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
                             return true;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("not connected,check mqtt setup error:{ ex.Message}");
-                    }
+
                     catch
                     {
                         throw;
@@ -161,7 +135,7 @@ namespace mqttclient.Mqtt
                 }
             }
 
-            catch (Exception ex)
+            catch
             {
                 throw new Exception("not connected,check settings. Error: {ex.InnerException.ToString()}");
             }
@@ -247,7 +221,25 @@ namespace mqttclient.Mqtt
                 switch (subtopic)
                 {
                     case "app/running":
-                        Publish($"app/running/{message}", Process.IsRunning(message, ""));
+
+                        var isRunning = JsonConvert.DeserializeObject<Win10MqttLibrary.Models.IsRunning>(message);
+
+                        switch (isRunning.Action)
+                        {
+
+                            case "1":
+                                Publish($"app/running/{isRunning.ApplicationName}", Process.IsRunning(message, ""));
+                                break;
+                            case "0":
+                                //close the app
+                                Process.Close(isRunning.ApplicationName);
+                                Publish($"app/running/{isRunning.ApplicationName}", "0");
+                                break;
+                            default:
+                                Publish($"app/running/{isRunning.ApplicationName}", Process.IsRunning(message, ""));
+                                break;
+
+                        }
                         break;
 
                     case "app/close":
@@ -324,9 +316,10 @@ namespace mqttclient.Mqtt
 
                         ProcessWindowStyle processWindowStyle = new ProcessWindowStyle();
 
-                        var commandParameters = JsonConvert.DeserializeObject<Win10SensorLibrary.Models.CommandParameters>(message);
+                        var commandParameters = JsonConvert.DeserializeObject<Win10MqttLibrary.Models.CommandParameters>(message);
 
-                        switch (Convert.ToInt16(commandParameters.WindowStyle)){
+                        switch (Convert.ToInt16(commandParameters.WindowStyle))
+                        {
                             case 0:
                                 processWindowStyle = ProcessWindowStyle.Normal;
                                 break;
@@ -356,7 +349,7 @@ namespace mqttclient.Mqtt
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

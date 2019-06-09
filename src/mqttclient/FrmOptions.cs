@@ -13,15 +13,9 @@ namespace mqttclient
 {
     public partial class FrmOptions : Form
     {
-        BindingList<MqttTrigger> MqttTriggerList = new BindingList<MqttTrigger>();
         readonly string appID = "win iot";
         public string TriggerFile { get; set; }
-
-
         public FrmMqttMain ParentForm { get; set; }
-
-
-
         public FrmOptions(FrmMqttMain Mainform)
         {
 
@@ -44,35 +38,10 @@ namespace mqttclient
                 txtmqtttopic.Text = txtmqtttopic.Text.Replace("/#", "");
                 Properties.Settings.Default["mqtttopic"] = txtmqtttopic.Text;
                 Properties.Settings.Default.Save();
-
             }
             LoadAudioDevices();
 
         }
-        private void SaveTriggerlist()
-
-        {
-            string output = JsonConvert.SerializeObject(MqttTriggerList);
-            try
-            {
-                File.WriteAllText(TriggerFile, output);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"error durring file io: {TriggerFile} details: {ex.Message}");
-                throw;
-            }
-
-
-        }
-        //private void ClearNewTrigger()
-        //{
-        //    txtSubTopic.Text = "";
-        //    txtCmd.Text = "";
-        //    txtCmdParameter.Text = "";
-
-        //}
-
         private void LoadSettings()
         {
             txtmqttserver.Text = MqttSettings.MqttServer;
@@ -100,16 +69,7 @@ namespace mqttclient
             chkmute.Checked = MqttSettings.Mute;
             ChkVolume.Checked = MqttSettings.Volume;
 
-            if (MqttSettings.ScreenshotMqtt)
-            {
-                chkScreenshotMqtt.Checked = true;
-                txtScreenshotPath.Visible = false;
-                LblScreenshotPath.Visible = false;
-            }
-            else
-            {
-                txtScreenshotPath.Text = MqttSettings.ScreenShotPath;
-            }
+           
 
             if (chkTtsEnabled.Checked == true)
             {
@@ -147,8 +107,6 @@ namespace mqttclient
             MqttSettings.MqttTopic = txtmqtttopic.Text;
             MqttSettings.MqttTimerInterval = txtMqttTimerInterval.Text;
             MqttSettings.ScreenshotEnable = Convert.ToBoolean(chkScreenshot.Checked);
-            MqttSettings.ScreenshotMqtt = Convert.ToBoolean(chkScreenshotMqtt.Checked);
-            MqttSettings.ScreenShotPath = txtScreenshotPath.Text;
             MqttSettings.MinimizeToTray = chkMinimizeToTray.Checked;
             MqttSettings.MqttSlideshow = ChkSlideshow.Checked;
             MqttSettings.MqttSlideshowFolder = txtSlideshowFolder.Text;
@@ -190,93 +148,6 @@ namespace mqttclient
             }
             MqttSettings.Save();
         }
-        private void AddRemovePrefinedItem(string name, Boolean Add)
-        {
-            if (Add == true)
-            {
-                MqttTrigger t = new MqttTrigger
-                {
-                    Name = name,
-                    Predefined = true
-                };
-                MqttTriggerList.Add(t);
-            }
-            else
-            {
-                var tmpMqttTriggerList = MqttTriggerList;
-
-                foreach (MqttTrigger t in MqttTriggerList)
-                {
-                    if (t.Name == name)
-                    {
-                        tmpMqttTriggerList.Remove(t);
-                        break;
-                    }
-                }
-                MqttTriggerList = tmpMqttTriggerList;
-            }
-            SaveTriggerlist();
-        }
-        //private void ChkScreenshotMqtt_CheckedChanged(object sender, EventArgs e)
-        //{
-
-        //    if (chkScreenshotMqtt.Checked == true)
-        //    {
-        //        txtScreenshotPath.Visible = false;
-        //        LblScreenshotPath.Visible = false;
-        //    }
-        //    else
-        //    {
-        //        txtScreenshotPath.Visible = true;
-        //        LblScreenshotPath.Visible = true;
-        //    }
-        //    SaveSettings();
-        //}
-        //private void ChkBatterySensor_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    Properties.Settings.Default["BatterySensor"] = ChkBatterySensor.Checked;
-        //    Properties.Settings.Default.Save();
-        //}
-        //private void DiskSensor_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    Properties.Settings.Default["DiskSensor"] = ChkDiskSensor.Checked;
-        //    Properties.Settings.Default.Save();
-        //}
-        //private void IsComputerUsed_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    MqttSettings.IsComputerUsed = ChkComputerUsed.Checked;
-        //    MqttSettings.Save();
-        //}
-        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs anError)
-        {
-            MessageBox.Show(anError.RowIndex + " " + anError.ColumnIndex);
-            MessageBox.Show("Error happened " + anError.Context.ToString());
-
-            if (anError.Context == DataGridViewDataErrorContexts.Commit)
-            {
-                MessageBox.Show("Commit error");
-            }
-            if (anError.Context == DataGridViewDataErrorContexts.CurrentCellChange)
-            {
-                MessageBox.Show("Cell change");
-            }
-            if (anError.Context == DataGridViewDataErrorContexts.Parsing)
-            {
-                MessageBox.Show("parsing error");
-            }
-            if (anError.Context == DataGridViewDataErrorContexts.LeaveControl)
-            {
-                MessageBox.Show("leave control error");
-            }
-
-            if ((anError.Exception) is ConstraintException)
-            {
-                DataGridView view = (DataGridView)sender;
-                view.Rows[anError.RowIndex].ErrorText = "an error";
-                view.Rows[anError.RowIndex].Cells[anError.ColumnIndex].ErrorText = "an error";
-                anError.ThrowException = false;
-            }
-        }
         private void CmdClose_Click(object sender, EventArgs e)
         {
             Close();
@@ -285,15 +156,6 @@ namespace mqttclient
         {
             try
             {
-                try
-                {
-                    SaveTriggerlist();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error durring SaveTriggerlist error:" + ex.Message);
-                    throw;
-                }
                 try
                 {
                     SaveSettings();
@@ -386,19 +248,6 @@ namespace mqttclient
                     throw;
                 }
 
-
-                //HardwareSensors.Camera c = new HardwareSensors.Camera
-                //{
-                //    Filename = @"c:\temp\test.bmp"
-                //};
-                //c.GetPicture(cmbWebcam.SelectedValue.ToString());
-
-
-                //using (FileStream file = new FileStream(c.Filename, FileMode.Create, FileAccess.Write))
-                //{
-                //    c.memoryStream.WriteTo(file);
-                //}
-
             }
         }
         private void ChkEnableWebCamPublish_CheckedChanged(object sender, EventArgs e)
@@ -444,6 +293,14 @@ namespace mqttclient
             {
                 MessageBox.Show("Connection failed");
                 //throw;
+            }
+        }
+        private void CmdSelectSlideShowPath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtSlideshowFolder.Text = folderBrowserDialog1.SelectedPath;
             }
         }
     }

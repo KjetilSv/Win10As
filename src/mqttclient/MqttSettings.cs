@@ -41,26 +41,12 @@ namespace mqttclient
         public static string MqttTimerInterval
         {
             get => (string)Properties.Settings.Default["mqtttimerinterval"];
-            //{
-            //    if (string.IsNullOrEmpty(Properties.Settings.Default["mqtttimerinterval"].ToString()))
-            //    {
-            //        Properties.Settings.Default["mqtttimerinterval"] = 6000;
-            //        Properties.Settings.Default.Save();
-            //    }
-            //    => (Int)Properties.Settings.Default["mqtttimerinterval"];
-            //}
-
             set => Properties.Settings.Default["mqtttimerinterval"] = value.ToString(CultureInfo.CurrentCulture);
         }
         public static bool ScreenshotEnable
         {
             get => (bool)Properties.Settings.Default["screenshotenable"];
             set => Properties.Settings.Default["screenshotenable"] = Convert.ToBoolean(value.ToString(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture);
-        }
-        public static bool ScreenshotMqtt
-        {
-            get => (bool)Properties.Settings.Default[nameof(ScreenshotMqtt)];
-            set => Properties.Settings.Default[nameof(ScreenshotMqtt)] = Convert.ToBoolean(value.ToString(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture);
         }
         public static string ScreenShotPath
         {
@@ -128,21 +114,16 @@ namespace mqttclient
             set => Properties.Settings.Default[nameof(EnableTTS)] = Convert.ToBoolean(value.ToString(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture);
         }
         public static string TTSSpeaker { get; internal set; }
-
-
         public static Boolean Monitor
         {
             get => (Boolean)Properties.Settings.Default["CmdMonitor"];
             set => Properties.Settings.Default["CmdMonitor"] = Convert.ToBoolean(value.ToString(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture);
         }
-
-
         public static Boolean Toast
         {
             get => (Boolean)Properties.Settings.Default["CmdToast"];
             set => Properties.Settings.Default["CmdToast"] = Convert.ToBoolean(value.ToString(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture);
         }
-
         public static Boolean App
         {
             get => (Boolean)Properties.Settings.Default["CmdApp"];
@@ -178,7 +159,6 @@ namespace mqttclient
             get => (Boolean)Properties.Settings.Default["CmdMute"];
             set => Properties.Settings.Default["CmdMute"] = Convert.ToBoolean(value.ToString(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture);
         }
-
         public static Boolean Volume
         {
             get => (Boolean)Properties.Settings.Default["CmdVolume"];

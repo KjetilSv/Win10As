@@ -20,14 +20,8 @@
     <Setting Name="ScreenShotEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ScreenShotpath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="ScreenShotInterval" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="ScreenshotMqtt" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="BatterySensor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

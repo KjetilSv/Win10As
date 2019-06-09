@@ -68,20 +68,11 @@
             this.chkShutdown = new System.Windows.Forms.CheckBox();
             this.chkSuspend = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.chkScreenDumpPrimonitor = new System.Windows.Forms.CheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.ChkEnableWebCamPublish = new System.Windows.Forms.CheckBox();
             this.CmdWebCamTest = new System.Windows.Forms.Button();
             this.cmbWebcam = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.chkScreenshotMqtt = new System.Windows.Forms.CheckBox();
-            this.LblScreenshotPath = new System.Windows.Forms.Label();
-            this.txtScreenshotPath = new System.Windows.Forms.TextBox();
             this.chkScreenshot = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -103,6 +94,7 @@
             this.chkStartUp = new System.Windows.Forms.CheckBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.CmdDiscovery = new System.Windows.Forms.Button();
+            this.CmdSelectSlideShowPath = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -111,7 +103,6 @@
             this.tabPage3.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -538,7 +529,6 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.groupBox1);
             this.tabPage4.Controls.Add(this.groupBox10);
             this.tabPage4.Controls.Add(this.groupBox5);
             this.tabPage4.Controls.Add(this.groupBox7);
@@ -549,68 +539,12 @@
             this.tabPage4.Text = "Camera";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.chkScreenDumpPrimonitor);
-            this.groupBox1.Location = new System.Drawing.Point(7, 329);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(352, 218);
-            this.groupBox1.TabIndex = 57;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Screenshots";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 103);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(61, 13);
-            this.label9.TabIndex = 33;
-            this.label9.Text = "Interval(ms)";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(82, 100);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 32;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(-81, 57);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 13);
-            this.label8.TabIndex = 31;
-            this.label8.Text = "Path";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(175, 51);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(124, 20);
-            this.textBox2.TabIndex = 30;
-            // 
-            // chkScreenDumpPrimonitor
-            // 
-            this.chkScreenDumpPrimonitor.AutoSize = true;
-            this.chkScreenDumpPrimonitor.Location = new System.Drawing.Point(23, 28);
-            this.chkScreenDumpPrimonitor.Name = "chkScreenDumpPrimonitor";
-            this.chkScreenDumpPrimonitor.Size = new System.Drawing.Size(165, 17);
-            this.chkScreenDumpPrimonitor.TabIndex = 29;
-            this.chkScreenDumpPrimonitor.Text = "Screenshot of primary monitor";
-            this.chkScreenDumpPrimonitor.UseVisualStyleBackColor = true;
-            // 
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.ChkEnableWebCamPublish);
             this.groupBox10.Controls.Add(this.CmdWebCamTest);
             this.groupBox10.Controls.Add(this.cmbWebcam);
-            this.groupBox10.Location = new System.Drawing.Point(7, 159);
+            this.groupBox10.Location = new System.Drawing.Point(7, 152);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(352, 151);
             this.groupBox10.TabIndex = 56;
@@ -648,42 +582,13 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.chkScreenshotMqtt);
-            this.groupBox5.Controls.Add(this.LblScreenshotPath);
-            this.groupBox5.Controls.Add(this.txtScreenshotPath);
             this.groupBox5.Controls.Add(this.chkScreenshot);
             this.groupBox5.Location = new System.Drawing.Point(7, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(352, 70);
+            this.groupBox5.Size = new System.Drawing.Size(352, 62);
             this.groupBox5.TabIndex = 55;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Screenshot";
-            // 
-            // chkScreenshotMqtt
-            // 
-            this.chkScreenshotMqtt.AutoSize = true;
-            this.chkScreenshotMqtt.Location = new System.Drawing.Point(95, 19);
-            this.chkScreenshotMqtt.Name = "chkScreenshotMqtt";
-            this.chkScreenshotMqtt.Size = new System.Drawing.Size(57, 17);
-            this.chkScreenshotMqtt.TabIndex = 3;
-            this.chkScreenshotMqtt.Text = "MQTT";
-            this.chkScreenshotMqtt.UseVisualStyleBackColor = true;
-            // 
-            // LblScreenshotPath
-            // 
-            this.LblScreenshotPath.AutoSize = true;
-            this.LblScreenshotPath.Location = new System.Drawing.Point(19, 44);
-            this.LblScreenshotPath.Name = "LblScreenshotPath";
-            this.LblScreenshotPath.Size = new System.Drawing.Size(29, 13);
-            this.LblScreenshotPath.TabIndex = 2;
-            this.LblScreenshotPath.Text = "Path";
-            // 
-            // txtScreenshotPath
-            // 
-            this.txtScreenshotPath.Location = new System.Drawing.Point(88, 41);
-            this.txtScreenshotPath.Name = "txtScreenshotPath";
-            this.txtScreenshotPath.Size = new System.Drawing.Size(219, 20);
-            this.txtScreenshotPath.TabIndex = 1;
             // 
             // chkScreenshot
             // 
@@ -697,10 +602,11 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.CmdSelectSlideShowPath);
             this.groupBox7.Controls.Add(this.label12);
             this.groupBox7.Controls.Add(this.ChkSlideshow);
             this.groupBox7.Controls.Add(this.txtSlideshowFolder);
-            this.groupBox7.Location = new System.Drawing.Point(7, 79);
+            this.groupBox7.Location = new System.Drawing.Point(7, 70);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(352, 74);
             this.groupBox7.TabIndex = 54;
@@ -730,7 +636,7 @@
             // 
             this.txtSlideshowFolder.Location = new System.Drawing.Point(88, 48);
             this.txtSlideshowFolder.Name = "txtSlideshowFolder";
-            this.txtSlideshowFolder.Size = new System.Drawing.Size(219, 20);
+            this.txtSlideshowFolder.Size = new System.Drawing.Size(189, 20);
             this.txtSlideshowFolder.TabIndex = 49;
             // 
             // tabPage5
@@ -898,6 +804,16 @@
             this.CmdDiscovery.Text = "Send discovery";
             this.CmdDiscovery.UseVisualStyleBackColor = true;
             // 
+            // CmdSelectSlideShowPath
+            // 
+            this.CmdSelectSlideShowPath.Location = new System.Drawing.Point(288, 47);
+            this.CmdSelectSlideShowPath.Name = "CmdSelectSlideShowPath";
+            this.CmdSelectSlideShowPath.Size = new System.Drawing.Size(58, 20);
+            this.CmdSelectSlideShowPath.TabIndex = 52;
+            this.CmdSelectSlideShowPath.Text = "Browse";
+            this.CmdSelectSlideShowPath.UseVisualStyleBackColor = true;
+            this.CmdSelectSlideShowPath.Click += new System.EventHandler(this.CmdSelectSlideShowPath_Click);
+            // 
             // FrmOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -920,8 +836,6 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -981,9 +895,6 @@
         private System.Windows.Forms.CheckBox chkSuspend;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.CheckBox chkScreenshotMqtt;
-        private System.Windows.Forms.Label LblScreenshotPath;
-        private System.Windows.Forms.TextBox txtScreenshotPath;
         private System.Windows.Forms.CheckBox chkScreenshot;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label12;
@@ -1003,12 +914,6 @@
         private System.Windows.Forms.CheckBox chkStartUp;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.ComboBox cmbWebcam;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox chkScreenDumpPrimonitor;
         private System.Windows.Forms.Button CmdWebCamTest;
         private System.Windows.Forms.CheckBox ChkEnableWebCamPublish;
         private System.Windows.Forms.CheckBox chkTtsEnabled;
@@ -1016,5 +921,6 @@
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.Button CmdDiscovery;
         private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button CmdSelectSlideShowPath;
     }
 }

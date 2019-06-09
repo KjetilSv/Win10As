@@ -15,13 +15,11 @@ namespace mqttclient.Mqtt
         private readonly IMqtt _mqtt;
         private readonly string GLocalScreetshotFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "primonitor.jpg");
         private readonly string GLocalWebcamFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "webcam.png");
-
         public MqttPublish(IMqtt mqtt, IAudio audio)
         {
             _mqtt = mqtt;
             _audioobj = audio;
         }
-
         public void PublishSystemData()
         {
             if (_mqtt.IsConnected == false)
@@ -49,10 +47,6 @@ namespace mqttclient.Mqtt
                 {
                     PublishAudio();
                 }
-                if (MqttSettings.ScreenshotEnable)
-                {
-                    PublishScreenshot(Properties.Settings.Default["ScreenShotpath"].ToString());
-                }
                 if (MqttSettings.MqttSlideshow)
                 {
                     if (Properties.Settings.Default["MqttSlideshowFolder"].ToString().Length > 5)
@@ -71,11 +65,14 @@ namespace mqttclient.Mqtt
                 }
                 if (MqttSettings.EnableWebCamPublish)
                 {
-                    PublishCamera(GLocalWebcamFile);
+                    PublishCamera();
+                }
+                if (MqttSettings.ScreenshotEnable)
+                {
+                    PublishScreenshot();
                 }
             }
         }
-
         private void PublishAudio(bool DiscoveryPacket = false)
         {
 
@@ -110,7 +107,6 @@ namespace mqttclient.Mqtt
             {
             }
         }
-
         private void PublishStatus()
         {
             if (UsingComputer.IsUsing())
@@ -123,7 +119,6 @@ namespace mqttclient.Mqtt
             }
 
         }
-
         private void PublishBattery()
         {
             //_mqtt.Publish("Power/BatteryChargeStatus", Power.BatteryChargeStatus());
@@ -132,7 +127,6 @@ namespace mqttclient.Mqtt
             //_mqtt.Publish("Power/BatteryLifeRemaining", Power.BatteryLifeRemaining());
             //_mqtt.Publish("Power/PowerLineStatus", Power.PowerLineStatus());
         }
-
         private void PublishDiskStatus()
         {
             try
@@ -157,7 +151,6 @@ namespace mqttclient.Mqtt
             }
 
         }
-
         private static bool NetworkUp()
         {
 
@@ -171,8 +164,7 @@ namespace mqttclient.Mqtt
             }
 
         }
-
-        private void PublishScreenshot(string fileUri)
+        private void PublishScreenshot()
         {
             try
             {
@@ -184,15 +176,9 @@ namespace mqttclient.Mqtt
                         {
                             gfxScreenshot.CopyFromScreen(Screen.PrimaryScreen.Bounds.X, Screen.PrimaryScreen.Bounds.Y, 0, 0, Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
 
-                            if (MqttSettings.ScreenshotMqtt)
-                            {
-                                bmpScreenshot.Save(GLocalScreetshotFile, ImageFormat.Png);
-                                _mqtt.PublishImage("mqttcamera", GLocalScreetshotFile);
-                            }
-                            else
-                            {
-                                bmpScreenshot.Save(fileUri, ImageFormat.Jpeg);
-                            }
+
+                            bmpScreenshot.Save(GLocalScreetshotFile, ImageFormat.Png);
+                            _mqtt.PublishImage("screenshot", GLocalScreetshotFile);
 
                         }
                     }
@@ -203,20 +189,21 @@ namespace mqttclient.Mqtt
                 throw;
             }
         }
-
-        private void PublishCamera(string filename)
+        private void PublishCamera()
         {
             try
             {
+                if (HardwareSensors.Camera.Save(GLocalWebcamFile))
+                {
+                    _mqtt.PublishImage("webcamera", GLocalWebcamFile);
 
+                }
+                else
+                {
 
+                    MessageBox.Show($"Failed to save image");
+                }
 
-
-                //Camera c = new Camera();
-                //c.Filename = filename;
-                //string retur = c.GetPicture(MqttSettings.WebCamToPublish);
-                //c = null;
-                //_mqtt.PublishImage("webcamera", filename);
             }
             catch (Exception)
             {
@@ -225,7 +212,6 @@ namespace mqttclient.Mqtt
             }
 
         }
-
         private void MqttCameraSlide(string folder)
         {
             var rand = new Random();
@@ -233,7 +219,6 @@ namespace mqttclient.Mqtt
             string topic = "slideshow";
             _mqtt.PublishByte(topic, File.ReadAllBytes(files[rand.Next(files.Length)]));
         }
-
         public void DiscoveryMessage(string topic, string Message)
         {
 

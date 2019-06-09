@@ -98,36 +98,12 @@ namespace mqttclient.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ScreenShotpath {
-            get {
-                return ((string)(this["ScreenShotpath"]));
-            }
-            set {
-                this["ScreenShotpath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ScreenShotInterval {
             get {
                 return ((string)(this["ScreenShotInterval"]));
             }
             set {
                 this["ScreenShotInterval"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ScreenshotMqtt {
-            get {
-                return ((bool)(this["ScreenshotMqtt"]));
-            }
-            set {
-                this["ScreenshotMqtt"] = value;
             }
         }
         

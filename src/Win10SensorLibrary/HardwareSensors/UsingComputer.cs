@@ -4,12 +4,17 @@
     {
         public static bool IsUsing()
         {
-            var idleTime = IdleTimeFinder.GetIdleTime();
-            if (idleTime.TotalSeconds > 30)
+            if (GetIdleTime() > 30)
             {
                 return false;
             }
             return true;
+        }
+
+        public static int GetIdleTime()
+        {
+            var idleTime = IdleTimeFinder.GetIdleTime();
+            return (int)idleTime.TotalSeconds;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Win10SensorLibrary.Models
+namespace Win10MqttLibrary.Models
 {
     public class CommandParameters
     {

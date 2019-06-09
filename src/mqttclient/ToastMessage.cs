@@ -25,7 +25,6 @@ namespace mqttclient
             toast.Failed += ToastFailed;
             ToastNotificationManager.CreateToastNotifier(AppId).Show(toast);
         }
-
         public void ShowImage(IList<string> lines, string imageUrl)
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastImageAndText04);
@@ -48,8 +47,6 @@ namespace mqttclient
             toast.Failed += ToastFailed;
             ToastNotificationManager.CreateToastNotifier(AppId).Show(toast);
         }
-
-
         private void ToastFailed(ToastNotification sender, ToastFailedEventArgs args)
         {
             throw new NotImplementedException();

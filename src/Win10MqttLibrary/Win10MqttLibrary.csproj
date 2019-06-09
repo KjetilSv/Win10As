@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Helpers.cs" />
     <Compile Include="Models\CommandParameters.cs" />
+    <Compile Include="Models\IsRunning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

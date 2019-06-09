@@ -20,7 +20,6 @@ namespace mqttclient.HardwareSensors
                 }
             return result;
         }
-
         public static void Speak(string Text,string Device)
         {
             SpeechSynthesizer synthesizer = new SpeechSynthesizer();

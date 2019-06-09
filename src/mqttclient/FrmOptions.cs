@@ -242,7 +242,7 @@ namespace mqttclient
                     }
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     throw;

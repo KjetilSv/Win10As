@@ -73,20 +73,20 @@ namespace mqttclient.Mqtt
                 }
             }
         }
-        private void PublishAudio(bool DiscoveryPacket = false)
+        private void PublishAudio()
         {
 
-            if (DiscoveryPacket == true)
-            {
-                string fullltopic = _mqtt.FullTopic("switch/mute");
-                MqttConfig _MqttConfig = new MqttConfig();
-                _MqttConfig.device_class = "switch";
-                _MqttConfig.name = MqttSettings.MqttTopic + "switch-mute";
-                _MqttConfig.state_topic = fullltopic + "/set";
-                string configTopic = "switch/mute/config";
-                string ConfigPayload = JsonConvert.SerializeObject(_MqttConfig, Newtonsoft.Json.Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                _mqtt.Publish(configTopic, ConfigPayload);
-            }
+            //if (DiscoveryPacket == true)
+            //{
+            //    string fullltopic = _mqtt.FullTopic("switch/mute");
+            //    MqttConfig _MqttConfig = new MqttConfig();
+            //    _MqttConfig.device_class = "switch";
+            //    _MqttConfig.name = MqttSettings.MqttTopic + "switch-mute";
+            //    _MqttConfig.state_topic = fullltopic + "/set";
+            //    //string configTopic = "switch/mute/config";
+            //    //string ConfigPayload = JsonConvert.SerializeObject(_MqttConfig, Newtonsoft.Json.Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            //    //_mqtt.Publish(configTopic, ConfigPayload);
+            //}
 
 
 

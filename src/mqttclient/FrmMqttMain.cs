@@ -57,12 +57,12 @@ namespace mqttclient
 
             timer1.Start();
         }
-        private void client_MqttConnectionClosed(object sender, EventArgs e)
-        {
-            toolStripStatusLabel1.Text = "not connected";
-        }
+        //private void client_MqttConnectionClosed(object sender, EventArgs e)
+        //{
+        //    toolStripStatusLabel1.Text = "not connected";
+        //}
         delegate void SetTextCallback(string text);
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             _mqttPublish.PublishSystemData();
         }
@@ -79,7 +79,7 @@ namespace mqttclient
         {
             HandleUnhandledException(e.Exception);
         }
-        private void listBox1_KeyUp(object sender, KeyEventArgs e)
+        private void ListBox1_KeyUp(object sender, KeyEventArgs e)
         {
             if (sender != listBox1) return;
 
@@ -92,7 +92,7 @@ namespace mqttclient
                 {
                 }
         }
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frmSettingsFrom = new FrmOptions(this);
             frmSettingsFrom.Show();
@@ -123,12 +123,12 @@ namespace mqttclient
                 this.Show();
             }
         }
-        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        private void NotifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
         }
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
@@ -138,7 +138,7 @@ namespace mqttclient
             //hard exit
             Environment.Exit(0);
         }
-        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        private void ToolStripStatusLabel2_Click(object sender, EventArgs e)
         {
 
         }

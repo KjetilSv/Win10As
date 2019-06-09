@@ -116,8 +116,10 @@ namespace mqttclient.Mqtt
 
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
 
-                            var r = new List<string>();
-                            r.Add(GMqtttopic);
+                            var r = new List<string>
+                            {
+                                GMqtttopic
+                            };
                             _client.Subscribe(r.ToArray(), new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 
                             return true;

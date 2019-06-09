@@ -168,5 +168,13 @@ namespace mqttclient
         {
             Properties.Settings.Default.Save();
         }
+
+        public static string AppId
+        {
+            get => "Win Mqtt Client";
+        }
+        
+
+
     }
 }

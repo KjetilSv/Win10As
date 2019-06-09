@@ -7,8 +7,6 @@ namespace mqttclient
 {
     public class ToastMessage : IToastMessage
     {
-        private const string AppId = "Win Mqtt Client";
-
         public void ShowText(IList<string> lines)
         {
             XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText04);
@@ -23,7 +21,7 @@ namespace mqttclient
             toast.Activated += ToastActivated;
             toast.Dismissed += ToastDismissed;
             toast.Failed += ToastFailed;
-            ToastNotificationManager.CreateToastNotifier(AppId).Show(toast);
+            ToastNotificationManager.CreateToastNotifier(MqttSettings.AppId).Show(toast);
         }
         public void ShowImage(IList<string> lines, string imageUrl)
         {
@@ -45,7 +43,7 @@ namespace mqttclient
             toast.Activated += ToastActivated;
             toast.Dismissed += ToastDismissed;
             toast.Failed += ToastFailed;
-            ToastNotificationManager.CreateToastNotifier(AppId).Show(toast);
+            ToastNotificationManager.CreateToastNotifier(MqttSettings.AppId).Show(toast);
         }
         private void ToastFailed(ToastNotification sender, ToastFailedEventArgs args)
         {

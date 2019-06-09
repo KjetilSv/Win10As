@@ -13,7 +13,6 @@ namespace mqttclient
 {
     public partial class FrmOptions : Form
     {
-        readonly string appID = "win iot";
         public string TriggerFile { get; set; }
         public FrmMqttMain ParentForm { get; set; }
         public FrmOptions(FrmMqttMain Mainform)
@@ -207,11 +206,11 @@ namespace mqttclient
 
                 if (chkStartUp.Checked)
                 {
-                    rk.SetValue(appID, Application.ExecutablePath.ToString(CultureInfo.CurrentCulture));
+                    rk.SetValue(MqttSettings.AppId, Application.ExecutablePath.ToString(CultureInfo.CurrentCulture));
                 }
                 else
                 {
-                    rk.DeleteValue(appID, false);
+                    rk.DeleteValue(MqttSettings.AppId, false);
                 }
                 Properties.Settings.Default["RunAtStart"] = chkStartUp.Checked;
             }

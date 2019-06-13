@@ -133,11 +133,11 @@ namespace mqttclient.Mqtt
                 }
                 else
                 {
-                    throw new Exception("not connected, check settings mqttservername not entered");
+                    //throw new Exception("not connected, check settings mqttservername not entered");
                 }
             }
 
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("not connected,check settings. Error: {ex.InnerException.ToString()}");
             }

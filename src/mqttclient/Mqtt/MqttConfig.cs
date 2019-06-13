@@ -13,16 +13,12 @@ namespace mqttclient.Mqtt
         public string state_topic { get; set; }
         public string unit_of_measurement { get; set; }
         public string value_template { get; set; }
-
-
         public string payload () {
 
 
             return "";
 
         }
-
-
 
     }
 }

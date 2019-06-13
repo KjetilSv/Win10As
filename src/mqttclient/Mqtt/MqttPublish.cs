@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using mqttclient.HardwareSensors;
 using Newtonsoft.Json;
@@ -20,10 +23,20 @@ namespace mqttclient.Mqtt
             _mqtt = mqtt;
             _audioobj = audio;
         }
-        public void PublishSystemData()
+        public async void PublishSystemData()
         {
+
+
+            List<System.Threading.Tasks.Task> task = new List<System.Threading.Tasks.Task>();
+
+
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             if (_mqtt.IsConnected == false)
             {
+
                 _mqtt.Connect(MqttSettings.MqttServer, MqttSettings.MqttPort, MqttSettings.MqttUsername, MqttSettings.MqttPassword);
             }
 
@@ -31,47 +44,56 @@ namespace mqttclient.Mqtt
             {
                 if (MqttSettings.IsComputerUsed)
                 {
-                    PublishStatus();
+                    task.Add(Task.Run(() => PublishStatus()));
                 }
                 if (MqttSettings.CpuSensor)
                 {
-
-                    _mqtt.Publish("cpuprosessortime", Processor.GetCpuProcessorTime());
-
+                    task.Add(Task.Run(() => _mqtt.Publish("cpuprosessortime", Processor.GetCpuProcessorTime())));
                 }
                 if (MqttSettings.FreeMemorySensor)
                 {
-                    _mqtt.Publish("freememory", Memory.GetFreeMemory());
+                    task.Add(Task.Run(() =>  _mqtt.Publish("freememory", Memory.GetFreeMemory())));
                 }
                 if (MqttSettings.VolumeSensor)
                 {
-                    PublishAudio();
+                    task.Add(Task.Run(() => PublishAudio()));
                 }
                 if (MqttSettings.MqttSlideshow)
                 {
                     if (Properties.Settings.Default["MqttSlideshowFolder"].ToString().Length > 5)
                     {
                         string folder = @Properties.Settings.Default["MqttSlideshowFolder"].ToString();
-                        MqttCameraSlide(folder);
+                        task.Add(Task.Run(() =>  MqttCameraSlide(folder)));
                     }
                 }
                 if (MqttSettings.BatterySensor)
                 {
-                    PublishBattery();
+                    task.Add(Task.Run(() => PublishBattery()));
                 }
                 if (MqttSettings.DiskSensor)
                 {
-                    PublishDiskStatus();
+                    task.Add(Task.Run(() => PublishDiskStatus()));
                 }
                 if (MqttSettings.EnableWebCamPublish)
                 {
-                    PublishCamera();
+                    task.Add(Task.Run(() => PublishCamera()));
                 }
                 if (MqttSettings.ScreenshotEnable)
                 {
-                    PublishScreenshot();
+                    task.Add(Task.Run(() => PublishScreenshot()));
                 }
             }
+            await Task.WhenAll(task).ConfigureAwait(false);
+
+            stopWatch.Stop();
+            // Get the elapsed time as a TimeSpan value.
+            TimeSpan ts = stopWatch.Elapsed;
+            
+
+            //TotalSeconds: 2.6777968
+            //no async TotalSeconds: 3.1030012
+
+
         }
         private void PublishAudio()
         {
@@ -107,7 +129,7 @@ namespace mqttclient.Mqtt
             {
             }
         }
-        private void PublishStatus()
+        private async void PublishStatus()
         {
             if (UsingComputer.IsUsing())
             {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -8,7 +7,6 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using mqttclient.HardwareSensors;
-using Newtonsoft.Json;
 
 namespace mqttclient.Mqtt
 {
@@ -26,14 +24,8 @@ namespace mqttclient.Mqtt
         public async void PublishSystemData()
         {
 
-
             List<System.Threading.Tasks.Task> task = new List<System.Threading.Tasks.Task>();
-
-
-
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-
+            
             if (_mqtt.IsConnected == false)
             {
 
@@ -84,34 +76,9 @@ namespace mqttclient.Mqtt
                 }
             }
             await Task.WhenAll(task).ConfigureAwait(false);
-
-            stopWatch.Stop();
-            // Get the elapsed time as a TimeSpan value.
-            TimeSpan ts = stopWatch.Elapsed;
-            
-
-            //TotalSeconds: 2.6777968
-            //no async TotalSeconds: 3.1030012
-
-
         }
         private void PublishAudio()
         {
-
-            //if (DiscoveryPacket == true)
-            //{
-            //    string fullltopic = _mqtt.FullTopic("switch/mute");
-            //    MqttConfig _MqttConfig = new MqttConfig();
-            //    _MqttConfig.device_class = "switch";
-            //    _MqttConfig.name = MqttSettings.MqttTopic + "switch-mute";
-            //    _MqttConfig.state_topic = fullltopic + "/set";
-            //    //string configTopic = "switch/mute/config";
-            //    //string ConfigPayload = JsonConvert.SerializeObject(_MqttConfig, Newtonsoft.Json.Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            //    //_mqtt.Publish(configTopic, ConfigPayload);
-            //}
-
-
-
             _mqtt.Publish("volume", _audioobj.GetVolume(), true);
 
             try
@@ -240,12 +207,6 @@ namespace mqttclient.Mqtt
             var files = Directory.GetFiles(folder, "*.jpg");
             string topic = "slideshow";
             _mqtt.PublishByte(topic, File.ReadAllBytes(files[rand.Next(files.Length)]));
-        }
-        public void DiscoveryMessage(string topic, string Message)
-        {
-
-            _mqtt.Publish(topic, Message);
-
         }
     }
 }

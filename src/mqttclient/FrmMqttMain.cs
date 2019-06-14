@@ -11,7 +11,6 @@ namespace mqttclient
     {
         private readonly IMqttPublish _mqttPublish;
         private readonly IMqtt _mqtt;
-
         public FrmMqttMain(IMqtt mqtt, IMqttPublish mqttPublish, MainFormContainer mainFormContainer)
         {
             _mqtt = mqtt;
@@ -101,7 +100,6 @@ namespace mqttclient
         {
             ReconnectMqtt();
             SetupTimer();
-            //new SystemShutdown(_mqtt).Subscribe();
         }
         public void ReconnectMqtt()
         {
@@ -172,7 +170,6 @@ namespace mqttclient
             SetupTimer();
 
         }
-
         private void FrmMqttMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             _mqtt.Disconnect();

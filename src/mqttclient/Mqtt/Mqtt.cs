@@ -87,7 +87,7 @@ namespace mqttclient.Mqtt
 
                         _client = new MqttClient(hostname, portNumber, false, null, null, MqttSslProtocols.None, null);
 
-                        if (!Helpers.IsEmptyOrWhitespaced(username))
+                        if (Helpers.IsEmptyOrWhitespaced(username))
                         {
                             byte code = _client.Connect(Guid.NewGuid().ToString());
                         }

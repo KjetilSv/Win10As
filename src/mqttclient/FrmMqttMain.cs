@@ -165,7 +165,7 @@ namespace mqttclient
             }
             catch (Exception)
             {
-                throw;
+                //throw;
             }
             SetupTimer();
 

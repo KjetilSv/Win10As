@@ -13,6 +13,8 @@ namespace mqttclient
 {
     public partial class FrmOptions : Form
     {
+
+        
         public string TriggerFile { get; set; }
         public FrmMqttMain ParentForm { get; set; }
         public FrmOptions(FrmMqttMain Mainform)

@@ -16,8 +16,10 @@ namespace mqttclient
             builder.RegisterType<Logger>().As<ILogger>();
             builder.RegisterType<Mqtt.Mqtt>().As<IMqtt>().SingleInstance();
             builder.RegisterType<MqttPublish>().As<IMqttPublish>();
-            builder.RegisterType<Audio>().As<IAudio>();
+           builder.RegisterType<Audio>().As<IAudio>().SingleInstance();
             builder.RegisterType<ToastMessage>().As<IToastMessage>();
+
+            builder.RegisterType<FrmOptions>().AsSelf();
 
             //builder.RegisterAssemblyTypes(Assembly.Load(nameof(mqttclient)))
             //    .Where(t => t.Namespace.Contains("HardwareSensors"))

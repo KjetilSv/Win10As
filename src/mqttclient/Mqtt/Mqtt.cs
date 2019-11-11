@@ -87,7 +87,7 @@ namespace mqttclient.Mqtt
 
                         _client = new MqttClient(hostname, portNumber, false, null, null, MqttSslProtocols.None, null);
 
-                        if (!Helpers.IsEmptyOrWhitespaced(username))
+                        if (Helpers.IsEmptyOrWhitespaced(username))
                         {
                             byte code = _client.Connect(Guid.NewGuid().ToString());
                         }
@@ -118,13 +118,14 @@ namespace mqttclient.Mqtt
                             GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString();
 
                             var r = new List<string>();
-                            var qosLevelse = new List<Byte>();
+                            var qosLevelse = new List<Byte[]>();
 
                             //r.Add(GMqtttopic + "/#");
 
 
-                            r.Add(GMqtttopic + "/app/running");
-                            qosLevelse.Add(new byte { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            //r.Add(GMqtttopic + "/app/running");
+                            ////qosLevelse.Add(new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+
                             //r.Add(GMqtttopic + "/monitor/set");
                             //r.Add(GMqtttopic + "/mute/set");
                             //r.Add(GMqtttopic + "/volume/set");
@@ -136,7 +137,17 @@ namespace mqttclient.Mqtt
                             //r.Add(GMqtttopic + "/toast");
                             //r.Add(GMqtttopic + "/cmd");
 
-                            _client.Subscribe(r.ToArray(), new byte});
+                            _client.Subscribe(new string[] { GMqtttopic + "/monitor/set" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/mute/set" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/volume/set" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/hibernate" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/suspend" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/reboot" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/reboot" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/shutdown" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/tts" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/toast" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            _client.Subscribe(new string[] { GMqtttopic + "/cmd" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 
                             return true;
                         }
@@ -155,7 +166,7 @@ namespace mqttclient.Mqtt
 
             catch (Exception ex)
             {
-                throw new Exception("not connected,check settings. Error: {ex.InnerException.ToString()}");
+                throw new Exception($"not connected,check settings. Error: {ex.InnerException.ToString()}");
             }
             return false;
         }

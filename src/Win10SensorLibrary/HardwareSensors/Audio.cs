@@ -7,13 +7,15 @@ namespace mqttclient.HardwareSensors
 {
     public class Audio : IAudio
     {
-        CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
+        
 
         public void Mute(Boolean Enable)
         {
             try
             {
+                CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
                 defaultPlaybackDevice.Mute(Enable);
+                
             }
             catch (Exception)
             {
@@ -26,6 +28,7 @@ namespace mqttclient.HardwareSensors
         {
             try
             {
+                CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
                 return defaultPlaybackDevice.IsMuted;
             }
             catch (Exception)
@@ -39,6 +42,7 @@ namespace mqttclient.HardwareSensors
         {
             try
             {
+                CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
                 defaultPlaybackDevice.Volume = Convert.ToDouble(level);
             }
             catch (Exception)
@@ -52,6 +56,7 @@ namespace mqttclient.HardwareSensors
         {
             try
             {
+                CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
                 return defaultPlaybackDevice.Volume + "%";
             }
             catch (Exception)
@@ -75,6 +80,7 @@ namespace mqttclient.HardwareSensors
         }
         public void ChangeOutputDevice(string DeviceFullname)
         {
+            CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
             CoreAudioController cac = new CoreAudioController();
             foreach (CoreAudioDevice de in cac.GetPlaybackDevices())
             {

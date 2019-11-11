@@ -114,13 +114,29 @@ namespace mqttclient.Mqtt
 
                             _logger.Log("connected");
 
-                            GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString() + "/#";
 
-                            var r = new List<string>
-                            {
-                                GMqtttopic
-                            };
-                            _client.Subscribe(r.ToArray(), new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            GMqtttopic = Properties.Settings.Default["mqtttopic"].ToString();
+
+                            var r = new List<string>();
+                            var qosLevelse = new List<Byte>();
+
+                            //r.Add(GMqtttopic + "/#");
+
+
+                            r.Add(GMqtttopic + "/app/running");
+                            qosLevelse.Add(new byte { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                            //r.Add(GMqtttopic + "/monitor/set");
+                            //r.Add(GMqtttopic + "/mute/set");
+                            //r.Add(GMqtttopic + "/volume/set");
+                            //r.Add(GMqtttopic + "/hibernate");
+                            //r.Add(GMqtttopic + "/suspend");
+                            //r.Add(GMqtttopic + "/reboot");
+                            //r.Add(GMqtttopic + "/shutdown");
+                            //r.Add(GMqtttopic + "/tts");
+                            //r.Add(GMqtttopic + "/toast");
+                            //r.Add(GMqtttopic + "/cmd");
+
+                            _client.Subscribe(r.ToArray(), new byte});
 
                             return true;
                         }

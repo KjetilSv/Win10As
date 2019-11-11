@@ -78,19 +78,19 @@ namespace mqttclient
         {
             HandleUnhandledException(e.Exception);
         }
-        private void ListBox1_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (sender != listBox1) return;
+        //private void ListBox1_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (sender != listBox1) return;
 
-            if (e.Control && e.KeyCode == Keys.C)
-                try
-                {
-                    Clipboard.SetText(listBox1.SelectedItems[0].ToString());
-                }
-                catch (Exception)
-                {
-                }
-        }
+        //    if (e.Control && e.KeyCode == Keys.C)
+        //        try
+        //        {
+        //            Clipboard.SetText(listBox1.SelectedItems[0].ToString());
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //}
         private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frmSettingsFrom = new FrmOptions(this);
@@ -173,6 +173,11 @@ namespace mqttclient
         private void FrmMqttMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             _mqtt.Disconnect();
+        }
+
+        private void FrmMqttMain_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

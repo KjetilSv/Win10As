@@ -32,13 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMqttMain));
             this.serviceController1 = new System.ServiceProcess.ServiceController();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.txtLoger = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -46,16 +46,6 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 38);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBox1.Size = new System.Drawing.Size(572, 277);
-            this.listBox1.TabIndex = 26;
-            this.listBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ListBox1_KeyUp);
             // 
             // menuStrip1
             // 
@@ -108,13 +98,22 @@
             this.toolStripStatusLabel2.Text = "toolStripStatusLabel1";
             this.toolStripStatusLabel2.Click += new System.EventHandler(this.ToolStripStatusLabel2_Click);
             // 
+            // txtLoger
+            // 
+            this.txtLoger.Location = new System.Drawing.Point(12, 37);
+            this.txtLoger.Multiline = true;
+            this.txtLoger.Name = "txtLoger";
+            this.txtLoger.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtLoger.Size = new System.Drawing.Size(572, 265);
+            this.txtLoger.TabIndex = 29;
+            // 
             // FrmMqttMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 327);
+            this.Controls.Add(this.txtLoger);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -123,6 +122,7 @@
             this.Text = "Mqtt Client";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMqttMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMqttMain_FormClosed);
+            this.Load += new System.EventHandler(this.FrmMqttMain_Load);
             this.Shown += new System.EventHandler(this.FrmMqttMain_Shown);
             this.Resize += new System.EventHandler(this.FrmMqttMain_Resize);
             this.menuStrip1.ResumeLayout(false);
@@ -137,13 +137,13 @@
         #endregion
         private System.ServiceProcess.ServiceController serviceController1;
         private System.Windows.Forms.Timer timer1;
-        public System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        public System.Windows.Forms.TextBox txtLoger;
     }
 }
 

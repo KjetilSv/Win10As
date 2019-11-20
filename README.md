@@ -60,7 +60,7 @@ published to [maintopic]/monitor after setting
 [maintopic]/toast
 Displays a message on the windows computer.
 Message exsample "Home Assistant,kom ned!,Kjetil,c:\temp\iselin.jpg".
-The the image must be visable from the windows computer.
+The image must be visible from the windows computer.
 #### TTS
 [maintopic]/tts
 Mqtt message is sendt to the synthesizer.
@@ -68,7 +68,7 @@ Currently the volume is set to 100%
 #### app/running sensor
 [maintopic]/app/running/ message:[appname] and published back to [maintopic]/app/running/[appname] with 0= not running/not found in process 1= found
 Tested with common applications like spotify/firefox/skype.
-Exsample: 
+Example: 
 mosquitto_pub -t kjetilsv/app/running -m Spotify
 if spotify is running kjetilsv/app/running/Spotify return message = 1 
 #### CMD

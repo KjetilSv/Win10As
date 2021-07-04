@@ -54,8 +54,8 @@ published to [maintopic]/monitor after setting
 [maintopic]/shutdown
 #### Reboot
 [maintopic]/reboot
-#### Hibrernate
-[maintopic]/hibrernate
+#### Hibernate
+[maintopic]/hibernate
 #### Toast message
 [maintopic]/toast
 Displays a message on the windows computer.
